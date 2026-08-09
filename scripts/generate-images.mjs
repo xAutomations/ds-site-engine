@@ -299,6 +299,7 @@ async function toWebp(buffer, outPath, resizeWidth) {
     last = { ...encoded, quality };
     if (encoded.info.size / 1024 <= BUDGET_KB) break;
   }
+  await mkdir(path.dirname(outPath), { recursive: true });
   await writeFile(outPath, last.data);
   return { ...last.info, quality: last.quality };
 }

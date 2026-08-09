@@ -134,6 +134,10 @@ supports constrained site-relative Markdown links in body and FAQ prose.
 
 ### 5. Prepare Images
 
+Use `skills/site-image-generator/SKILL.md` for image planning, manifest edits,
+paid-generation approval, execution, and output verification. If the agent can
+auto-discover project skills, load `site-image-generator` before generating.
+
 Follow the supplied brief when one exists. Otherwise plan:
 
 - One hero image

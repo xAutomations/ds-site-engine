@@ -25,3 +25,17 @@ For every client:
 
 If an agent cannot auto-discover project skills, it should read the canonical
 skill directly before doing blog work.
+
+## Client Image Generation
+
+Use `skills/site-image-generator/SKILL.md` whenever a user asks to plan,
+generate, replace, or connect client website imagery through
+`image-prompts.json` or `scripts/generate-images.mjs`.
+
+The manifest is the source of truth. Run a targeted `--dry-run` before paid
+generation, use `--only` unless the user explicitly requests all missing
+images, and do not use `--force` without explicit replacement intent. The
+canonical skill governs paid-generation approval and output verification.
+
+Agent-specific skill directories are adapters only. If an agent cannot
+auto-discover the skill, it should read the canonical file directly.
