@@ -24,6 +24,7 @@ const { brand, contact, tracking, theme } = siteConfig;
 // PNG rather than WebP: the logo carries transparency, and this URL is consumed by
 // crawlers rather than browsers.
 const logoUrl = new URL(await imageUrl(brand.logoPath, 512, 'png'), siteConfig.site.url).href;
+const faviconHref = brand.faviconPath ? await imageUrl(brand.faviconPath, 48, 'png') : '/favicon.svg';
 const graphs = [
   webSiteJsonLd(siteConfig),
   webPageJsonLd(siteConfig, { title, description, path }),
@@ -37,7 +38,7 @@ const hasTracking = !tracking.gtmId.includes('PLACEHOLDER');
 <html lang="en" style={`--ae-accent:${theme.accentColor}`}>
   <head>
     <SEOHead {title} {description} {path} {ogImage} {noindex} jsonLd={graphs} />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href={faviconHref} type={brand.faviconPath?.endsWith('.png') ? 'image/png' : 'image/svg+xml'} />
     <link rel="preload" as="font" type="font/woff2" href="/fonts/archivo-latin.woff2" crossorigin />
     {
       hasTracking && (

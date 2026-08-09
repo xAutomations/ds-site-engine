@@ -9,7 +9,8 @@
     "websiteUrl": "https://jetspa.co",
     "category": "Aircraft Detailing",
     "region": "the Northeast",
-    "footerNote": "Every jet deserves a spa day."
+    "footerNote": "Every jet deserves a spa day.",
+    "faviconPath": "./assets/favicon.png"
   },
   "contact": {
     "phone": "+18665159066",

@@ -43,6 +43,8 @@ export const siteConfigSchema = z.object({
     /** Longer footer blurb (spec §04, brand column). */
     blurb: z.string().min(1),
     logoPath: z.string().min(1),
+    /** Custom favicon path. Omitted generates one from the accent colour. */
+    faviconPath: z.string().min(1).optional(),
     /**
      * Closing sentence in the footer contact column. Optional — omitted, the footer
      * renders the bare "Serving {city}, {ST} and communities across {label}." line.

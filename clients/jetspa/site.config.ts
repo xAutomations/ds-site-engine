@@ -32,6 +32,7 @@ export const siteConfig = {
       'JetSpa is a New Jersey based aircraft detailing company serving four of the busiest general aviation airports in the Northeast. Certified private aircraft appearance care with OEM-approved chemistry and coordinated airport access.',
     footerNote: 'Every jet deserves a spa day.',
     logoPath: './assets/logo.png',
+    faviconPath: './assets/favicon.png',
   },
 
   contact: {
