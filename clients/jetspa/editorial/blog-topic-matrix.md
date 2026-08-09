@@ -15,7 +15,7 @@ Published status is reconciled against `clients/jetspa/content/blog/`.
 | ID | Topic | Status | Published URL |
 |---:|---|---|---|
 | 1 | Aircraft Ceramic Coating in the Northeast: Is It Worth It for Your Jet? | published | /post/aircraft-ceramic-coating-northeast |
-| 2 | What Does Aircraft Interior Detailing Include at Teterboro? | available | |
+| 2 | What Does Aircraft Interior Detailing Include at Teterboro? | published | /post/aircraft-interior-detailing-teterboro |
 | 3 | Aircraft Exterior Detailing at Morristown: Dry Wash vs Wet Wash | available | |
 | 4 | Brightwork Polishing in the Northeast: Why Leading Edges Go Dull | available | |
 | 5 | Deice Boot Refurbishment at Lehigh Valley: When to Condition and When to Replace | available | |

@@ -837,6 +837,36 @@
       "prompt": "Photorealistic close up of a gloved technician applying ceramic coating with a suede applicator block to a white aircraft fuselage panel, controlled indoor hangar lighting, visible product sheen on the treated section, professional aviation detailing, no text, no logos"
     },
     {
+      "id": "blog-interior-teterboro-hero",
+      "out": "blog/blog-interior-teterboro-hero.webp",
+      "resizeWidth": 600,
+      "alt": "Finished private jet cabin after aircraft interior detailing at Teterboro Airport",
+      "usedBy": [
+        "content/blog/aircraft-interior-detailing-teterboro.md → heroImage"
+      ],
+      "prompt": "Photorealistic wide interior view of a finished midsize business jet cabin in a Teterboro hangar, cream leather club seats aligned evenly, seat belts laid flat, clean neutral carpet, polished dark wood veneer reflecting soft window light, restrained premium aviation photography, realistic materials and cabin proportions, no people, no text, no logos, no visible registration"
+    },
+    {
+      "id": "blog-interior-teterboro-vacuum",
+      "out": "blog/blog-interior-teterboro-vacuum.webp",
+      "resizeWidth": 600,
+      "alt": "Aircraft detailer vacuuming debris from a private jet seat rail and carpet edge at Teterboro",
+      "usedBy": [
+        "content/blog/aircraft-interior-detailing-teterboro.md → inline image 2"
+      ],
+      "prompt": "Photorealistic close detail of a gloved aircraft technician using a narrow crevice vacuum tool along the carpet edge and exposed seat rail beside a cream leather business jet seat, clean controlled hangar lighting, accurate aviation cabin materials, tool and hands in sharp focus, no text, no logos, no visible registration"
+    },
+    {
+      "id": "blog-interior-teterboro-surfaces",
+      "out": "blog/blog-interior-teterboro-surfaces.webp",
+      "resizeWidth": 600,
+      "alt": "Certified aircraft detailer conditioning a leather armrest beside polished wood veneer in a private jet cabin",
+      "usedBy": [
+        "content/blog/aircraft-interior-detailing-teterboro.md → inline image 3"
+      ],
+      "prompt": "Photorealistic close-up inside a private business jet of gloved hands applying conditioner to a cream leather armrest beside a polished dark burl wood veneer side ledge, subtle product sheen without excessive gloss, soft directional cabin light, accurate premium aviation materials, professional documentary style, no text, no logos, no visible registration"
+    },
+    {
       "id": "proof-boot",
       "out": "proof-boot.webp",
       "alt": "A de-ice boot split between chalky untreated rubber and deep black refurbished rubber",

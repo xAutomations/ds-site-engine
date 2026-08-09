@@ -318,6 +318,9 @@ const blog = defineCollection({
     metaDescription,
     heroImage: image,
     ctaImage: image.optional(),
+    ctaEyebrow: prose.optional(),
+    ctaHeadline: prose.optional(),
+    ctaBody: prose.optional(),
     body: z.array(z.string()).min(1),
     faq: z.array(z.object({ q: prose, a: prose })).min(1),
     images: z.array(z.object({

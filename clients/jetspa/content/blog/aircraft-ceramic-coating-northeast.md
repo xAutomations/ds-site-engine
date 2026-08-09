@@ -27,6 +27,9 @@ heroImage:
 ctaImage:
   src: "./assets/about-crew.webp"
   alt: JetSpa aircraft detailing crew working on a business jet
+ctaEyebrow: Ready when your ground window is
+ctaHeadline: Get Your Aircraft Coated
+ctaBody: JetSpa provides certified aircraft ceramic coating at Teterboro, Morristown, Lehigh Valley, and White Plains, operating out of Alpha, New Jersey. Every job includes a written scope, a confirmed timeline, and a clear statement of exactly how many hours your aircraft will be grounded.
 body:
   - "Aircraft ceramic coating is one of the most common questions owners and flight departments ask when their paint starts to look tired. It is also one of the most misunderstood. Some people think it is a wax. Some think it is a repaint. It is neither. This guide explains what a ceramic coating actually does for an aircraft based in the Northeast, what it costs you in ground time, and how to decide whether it is worth doing on your airframe."
   - "## What Is Aircraft Ceramic Coating?"

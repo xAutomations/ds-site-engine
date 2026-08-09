@@ -174,6 +174,9 @@ heroImage:
 ctaImage:
   src: "./assets/team.webp"
   alt: Descriptive alt text
+ctaEyebrow: Short CTA context
+ctaHeadline: Topic-specific CTA heading
+ctaBody: Topic-specific CTA copy
 body:
   - Opening paragraph
   - "## Searchable section heading"

@@ -15,6 +15,9 @@ const { brand, contact } = siteConfig;
 const authorBio = post.authorBio ?? brand.blurb;
 const authorImage = post.authorImage ?? post.heroImage;
 const ctaImage = post.ctaImage ?? post.heroImage;
+const ctaEyebrow = post.ctaEyebrow ?? 'Ready when your ground window is';
+const ctaHeadline = post.ctaHeadline ?? 'Get Your Aircraft Detailed';
+const ctaBody = post.ctaBody ?? `${brand.name} provides certified aircraft detailing across the Northeast. Every job includes a written scope, a confirmed timeline, and a clear statement of the work being performed.`;
 const inlineImages = post.images.filter((image) => image.type === 'inline' && image.src && image.afterHeading);
 const escapeHtml = (text: string) => text
   .replaceAll('&', '&amp;')
@@ -113,11 +116,9 @@ const readTime = Math.max(1, Math.ceil(wordCount / 200));
     <section class="post-cta">
       <Img src={ctaImage.src} alt={ctaImage.alt} widths={[480, 600]} sizes="(min-width: 37.5rem) 37.5rem, 100vw" />
       <div class="post-cta-copy">
-        <p class="section-label">Ready when your ground window is</p>
-        <h2>Get Your Aircraft Coated</h2>
-        <p>
-          {brand.name} provides certified aircraft ceramic coating at Teterboro, Morristown, Lehigh Valley, and White Plains, operating out of Alpha, New Jersey. Every job includes a written scope, a confirmed timeline, and a clear statement of exactly how many hours your aircraft will be grounded.
-        </p>
+        <p class="section-label">{ctaEyebrow}</p>
+        <h2>{ctaHeadline}</h2>
+        <p>{ctaBody}</p>
         <p>
           Call <a href={`tel:${contact.phone}`}><strong>{contact.phoneDisplay}</strong></a> or <a href="/get-quote">request a quote online</a> with your aircraft type, home base airport, and preferred service window.
         </p>
