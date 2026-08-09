@@ -1,0 +1,24 @@
+---
+import type { InferGetStaticPropsType } from 'astro';
+import { getBlogPosts } from '../../lib/content';
+import { siteConfig } from '../../lib/site-config';
+import AviationEditorialBlogPost from '../../templates/aviation-editorial/pages/BlogPost.astro';
+
+export const getStaticPaths = async () => {
+  const posts = await getBlogPosts();
+  return posts.map((entry) => ({
+    params: { slug: entry.data.slug },
+    props: { entry },
+  }));
+};
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { entry } = Astro.props as Props;
+
+if (siteConfig.template !== 'aviation-editorial') {
+  throw new Error(`No blog post page registered for template "${siteConfig.template}".`);
+}
+---
+
+<AviationEditorialBlogPost {entry} />

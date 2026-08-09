@@ -14,11 +14,12 @@ interface Props {
   description: string;
   path: string;
   ogImage?: string;
+  ogType?: 'website' | 'article';
   noindex?: boolean;
   jsonLd?: Array<Record<string, unknown>>;
 }
 
-const { title, description, path, ogImage, noindex = false, jsonLd = [] } = Astro.props;
+const { title, description, path, ogImage, ogType = 'website', noindex = false, jsonLd = [] } = Astro.props;
 const [home, services, areas] = await Promise.all([getHome(), getServices(), getAreas()]);
 const { brand, contact, tracking, theme } = siteConfig;
 // PNG rather than WebP: the logo carries transparency, and this URL is consumed by
@@ -37,7 +38,7 @@ const hasTracking = !tracking.gtmId.includes('PLACEHOLDER');
 <!doctype html>
 <html lang="en" style={`--ae-accent:${theme.accentColor}`}>
   <head>
-    <SEOHead {title} {description} {path} {ogImage} {noindex} jsonLd={graphs} />
+    <SEOHead {title} {description} {path} {ogImage} {ogType} {noindex} jsonLd={graphs} />
     <link rel="icon" href={faviconHref} type={brand.faviconPath?.endsWith('.png') ? 'image/png' : 'image/svg+xml'} />
     <link rel="preload" as="font" type="font/woff2" href="/fonts/archivo-latin.woff2" crossorigin />
     {

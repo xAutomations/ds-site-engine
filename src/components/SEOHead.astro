@@ -14,12 +14,13 @@ interface Props {
   path: string;
   /** Absolute or site-relative image for OG/Twitter cards. */
   ogImage?: string;
+  ogType?: 'website' | 'article';
   noindex?: boolean;
   /** Nodes of the page's single JSON-LD @graph (no @context — added here). */
   jsonLd?: Array<Record<string, unknown>>;
 }
 
-const { title, description, path, ogImage, noindex = false, jsonLd = [] } = Astro.props;
+const { title, description, path, ogImage, ogType = 'website', noindex = false, jsonLd = [] } = Astro.props;
 
 const href = canonical(siteConfig, path);
 
@@ -36,7 +37,7 @@ const og = await ogImageUrl(ogImage ?? siteConfig.defaults.heroVideo.poster.src,
 <link rel="canonical" href={href} />
 {noindex && <meta name="robots" content="noindex, nofollow" />}
 
-<meta property="og:type" content="website" />
+<meta property="og:type" content={ogType} />
 <meta property="og:site_name" content={siteConfig.brand.name} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />

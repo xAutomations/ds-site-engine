@@ -1,0 +1,10 @@
+---
+import AviationEditorialBlogIndex from '../../templates/aviation-editorial/pages/BlogIndex.astro';
+import { siteConfig } from '../../lib/site-config';
+
+if (siteConfig.template !== 'aviation-editorial') {
+  throw new Error(`No blog index page registered for template "${siteConfig.template}".`);
+}
+---
+
+<AviationEditorialBlogIndex />

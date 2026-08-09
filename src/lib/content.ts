@@ -16,6 +16,8 @@ const RESERVED_SLUGS = new Set([
   'privacy-policy',
   'tos',
   'styleguide',
+  'blog',
+  'post',
 ]);
 
 /**
@@ -123,6 +125,16 @@ export const getGetQuote = () => getSingleton('getQuote', 'get-quote');
  */
 export async function getLegalDoc(id: 'privacy-policy' | 'tos') {
   return await getEntry('legal', id);
+}
+
+export async function getBlogPosts() {
+  const posts = await getCollection('blog');
+  return posts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+}
+
+export async function getBlogPost(slug: string) {
+  const posts = await getCollection('blog');
+  return posts.find((p) => p.data.slug === slug);
 }
 
 /** Splits an authored multi-paragraph string on blank lines. */

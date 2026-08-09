@@ -1,0 +1,444 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Img from '../../../components/Img.astro';
+import { faqPageJsonLd } from '../../../lib/seo';
+import { siteConfig } from '../../../lib/site-config';
+import SiteLayout from '../layouts/SiteLayout.astro';
+
+interface Props {
+  entry: CollectionEntry<'blog'>;
+}
+
+const { entry } = Astro.props;
+const post = entry.data;
+const { brand, contact } = siteConfig;
+const authorBio = post.authorBio ?? brand.blurb;
+const authorImage = post.authorImage ?? post.heroImage;
+const ctaImage = post.ctaImage ?? post.heroImage;
+const inlineImages = post.images.filter((image) => image.type === 'inline' && image.src && image.afterHeading);
+const escapeHtml = (text: string) => text
+  .replaceAll('&', '&amp;')
+  .replaceAll('<', '&lt;')
+  .replaceAll('>', '&gt;')
+  .replaceAll('"', '&quot;')
+  .replaceAll("'", '&#039;');
+const internalLinks = (text: string) => escapeHtml(text).replace(
+  /\[([^\]]+)\]\((\/[a-z0-9/-]+)\)/g,
+  '<a class="post-inline-link" href="$2">$1</a>',
+);
+const plainText = (text: string) => text.replace(/\[([^\]]+)\]\(\/[a-z0-9/-]+\)/g, '$1');
+const schemaFaq = post.faq.map((item) => ({ q: item.q, a: plainText(item.a) }));
+const bodyIntro: string[] = [];
+const bodySections: Array<{ heading: string; paragraphs: string[]; image?: (typeof inlineImages)[number] }> = [];
+
+for (const block of post.body) {
+  const heading = block.match(/^## (.+)/)?.[1];
+  if (heading) {
+    bodySections.push({
+      heading,
+      paragraphs: [],
+      image: inlineImages.find((image) => image.afterHeading === heading),
+    });
+  } else if (bodySections.length) {
+    bodySections.at(-1)!.paragraphs.push(block);
+  } else {
+    bodyIntro.push(block);
+  }
+}
+const wordCount = [post.title, ...post.body, ...post.faq.flatMap((item) => [item.q, item.a])]
+  .join(' ')
+  .trim()
+  .split(/\s+/).length;
+const readTime = Math.max(1, Math.ceil(wordCount / 200));
+---
+
+<SiteLayout
+  title={post.metaTitle}
+  description={post.metaDescription}
+  path={`/post/${post.slug}`}
+  ogImage={post.heroImage.src}
+  ogType="article"
+  jsonLd={[faqPageJsonLd(schemaFaq)]}
+>
+  <article class="blog-post">
+    <header class="post-header">
+      <div class="post-meta">
+        <time datetime={post.date}>{new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+        <span aria-hidden="true">•</span>
+        <span>{readTime} min read</span>
+      </div>
+      <span class="post-category">{post.category}</span>
+      <h1>{post.title}</h1>
+      <p class="post-byline">By {post.author}</p>
+    </header>
+
+    <div class="post-hero">
+      <Img src={post.heroImage.src} alt={post.heroImage.alt} widths={[480, 600]} sizes="(min-width: 37.5rem) 37.5rem, 100vw" />
+    </div>
+
+    <div class="post-body">
+      {bodyIntro.map((paragraph) => <p><Fragment set:html={internalLinks(paragraph)} /></p>)}
+      {bodySections.map((section) => (
+        <section class="post-body-section">
+          <h2>{section.heading}</h2>
+          {section.image?.src && (
+            <figure class="post-inline-image">
+              <Img
+                src={section.image.src}
+                alt={section.image.alt}
+                widths={[480, 600]}
+                sizes="(min-width: 37.5rem) 37.5rem, 100vw"
+              />
+            </figure>
+          )}
+          {section.paragraphs.map((paragraph) => <p><Fragment set:html={internalLinks(paragraph)} /></p>)}
+        </section>
+      ))}
+    </div>
+
+    <section class="post-faq">
+      <h2>Frequently Asked Questions</h2>
+      <dl>
+        {
+          post.faq.map((item) => (
+            <div>
+              <dt>{item.q}</dt>
+              <dd><Fragment set:html={internalLinks(item.a)} /></dd>
+            </div>
+          ))
+        }
+      </dl>
+    </section>
+
+    <section class="post-cta">
+      <Img src={ctaImage.src} alt={ctaImage.alt} widths={[480, 600]} sizes="(min-width: 37.5rem) 37.5rem, 100vw" />
+      <div class="post-cta-copy">
+        <p class="section-label">Ready when your ground window is</p>
+        <h2>Get Your Aircraft Coated</h2>
+        <p>
+          {brand.name} provides certified aircraft ceramic coating at Teterboro, Morristown, Lehigh Valley, and White Plains, operating out of Alpha, New Jersey. Every job includes a written scope, a confirmed timeline, and a clear statement of exactly how many hours your aircraft will be grounded.
+        </p>
+        <p>
+          Call <a href={`tel:${contact.phone}`}><strong>{contact.phoneDisplay}</strong></a> or <a href="/get-quote">request a quote online</a> with your aircraft type, home base airport, and preferred service window.
+        </p>
+      </div>
+    </section>
+
+    <ul class="post-tags" aria-label="Article topics">
+      {post.tags?.map((tag) => <li>{tag}</li>)}
+    </ul>
+
+    <aside class="post-author" aria-label="About the author">
+      <div style="display:grid;width:96px;height:96px;border-radius:50%;background:var(--ae-deck);flex:0 0 96px;place-items:center">
+        <Img
+          src={authorImage.src}
+          alt={authorImage.alt}
+          widths={[56]}
+          sizes="56px"
+          style="width:56px;height:56px;max-width:56px;object-fit:contain"
+        />
+      </div>
+      <div>
+        <h2>{post.author}</h2>
+        <p>{authorBio}</p>
+      </div>
+    </aside>
+
+    <nav class="post-navigation" aria-label="Article navigation">
+      <a href="#main">Back to top</a>
+      <a href="/blog">Back to blog <span aria-hidden="true">→</span></a>
+    </nav>
+  </article>
+</SiteLayout>
+
+<style>
+  .blog-post {
+    max-width: 44rem;
+    margin-inline: auto;
+    padding: 3rem var(--ae-gutter) 5rem;
+  }
+
+  .post-header {
+    margin-bottom: 2rem;
+  }
+
+  .post-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    color: var(--ae-muted);
+    font-family: var(--ae-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .post-category {
+    display: inline-block;
+    margin-left: 0.75rem;
+    padding: 0.2rem 0.55rem;
+    background: var(--ae-deck);
+    color: var(--ae-accent);
+    font-family: var(--ae-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .post-header h1 {
+    margin-top: 1rem;
+    font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+    font-weight: 500;
+    letter-spacing: -0.024em;
+    line-height: 1.12;
+  }
+
+  .post-byline {
+    margin-top: 0.5rem;
+    color: var(--ae-muted);
+    font-size: 0.9rem;
+  }
+
+  .post-hero {
+    width: 37.5rem;
+    max-width: 100%;
+    margin-inline: auto;
+    margin-bottom: 2.5rem;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .post-hero img {
+    width: 100%;
+    height: auto;
+  }
+
+  .post-body {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: var(--ae-copy);
+  }
+
+  .post-body p {
+    margin-top: 1.25rem;
+  }
+
+  .post-body-section {
+    margin-top: 3rem;
+  }
+
+  .post-body-section h2 {
+    font-size: 1.55rem;
+    font-weight: 500;
+    letter-spacing: -0.018em;
+    line-height: 1.25;
+  }
+
+  .post-body-section > p {
+    margin-top: 1.5rem;
+  }
+
+  .post-body p:first-child {
+    margin-top: 0;
+  }
+
+  :global(.post-inline-link) {
+    color: var(--ae-accent);
+    text-decoration: underline;
+  }
+
+  .post-inline-image {
+    width: 37.5rem;
+    max-width: 100%;
+    margin: 1.5rem 0 0;
+    margin-inline: auto;
+    overflow: hidden;
+    border: 1px solid var(--ae-line);
+    background: var(--ae-panel);
+  }
+
+  .post-inline-image img {
+    width: 100%;
+    height: auto;
+  }
+
+  .post-faq {
+    margin-top: 3.5rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--ae-line);
+  }
+
+  .post-faq h2 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    letter-spacing: -0.018em;
+    line-height: 1.2;
+  }
+
+  .post-faq dl {
+    margin-top: 1.5rem;
+  }
+
+  .post-faq div {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--ae-line-soft);
+  }
+
+  .post-faq div:last-child {
+    border-bottom: 0;
+  }
+
+  .post-faq dt {
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+
+  .post-faq dd {
+    margin-top: 0.4rem;
+    color: var(--ae-muted);
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+
+  .post-faq dd a {
+    color: var(--ae-accent);
+    text-decoration: underline;
+  }
+
+  .post-cta {
+    display: flex;
+    margin-top: 3.5rem;
+    border: 1px solid var(--ae-line);
+    background: var(--ae-deck);
+    flex-direction: column;
+  }
+
+  .post-cta-copy {
+    padding: 2rem 1.75rem;
+  }
+
+  .section-label {
+    color: var(--ae-accent);
+    font-family: var(--ae-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .post-cta h2 {
+    margin-top: 0.45rem;
+    font-size: 1.35rem;
+    font-weight: 500;
+    letter-spacing: -0.016em;
+  }
+
+  .post-cta p {
+    margin-top: 0.75rem;
+    color: var(--ae-muted);
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+
+  .post-cta .section-label {
+    margin-top: 0;
+  }
+
+  .post-cta strong {
+    color: var(--ae-bone);
+  }
+
+  .post-cta a {
+    color: var(--ae-accent);
+    text-decoration: underline;
+  }
+
+  .post-cta > img {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1800 / 845;
+    flex: none;
+    object-fit: cover;
+  }
+
+  .post-tags {
+    display: flex;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+  }
+
+  .post-tags li {
+    padding: 0.35rem 0.6rem;
+    border: 1px solid var(--ae-line);
+    color: var(--ae-muted);
+    font-family: var(--ae-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.04em;
+  }
+
+  .post-author {
+    display: flex;
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border: 1px solid var(--ae-line);
+    background: var(--ae-panel);
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .post-author > img {
+    width: 8rem;
+    height: 8rem;
+    border-radius: 50%;
+    aspect-ratio: 1;
+    flex: none;
+    object-fit: cover;
+  }
+
+  .post-author > div {
+    padding: 0;
+  }
+
+  .post-author h2 {
+    font-size: 1.35rem;
+    font-weight: 500;
+  }
+
+  .post-author div > p:last-child {
+    margin-top: 0.55rem;
+    color: var(--ae-muted);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .post-navigation {
+    display: flex;
+    margin-top: 1.5rem;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .post-navigation a {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--ae-line);
+    color: var(--ae-bone);
+    font-family: var(--ae-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .post-navigation a:hover {
+    border-color: var(--ae-accent);
+    color: var(--ae-accent);
+  }
+
+  @media (max-width: 47.99rem) {
+    .blog-post { padding: 2rem var(--ae-gutter) 3rem; }
+    .post-hero { margin-bottom: 1.5rem; }
+  }
+</style>

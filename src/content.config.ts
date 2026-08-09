@@ -303,6 +303,36 @@ const legal = defineCollection({
   }),
 });
 
+const blog = defineCollection({
+  loader: glob({ base: `${BASE}/blog`, pattern: '**/*.md' }),
+  schema: z.object({
+    title: prose,
+    slug,
+    date: z.coerce.string(),
+    author: prose,
+    authorBio: prose.optional(),
+    authorImage: image.optional(),
+    category: prose,
+    tags: z.array(prose).optional(),
+    metaTitle: prose,
+    metaDescription,
+    heroImage: image,
+    ctaImage: image.optional(),
+    body: z.array(z.string()).min(1),
+    faq: z.array(z.object({ q: prose, a: prose })).min(1),
+    images: z.array(z.object({
+      id: z.number(),
+      type: z.enum(['hero', 'inline']),
+      section: prose,
+      idea: prose,
+      alt: prose,
+      prompt: prose,
+      src: z.string().min(1).optional(),
+      afterHeading: prose.optional(),
+    })).min(1),
+  }),
+});
+
 export const collections = {
   services,
   areas,
@@ -311,4 +341,5 @@ export const collections = {
   faqs,
   getQuote,
   legal,
+  blog,
 };

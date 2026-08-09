@@ -17,6 +17,7 @@ interface Props {
   loading?: 'eager' | 'lazy';
   fetchpriority?: 'high' | 'low' | 'auto';
   class?: string;
+  style?: string;
 }
 
 const {
@@ -27,6 +28,7 @@ const {
   loading = 'lazy',
   fetchpriority = 'auto',
   class: className,
+  style,
 } = Astro.props;
 
 const assets = import.meta.glob<{ default: ImageMetadata }>(
@@ -62,4 +64,5 @@ const image = entry.default;
   loading={loading}
   fetchpriority={fetchpriority}
   class={className}
+  style={style}
 />

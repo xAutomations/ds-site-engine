@@ -810,6 +810,33 @@
       "prompt": "Close view along a polished dark burl wood veneer cabin table, shot at a low angle so the surface throws a long clean reflection of the cream leather seat and oval window behind it. A gloved hand at the far edge of frame lifts a folded microfiber cloth away from the finished surface. The depth of the veneer polish is the subject. Shot on a 50mm lens at f/2.0."
     },
     {
+      "id": "blog-cc-hero",
+      "out": "blog-cc-hero.webp",
+      "alt": "Water beading on a ceramic coated business jet fuselage after aircraft ceramic coating in the Northeast",
+      "usedBy": [
+        "content/blog/aircraft-ceramic-coating-northeast.md → heroImage"
+      ],
+      "prompt": "Photorealistic close up of water droplets beading tightly across a glossy white business jet fuselage panel in a hangar, soft directional light from a hangar door, shallow depth of field, high detail on the beading pattern, premium aviation photography, no text, no logos"
+    },
+    {
+      "id": "blog-cc-ramp",
+      "out": "blog-cc-ramp.webp",
+      "alt": "Business jet on a Northeast ramp showing the exhaust and weather exposure aircraft ceramic coating protects against",
+      "usedBy": [
+        "content/blog/aircraft-ceramic-coating-northeast.md → inline image 2"
+      ],
+      "prompt": "Photorealistic wide shot of a business jet parked on a wet general aviation ramp at dusk, overcast Northeast sky, faint exhaust haze in the background, reflections in standing water on the tarmac, moody realistic lighting, no text, no logos"
+    },
+    {
+      "id": "blog-cc-application",
+      "out": "blog-cc-application.webp",
+      "alt": "Certified technician applying aircraft ceramic coating to a business jet fuselage panel",
+      "usedBy": [
+        "content/blog/aircraft-ceramic-coating-northeast.md → inline image 3"
+      ],
+      "prompt": "Photorealistic close up of a gloved technician applying ceramic coating with a suede applicator block to a white aircraft fuselage panel, controlled indoor hangar lighting, visible product sheen on the treated section, professional aviation detailing, no text, no logos"
+    },
+    {
       "id": "proof-boot",
       "out": "proof-boot.webp",
       "alt": "A de-ice boot split between chalky untreated rubber and deep black refurbished rubber",
