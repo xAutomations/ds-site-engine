@@ -156,7 +156,7 @@ const readTime = Math.max(1, Math.ceil(wordCount / 200));
   .blog-post {
     max-width: 44rem;
     margin-inline: auto;
-    padding: 3rem var(--ae-gutter) 5rem;
+    padding: 3rem var(--ae-gutter-base) 5rem;
   }
 
   .post-header {
@@ -209,7 +209,7 @@ const readTime = Math.max(1, Math.ceil(wordCount / 200));
     overflow: hidden;
   }
 
-  .post-hero img {
+  :global(.post-hero img) {
     width: 100%;
     height: auto;
   }
@@ -258,7 +258,7 @@ const readTime = Math.max(1, Math.ceil(wordCount / 200));
     background: var(--ae-panel);
   }
 
-  .post-inline-image img {
+  :global(.post-inline-image img) {
     width: 100%;
     height: auto;
   }
@@ -439,7 +439,7 @@ const readTime = Math.max(1, Math.ceil(wordCount / 200));
   }
 
   @media (max-width: 47.99rem) {
-    .blog-post { padding: 2rem var(--ae-gutter) 3rem; }
+    .blog-post { padding: 2rem var(--ae-gutter-base) 3rem; }
     .post-hero { margin-bottom: 1.5rem; }
   }
 </style>
