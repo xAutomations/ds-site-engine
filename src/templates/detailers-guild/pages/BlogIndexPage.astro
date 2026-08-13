@@ -1,0 +1,59 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import GuildIcon from '../components/GuildIcon.astro';
+import type { GuildBlogPost, GuildHeroData, GuildShellData } from '../types';
+
+interface Props {
+  shell: GuildShellData;
+  hero: GuildHeroData;
+  posts: GuildBlogPost[];
+}
+const { shell, hero, posts } = Astro.props;
+const formatDate = (date: string) =>
+  new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<SiteLayout {...shell}>
+  <PageHero {hero} />
+  <section class="dg-section">
+    <div class="dg-container dg-section-inner">
+      {posts.length === 0 && <p class="empty dg-prose">No posts yet.</p>}
+      <div class="grid">
+        {posts.map((post) => (
+          <a class="card dg-reveal" href={`/post/${post.slug}`}>
+            <figure class="dg-media dg-grayscale">
+              <img src={post.heroImage.src} alt={post.heroImage.alt} loading="lazy" />
+            </figure>
+            <div class="body">
+              <div class="meta"><time datetime={post.date}>{formatDate(post.date)}</time><span class="category">{post.category}</span></div>
+              <h2>{post.title}</h2>
+              <p>{post.metaDescription}</p>
+              <span class="more">Read more<GuildIcon name="arrow" size={13} /></span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</SiteLayout>
+
+<style>
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  .card { display: flex; flex-direction: column; border: 1px solid var(--dg-rule); background: var(--dg-paper); color: inherit; text-decoration: none; }
+  .card:hover { border-color: var(--dg-ink); }
+  .card .dg-media { min-height: 0; border: 0; border-bottom: 1px solid var(--dg-rule); aspect-ratio: 16 / 9; }
+  .card:hover .dg-media :global(img) { transform: scale(1.04); }
+  .dg-media :global(img) { transition: transform .45s ease; }
+  .body { display: flex; flex: 1; flex-direction: column; gap: .7rem; padding: 1.5rem; }
+  .meta { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; }
+  time { color: var(--dg-faint); font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+  .category { padding: .2rem .55rem; background: var(--dg-accent-pale); color: var(--dg-accent-dark); font-size: .66rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  h2 { font-size: 1.25rem; line-height: 1.2; }
+  .body > p { color: var(--dg-muted); font-size: .9rem; }
+  .more { display: inline-flex; align-items: center; gap: .5rem; margin-top: auto; padding-top: .5rem; font-size: .8rem; font-weight: 800; letter-spacing: .05em; text-transform: uppercase; }
+  .card:hover .more { color: var(--dg-accent-dark); }
+  .empty { text-align: center; }
+  @media (max-width: 64rem) { .grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 40rem) { .grid { grid-template-columns: 1fr; } }
+</style>

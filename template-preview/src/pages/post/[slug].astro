@@ -1,0 +1,11 @@
+---
+import BlogPostPage from '../../../../src/templates/detailers-guild/pages/BlogPostPage.astro';
+import { blogPosts, blogShell } from '../../fixtures/detailers-guild';
+
+export function getStaticPaths() {
+  return blogPosts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+const { post } = Astro.props;
+---
+
+<BlogPostPage shell={blogShell} {post} />

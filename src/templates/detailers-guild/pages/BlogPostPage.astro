@@ -1,0 +1,143 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import GuildIcon from '../components/GuildIcon.astro';
+import FaqSection from '../components/FaqSection.astro';
+import ConversionBanner from '../components/ConversionBanner.astro';
+import type { GuildBlogPost, GuildShellData } from '../types';
+
+interface Props {
+  shell: GuildShellData;
+  post: GuildBlogPost;
+}
+const { shell, post } = Astro.props;
+const { site } = shell;
+
+const authorBio = post.authorBio ?? site.brand.blurb;
+const inlineImages = post.images.filter((image) => image.type === 'inline' && image.src && image.afterHeading);
+const escapeHtml = (text: string) => text
+  .replaceAll('&', '&amp;')
+  .replaceAll('<', '&lt;')
+  .replaceAll('>', '&gt;')
+  .replaceAll('"', '&quot;')
+  .replaceAll("'", '&#039;');
+const internalLinks = (text: string) => escapeHtml(text).replace(
+  /\[([^\]]+)\]\((\/[a-z0-9/-]+)\)/g,
+  '<a class="post-inline-link" href="$2">$1</a>',
+);
+const plainText = (text: string) => text.replace(/\[([^\]]+)\]\(\/[a-z0-9/-]+\)/g, '$1');
+
+const bodyIntro: string[] = [];
+const bodySections: Array<{ heading: string; paragraphs: string[]; image?: (typeof inlineImages)[number] }> = [];
+for (const block of post.body) {
+  const heading = block.match(/^## (.+)/)?.[1];
+  if (heading) {
+    bodySections.push({ heading, paragraphs: [], image: inlineImages.find((image) => image.afterHeading === heading) });
+  } else if (bodySections.length) {
+    bodySections.at(-1)!.paragraphs.push(block);
+  } else {
+    bodyIntro.push(block);
+  }
+}
+const wordCount = [post.title, ...post.body, ...post.faq.flatMap((item) => [item.q, item.a])]
+  .join(' ')
+  .trim()
+  .split(/\s+/).length;
+const readTime = Math.max(1, Math.ceil(wordCount / 200));
+const faqItems = post.faq.map((item) => ({ question: item.q, answer: plainText(item.a) }));
+---
+
+<SiteLayout
+  {...shell}
+  title={post.metaTitle}
+  description={post.metaDescription}
+  path={`/post/${post.slug}`}
+  ogImage={post.heroImage.src}
+  ogType="article"
+>
+  <article class="post">
+    <header class="head dg-container">
+      <div class="meta dg-reveal">
+        <time datetime={post.date}>{new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+        <span aria-hidden="true">■</span>
+        <span>{readTime} min read</span>
+        <span class="category">{post.category}</span>
+      </div>
+      <h1 class="dg-heading dg-reveal">{post.title}</h1>
+      <p class="byline dg-reveal">By {post.author}</p>
+    </header>
+
+    <figure class="hero dg-media dg-grayscale dg-reveal">
+      <img src={post.heroImage.src} alt={post.heroImage.alt} loading="eager" fetchpriority="high" />
+    </figure>
+
+    <div class="body dg-prose">
+      {bodyIntro.map((paragraph) => <p><Fragment set:html={internalLinks(paragraph)} /></p>)}
+      {bodySections.map((section) => (
+        <section class="section">
+          <h2>{section.heading}</h2>
+          {section.image?.src && (
+            <figure class="inline dg-media dg-grayscale"><img src={section.image.src} alt={section.image.alt} loading="lazy" /></figure>
+          )}
+          {section.paragraphs.map((paragraph) => <p><Fragment set:html={internalLinks(paragraph)} /></p>)}
+        </section>
+      ))}
+    </div>
+
+    <div class="post-faq">
+      <FaqSection items={faqItems} />
+    </div>
+
+    <ConversionBanner content={{
+      eyebrow: post.ctaEyebrow ?? 'We come to you',
+      heading: post.ctaHeadline ?? 'Ready to Get Your Vehicle Detailed?',
+      body: post.ctaBody ?? site.brand.blurb,
+      action: { label: 'Book today', href: '/get-quote' },
+      image: post.ctaImage ?? post.heroImage,
+    }} />
+
+    <footer class="foot dg-container">
+      {post.tags && post.tags.length > 0 && (
+        <ul class="tags" aria-label="Article topics">{post.tags.map((tag) => <li>{tag}</li>)}</ul>
+      )}
+      <aside class="author" aria-label="About the author">
+        {(post.authorImage ?? post.heroImage) && <img class="dg-grayscale" src={(post.authorImage ?? post.heroImage).src} alt={(post.authorImage ?? post.heroImage).alt} loading="lazy" />}
+        <div>
+          <strong>{post.author}</strong>
+          <p>{authorBio}</p>
+        </div>
+      </aside>
+      <nav class="post-nav" aria-label="Article navigation">
+        <a class="dg-btn" href="#main">Back to top</a>
+        <a class="dg-btn" href="/blog">Back to blog<GuildIcon name="arrow" size={13} /></a>
+      </nav>
+    </footer>
+  </article>
+</SiteLayout>
+
+<style>
+  .head { max-width: 52rem; padding-top: clamp(3rem, 6vw, 4.5rem); }
+  .meta { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; color: var(--dg-faint); font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+  .meta > span[aria-hidden] { color: var(--dg-accent); font-size: .5rem; }
+  .category { padding: .2rem .55rem; background: var(--dg-accent-pale); color: var(--dg-accent-dark); font-size: .66rem; font-weight: 800; }
+  h1 { margin-top: 1.1rem; }
+  .byline { margin-top: .8rem; color: var(--dg-muted); }
+  .hero { width: min(100%, 52rem); margin: 2.25rem auto 0; padding-inline: 0; aspect-ratio: 16 / 9; }
+  .body { width: min(100%, 44rem); margin: 2.75rem auto 0; padding-inline: var(--dg-gutter); max-width: none; font-size: 1.05rem; }
+  .body > p + p, .section p { margin-top: 1.25rem; }
+  .section { margin-top: 3rem; }
+  .section h2 { margin-bottom: 1.25rem; font-size: 1.55rem; letter-spacing: -0.015em; }
+  .inline { margin-bottom: 1.5rem; aspect-ratio: 16 / 9; min-height: 0; }
+  .body :global(.post-inline-link) { color: var(--dg-ink); font-weight: 800; text-decoration: underline; text-underline-offset: 3px; }
+  .body :global(.post-inline-link:hover) { color: var(--dg-accent-dark); }
+  .post-faq { margin-top: 3.5rem; }
+  .post-faq :global(section) { border-bottom: 0; }
+  .post-faq :global(.dg-section-inner) { max-width: min(100%, 48rem); padding-block: 0 4.5rem; }
+  .foot { max-width: 48rem; padding-block: 3rem 4.5rem; }
+  .tags { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0; padding: 0; list-style: none; }
+  .tags li { padding: .3rem .6rem; border: 1px solid var(--dg-rule); color: var(--dg-muted); font-size: .7rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+  .author { display: flex; align-items: center; gap: 1.5rem; margin-top: 2rem; padding: 1.5rem; border: 1px solid var(--dg-rule); background: var(--dg-paper); }
+  .author img { width: 5rem; height: 5rem; flex: none; object-fit: cover; }
+  .author strong { font-size: 1.15rem; }
+  .author p { margin-top: .45rem; color: var(--dg-muted); font-size: .9rem; }
+  .post-nav { display: flex; justify-content: space-between; gap: 1rem; margin-top: 1.5rem; }
+</style>

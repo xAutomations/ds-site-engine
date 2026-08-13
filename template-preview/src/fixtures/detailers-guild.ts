@@ -4,6 +4,7 @@ import type {
   GuildIncludedData,
   GuildProcessData,
   GuildAreaSectionData,
+  GuildBlogPost,
   GuildContentSection,
   GuildCtaData,
   GuildHeroData,
@@ -473,3 +474,89 @@ export const quoteCta: GuildCtaData = {
   action: { label: 'Book today', href: '#' },
   image: { src: '/assets/ripples.png', alt: '' },
 };
+
+export const blogShell: GuildShellData = {
+  ...homeShell,
+  title: 'Blog | Detailer Guild',
+  description: 'Detailing insights, tips, and service guides from San Mob Detailing.',
+  path: '/blog',
+};
+
+export const blogHero: GuildHeroData = {
+  eyebrow: 'The Blog',
+  heading: 'Blogs By San Mob Detailing',
+  primaryAction: { label: 'Get a quote', href: '/get-quote' },
+  secondaryAction: { label: '(888) 900-5941', href: 'tel:+18889005941' },
+  compact: true,
+};
+
+export const blogPosts: GuildBlogPost[] = [
+  {
+    title: 'RV Detailing in Great Falls, VA: A Complete Guide',
+    slug: 'rv-detailing-great-falls-va',
+    date: '2026-08-12',
+    author: 'Sanjar Durdygulyyev',
+    category: 'RV Detailing',
+    tags: ['RV Detailing', 'Great Falls', 'Mobile Detailing'],
+    metaTitle: 'RV Detailing in Great Falls, VA | San Mob Detailing',
+    metaDescription: 'RV detailing in Great Falls, VA by San Mob Detailing. Mobile exterior and interior cleaning for motorhomes and trailers. Call (888) 900-5941.',
+    heroImage: { src: '/assets/funky-lines.png', alt: 'Preview placeholder for RV detailing in Great Falls' },
+    body: [
+      'Your RV spends most of its life outside. Sun, tree sap, road film, and storage dust take a toll on the exterior while every trip adds crumbs, stains, and odors inside. A seasonal deep clean keeps the rig road-ready and protects its resale value.',
+      '## Why RVs Need Specialized Detailing',
+      'An RV is not a big car. Fiberglass gel coat, rubber roofing, awnings, and slide-outs all need different products and techniques. Using automotive products on the wrong surface can cause permanent damage.',
+      'That is why our RV service is priced by the foot and always starts with an [in-person inspection](/get-quote) before we quote.',
+      '## What Our RV Detail Includes',
+      'Exterior hand wash, oxidation removal, roof cleaning, awning cleaning, and UV protectant on all exterior surfaces. Inside, we deep clean the cab, living area, kitchen surfaces, and bathroom.',
+      'For long-term protection, consider our [ceramic coating](/ceramic-coating) after the detail.',
+    ],
+    faq: [
+      { q: 'How long does an RV detail take?', a: 'Most RV details take a full day depending on length and condition. Large Class A motorhomes can take longer.' },
+      { q: 'Do you come to storage lots?', a: 'Yes. As long as the lot allows detailing on site and there is space to work, we come to you.' },
+      { q: 'How is RV detailing priced?', a: 'By the foot, after an in-person inspection. The quote we give is the price you pay.' },
+    ],
+    images: [
+      { id: 1, type: 'hero', section: 'Hero', idea: 'RV being washed at a storage lot', alt: 'RV detailing in Great Falls, VA', prompt: '', src: '/assets/funky-lines.png' },
+      { id: 2, type: 'inline', section: 'What Our RV Detail Includes', idea: 'Detailer cleaning an RV roof', alt: 'RV roof cleaning', prompt: '', src: '/assets/ripples.png', afterHeading: 'What Our RV Detail Includes' },
+    ],
+  },
+  {
+    title: 'Interior Detailing for Family Drivers in Vienna, VA',
+    slug: 'interior-detailing-vienna-va',
+    date: '2026-07-23',
+    author: 'Sanjar Durdygulyyev',
+    category: 'Interior Detailing',
+    metaTitle: 'Interior Detailing in Vienna, VA | San Mob Detailing',
+    metaDescription: 'Interior detailing in Vienna, VA by San Mob Detailing. Mobile deep cleans for family cars, stains, pet hair, and odors. Call (888) 900-5941.',
+    heroImage: { src: '/assets/ripples.png', alt: 'Preview placeholder for interior detailing in Vienna' },
+    body: ['Family cars work hard. Here is how a mobile interior detail resets yours.'],
+    faq: [{ q: 'Is pet hair removal included?', a: 'Yes, at no extra charge.' }],
+    images: [{ id: 1, type: 'hero', section: 'Hero', idea: '', alt: '', prompt: '', src: '/assets/ripples.png' }],
+  },
+  {
+    title: 'Paint Correction for Luxury Cars in McLean, VA: Is It Worth It?',
+    slug: 'paint-correction-mclean-va',
+    date: '2026-07-03',
+    author: 'Sanjar Durdygulyyev',
+    category: 'Paint Correction',
+    metaTitle: 'Paint Correction in McLean, VA | San Mob Detailing',
+    metaDescription: 'Paint correction in McLean, VA by San Mob Detailing. Mobile swirl and scratch removal for luxury cars. Restore your paint at home. Call (888) 900-5941.',
+    heroImage: { src: '/assets/terrazzo-accent.png', alt: 'Preview placeholder for paint correction in McLean' },
+    body: ['Swirl marks and fine scratches dull even the best paint. Correction removes them for real.'],
+    faq: [{ q: 'How long does paint correction last?', a: 'With proper washing habits, results last for years.' }],
+    images: [{ id: 1, type: 'hero', section: 'Hero', idea: '', alt: '', prompt: '', src: '/assets/terrazzo-accent.png' }],
+  },
+  {
+    title: 'What Does a Full Auto Detail Include in Arlington, VA?',
+    slug: 'full-auto-detail-arlington-va',
+    date: '2026-06-18',
+    author: 'Sanjar Durdygulyyev',
+    category: 'Full Auto Detailing',
+    metaTitle: 'Full Auto Detail in Arlington, VA | San Mob Detailing',
+    metaDescription: 'What does a full auto detail include in Arlington, VA? San Mob Detailing breaks down every step, cost, and timing. Book your mobile detail today.',
+    heroImage: { src: '/assets/waves-accent.png', alt: 'Preview placeholder for a full detail in Arlington' },
+    body: ['Every surface, inside and out. Here is the complete breakdown of a full detail.'],
+    faq: [{ q: 'How long does it take?', a: 'Two to four hours for most vehicles.' }],
+    images: [{ id: 1, type: 'hero', section: 'Hero', idea: '', alt: '', prompt: '', src: '/assets/waves-accent.png' }],
+  },
+];

@@ -139,6 +139,37 @@ export interface GuildServiceCard extends GuildNavItem {
   image: GuildImage;
 }
 
+/** Mirrors the `blog` content-collection entry data produced by the blog-writer skill. */
+export interface GuildBlogPost {
+  title: string;
+  slug: string;
+  date: string;
+  author: string;
+  authorBio?: string;
+  authorImage?: GuildImage;
+  category: string;
+  tags?: string[];
+  metaTitle: string;
+  metaDescription: string;
+  heroImage: GuildImage;
+  ctaImage?: GuildImage;
+  ctaEyebrow?: string;
+  ctaHeadline?: string;
+  ctaBody?: string;
+  body: string[];
+  faq: Array<{ q: string; a: string }>;
+  images: Array<{
+    id: number;
+    type: 'hero' | 'inline';
+    section: string;
+    idea: string;
+    alt: string;
+    prompt: string;
+    src?: string;
+    afterHeading?: string;
+  }>;
+}
+
 export interface GuildQuoteData {
   eyebrow?: string;
   heading: string;
