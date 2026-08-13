@@ -27,7 +27,7 @@ jobs:
   build:
     runs-on: blacksmith-4vcpu-ubuntu-2404
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Validate client slug
         run: |
@@ -35,7 +35,7 @@ jobs:
 
       - uses: useblacksmith/setup-docker-builder@v1
 
-      - uses: docker/login-action@v3
+      - uses: docker/login-action@v4
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
