@@ -36,7 +36,7 @@ const active = (href: string) => activePath === href;
       <a class:list={{ active: active('/faqs') }} href="/faqs">FAQs</a>
       <a class:list={{ active: active('/blog') }} href="/blog">Blog</a>
     </nav>
-    <div class="actions"><a class="dg-btn call" href={`tel:${contact.phone}`}>Call {contact.phoneDisplay}</a><a class="dg-btn dg-btn--primary" href="/get-quote">Contact us</a></div>
+    <div class="actions"><a class="dg-btn call" href={`tel:${contact.phone}`}>Call {contact.phoneDisplay}</a><a class="dg-btn dg-btn--primary" href="/get-quote">Book today<GuildIcon name="arrow" size={13} /></a></div>
   </div>
 </header>
 

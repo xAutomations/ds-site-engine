@@ -1,4 +1,5 @@
 import type {
+  GuildFaqGroup,
   GuildFaqItem,
   GuildIncludedData,
   GuildProcessData,
@@ -359,4 +360,84 @@ export const autoDetailCta: GuildCtaData = {
   body: 'Your car is overdue. You know it, and so does everyone who rides in it. San Mob Detailing comes directly to you in Alexandria, VA and across the DMV. No drop-off, no waiting, no hassle.',
   action: { label: 'Book today', href: '#' },
   image: { src: '/assets/funky-lines.png', alt: '' },
+};
+
+export const faqShell: GuildShellData = {
+  ...homeShell,
+  title: 'Frequently Asked Questions | Detailer Guild',
+  description: 'Answers about booking, services, pricing, and aftercare for mobile detailing across the DMV.',
+  path: '/faqs',
+};
+
+export const faqHero: GuildHeroData = {
+  eyebrow: 'Help Center',
+  heading: 'Frequently Asked Questions',
+  primaryAction: { label: 'Get a quote', href: '#book' },
+  secondaryAction: { label: '(888) 900-5941', href: 'tel:+18889005941' },
+  compact: true,
+};
+
+export const faqIntro: GuildContentSection = {
+  body: [],
+  bodyHtml: [
+    'Got questions about San Mob Detailing? We have answers. If you do not find what you are looking for below, call us at <a href="tel:+18889005941">(888) 900-5941</a> or <a href="/get-quote">request a quote</a>.',
+  ],
+  lead: true,
+  seamless: true,
+};
+
+export const faqGroups: GuildFaqGroup[] = [
+  {
+    heading: 'Booking & Policies',
+    items: [
+      { question: 'How do I book a detailing appointment?', answer: 'You can book online through our website, call us at (888) 900-5941, or request a quote. We will confirm the details and schedule a time that works for you. Our availability is 10:00 AM - 10:00 PM.' },
+      { question: 'What areas do you serve?', answer: 'San Mob Detailing is based in Alexandria, VA and serves the entire DMV region including Great Falls, McLean, Vienna, Arlington, Fort Hunt, Clifton, and Washington, DC. We travel up to 40 miles from Alexandria at no additional charge. Service beyond 40 miles is available with an additional travel fee.' },
+      { question: 'Do I need to be home during the appointment?', answer: 'Not necessarily. As long as we have access to your vehicle and enough space to work around it, you can go about your day.' },
+      { question: 'What happens if it rains on my appointment day?', answer: 'Light rain does not stop us for most services. Heavy rain or severe weather may require rescheduling. If we need to reschedule, we will reach out in advance.' },
+      { question: 'Do you charge a cancellation fee?', answer: 'We ask for reasonable notice if you need to cancel or reschedule. Last-minute cancellations may be subject to a fee. Call us at (888) 900-5941 if you need to make changes.' },
+    ],
+  },
+  {
+    heading: 'Services',
+    items: [
+      { question: 'What is the difference between a full detail and an interior detail?', answer: 'A full auto detail covers both the interior and exterior of your vehicle. An interior detail focuses exclusively on the cabin. Choose interior only if your exterior is in good shape and the cabin needs the attention.' },
+      { question: 'What is a maintenance wash and who can book it?', answer: 'A maintenance wash is a lighter service designed to keep your vehicle looking clean between full details. It is exclusively available to existing San Mob Detailing customers who have already received a full detail from us.' },
+      { question: 'Do you do ceramic coating?', answer: 'Yes. Our ceramic coating service provides two to three years of hydrophobic paint protection. We also offer a hybrid ceramic option that provides over twelve months of protection. We recommend a paint correction before coating.' },
+      { question: 'Do you detail RVs, boats, and aircraft?', answer: 'Yes. We detail RVs, boats, and aircraft of all sizes. These services are priced by the foot and require an in-person inspection before quoting.' },
+      { question: 'Is pet hair removal included?', answer: 'Yes. Pet hair removal is included at no additional charge with every detailing service that involves interior work.' },
+    ],
+  },
+  {
+    heading: 'Pricing',
+    items: [
+      { question: 'How much does a detail cost?', answer: 'Pricing depends on the vehicle type, size, condition, and the service selected. Call us at (888) 900-5941 or request a free quote.' },
+      { question: 'Do you charge a travel fee?', answer: 'Service within 40 miles of Alexandria, VA has no additional travel charge. Beyond 40 miles, an additional travel fee applies.' },
+      { question: 'When is payment due?', answer: 'Payment is due upon completion of the service after you are satisfied with the results.' },
+    ],
+  },
+  {
+    heading: 'Maintenance & Aftercare',
+    items: [
+      { question: 'How often should I get my car detailed?', answer: 'For most daily drivers in the DMV, a full detail two to three times per year is a good schedule. Between full details, scheduling maintenance washes every two to four weeks keeps your vehicle looking sharp.' },
+      { question: 'How do I maintain my ceramic coating?', answer: 'Regular washing is the most important thing. Our maintenance wash program is designed specifically for maintaining coated vehicles. Avoid automated car washes with brushes.' },
+      { question: 'What should I avoid after a paint correction?', answer: 'Avoid automated car washes with brushes. Stick to hand washing or our maintenance wash program. If you are considering ceramic coating to protect your corrected paint long-term, schedule it soon after the correction.' },
+    ],
+  },
+];
+
+export const faqOutro: GuildContentSection = {
+  heading: 'Still Have Questions?',
+  small: true,
+  body: [
+    'Call us at (888) 900-5941 or send us a message. We respond quickly. Happy with your last detail? Leave us a review on Google. It helps more people in the DMV find professional mobile detailing.',
+  ],
+  action: { label: 'Get a quote', href: '#book' },
+  secondaryAction: { label: 'Call (888) 900-5941', href: 'tel:+18889005941' },
+};
+
+export const faqCta: GuildCtaData = {
+  heading: 'Ready to Experience Auto Care Excellence?',
+  body: 'Not sure if your vehicle needs a heavy paint correction or just a standard wash? We are here to help you make the right call.',
+  action: { label: 'Book today', href: '#' },
+  image: { src: '/assets/waves-accent.png', alt: '' },
 };

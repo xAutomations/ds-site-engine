@@ -87,6 +87,10 @@ export interface GuildContentSection {
   /** Renders the heading a step smaller than the default dg-heading. */
   small?: boolean;
   body: string[];
+  /** Paragraphs rendered as trusted HTML (inline links, bold, etc). Appended after `body`. */
+  bodyHtml?: string[];
+  /** Renders body copy larger than default prose. */
+  lead?: boolean;
   image?: GuildImage;
   action?: GuildLink;
   secondaryAction?: GuildLink;
@@ -111,6 +115,11 @@ export interface GuildProcessData {
 export interface GuildFaqItem {
   question: string;
   answer: string;
+}
+
+export interface GuildFaqGroup {
+  heading: string;
+  items: GuildFaqItem[];
 }
 
 export interface GuildIncludedPanel {

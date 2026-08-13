@@ -11,7 +11,7 @@ const { content } = Astro.props;
     <div class="copy dg-reveal">
       {content.eyebrow && <div class="dg-kicker">{content.eyebrow}</div>}
       {content.heading && <h2 class:list={['dg-heading', { large: content.large, small: content.small }]}>{content.heading}</h2>}
-      <div class="dg-prose">{content.body.map((paragraph) => <p>{paragraph}</p>)}</div>
+      <div class:list={['dg-prose', { lead: content.lead }]}>{content.body.map((paragraph) => <p>{paragraph}</p>)}{content.bodyHtml?.map((paragraph) => <p set:html={paragraph} />)}</div>
       {content.stats && <div class="stats">{content.stats.map((stat) => <div><strong>{stat.value}</strong><span>{stat.label}</span></div>)}</div>}
       {(content.action || content.secondaryAction) && <div class="actions">{content.action && <a class="dg-btn dg-btn--primary" href={content.action.href}>{content.action.label}<GuildIcon name="arrow" size={14} /></a>}{content.secondaryAction && <a class="dg-btn" href={content.secondaryAction.href}>{content.secondaryAction.label}</a>}</div>}
     </div>
@@ -32,6 +32,9 @@ const { content } = Astro.props;
   .copy h2.small { font-size: clamp(1.7rem, 3.2vw, 2.4rem); }
   .solo h2 { max-width: none; }
   .dg-prose { margin-top: 1.25rem; }
+  .dg-prose.lead { font-size: 1.2rem; line-height: 1.6; }
+  .dg-prose :global(a) { color: var(--dg-ink); font-weight: 800; text-decoration: underline; text-underline-offset: 3px; }
+  .dg-prose :global(a:hover) { color: var(--dg-accent-dark); }
   .copy > .dg-prose:first-child { margin-top: 0; }
   .actions { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.7rem; }
   .solo .actions { justify-content: center; }
