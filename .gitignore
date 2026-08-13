@@ -7,6 +7,9 @@ dist/
 .env.production
 .stress/
 .import/
+template-preview/.astro/
+template-preview/dist/
+template-preview/node_modules/
 design-reference/
 blog-direction/
 .claude/settings.local.json

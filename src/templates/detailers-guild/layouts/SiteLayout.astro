@@ -1,0 +1,61 @@
+---
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import type { GuildShellData } from '../types';
+import '../styles/global.css';
+
+interface Props extends GuildShellData {}
+
+const {
+  title,
+  description,
+  path,
+  ogImage,
+  ogType = 'website',
+  noindex = false,
+  jsonLd = [],
+  site,
+  services,
+  areas,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" style={`--dg-client-accent:${site.accentColor}`}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    {jsonLd.length > 0 && <script is:inline type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', '@graph': jsonLd })} />}
+    {site.favicon && <link rel="icon" href={site.favicon} />}
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/archivo-latin.woff2" crossorigin />
+  </head>
+  <body>
+    <a class="dg-skip" href="#main">Skip to content</a>
+    <SiteHeader {site} {services} {areas} activePath={path} />
+    <main id="main"><slot /></main>
+    <SiteFooter {site} {services} {areas} />
+    <script is:inline>
+      const reveal = document.querySelectorAll('.dg-reveal');
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        reveal.forEach((el) => el.classList.add('is-visible'));
+      } else {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          });
+        }, { threshold: 0.12 });
+        reveal.forEach((el) => observer.observe(el));
+      }
+    </script>
+  </body>
+</html>

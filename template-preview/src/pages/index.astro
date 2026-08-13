@@ -1,0 +1,26 @@
+---
+import HomePage from '../../../src/templates/detailers-guild/pages/HomePage.astro';
+import {
+  homeAbout,
+  homeAreaSection,
+  homeCta,
+  homeHero,
+  homeIntroduction,
+  homePromise,
+  homeShell,
+  homeSocial,
+  services,
+} from '../fixtures/detailers-guild';
+---
+
+<HomePage
+  shell={homeShell}
+  hero={homeHero}
+  introduction={homeIntroduction}
+  promise={homePromise}
+  {services}
+  about={homeAbout}
+  social={homeSocial}
+  areaSection={homeAreaSection}
+  cta={homeCta}
+/>

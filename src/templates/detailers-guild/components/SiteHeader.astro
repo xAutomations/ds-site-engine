@@ -1,0 +1,102 @@
+---
+import GuildIcon from './GuildIcon.astro';
+import type { GuildNavItem, GuildSiteData } from '../types';
+
+interface Props {
+  services: GuildNavItem[];
+  areas: GuildNavItem[];
+  site: GuildSiteData;
+  activePath?: string;
+}
+
+const { site, services, areas, activePath = '' } = Astro.props;
+const { brand, contact, serviceAreaLabel } = site;
+const active = (href: string) => activePath === href;
+---
+
+<div class="topbar">
+  <div><i aria-hidden="true"></i><span>Serving {serviceAreaLabel} — we come to you</span></div>
+  <div><a href="/get-quote">Book today</a><a href={`tel:${contact.phone}`}>{contact.phoneDisplay}</a></div>
+</div>
+<header class="header" data-header>
+  <div class="header-inner dg-container">
+    <a class="brand" href="/" aria-label={`${brand.name} home`}><i aria-hidden="true"></i><span>{brand.name}</span></a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="guild-nav" data-menu-toggle>Menu</button>
+    <nav id="guild-nav" class="nav" aria-label="Main navigation" data-menu>
+      <a class:list={{ active: active('/') }} href="/">Home</a>
+      <details>
+        <summary>Services <GuildIcon name="chevron" size={10} /></summary>
+        <div class="mega mega--services">{services.map((item) => <a href={`/${item.href.replace(/^\//, '')}`}>{item.label}</a>)}</div>
+      </details>
+      <details>
+        <summary>Areas we serve <GuildIcon name="chevron" size={10} /></summary>
+        <div class="mega">{areas.map((item) => <a href={`/${item.href.replace(/^\//, '')}`}>{item.label}</a>)}</div>
+      </details>
+      <a class:list={{ active: active('/about') }} href="/about">About</a>
+      <a class:list={{ active: active('/faqs') }} href="/faqs">FAQs</a>
+      <a class:list={{ active: active('/blog') }} href="/blog">Blog</a>
+    </nav>
+    <div class="actions"><a class="dg-btn call" href={`tel:${contact.phone}`}>Call {contact.phoneDisplay}</a><a class="dg-btn dg-btn--primary" href="/get-quote">Contact us</a></div>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector('[data-header]');
+  const toggle = document.querySelector('[data-menu-toggle]');
+  const menu = document.querySelector('[data-menu]');
+  const updateHeader = () => header?.classList.toggle('is-compact', window.scrollY > 60);
+  window.addEventListener('scroll', updateHeader, { passive: true });
+  updateHeader();
+  document.addEventListener('click', (event) => {
+    document.querySelectorAll('[data-menu] details[open]').forEach((details) => {
+      if (event.target instanceof Node && !details.contains(event.target)) details.removeAttribute('open');
+    });
+  });
+  toggle?.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') !== 'true';
+    toggle.setAttribute('aria-expanded', String(open));
+    menu?.classList.toggle('is-open', open);
+    document.body.classList.toggle('dg-menu-open', open);
+  });
+</script>
+
+<style>
+  .topbar { display: flex; min-height: 2.25rem; align-items: center; justify-content: space-between; gap: 1rem; padding: .45rem var(--dg-gutter); background: var(--dg-ink); color: white; font-size: .75rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+  .topbar > div { display: flex; align-items: center; gap: 1.5rem; }
+  .topbar i { width: .5rem; height: .5rem; background: var(--dg-accent); }
+  .topbar a { text-decoration: none; }
+  .header { position: sticky; z-index: 100; top: 0; border-bottom: 2px solid var(--dg-rule); background: color-mix(in srgb, var(--dg-bg) 96%, transparent); backdrop-filter: blur(10px); }
+  .header-inner { display: flex; min-height: 5.4rem; align-items: center; gap: 1.4rem; transition: min-height .25s ease; }
+  .is-compact .header-inner { min-height: 4.25rem; }
+  .brand { display: flex; align-items: center; gap: .75rem; color: var(--dg-ink); font-size: clamp(1.15rem, 2vw, 1.6rem); font-weight: 800; line-height: 1; text-decoration: none; text-transform: uppercase; }
+  .brand i { width: 2rem; height: 2rem; flex: none; background: var(--dg-accent); transition: width .25s ease, height .25s ease; }
+  .is-compact .brand i { width: 1.4rem; height: 1.4rem; }
+  .nav { display: flex; align-items: center; gap: 1.45rem; margin-left: auto; font-size: .875rem; font-weight: 700; white-space: nowrap; }
+  .nav > a, summary { padding-block: .8rem; text-decoration: none; cursor: pointer; list-style: none; }
+  .nav > a:hover, .nav > a.active, summary:hover { color: var(--dg-accent-dark); }
+  details { position: relative; }
+  summary::-webkit-details-marker { display: none; }
+  .mega { position: absolute; z-index: 5; top: calc(100% - .2rem); left: -1rem; width: 16rem; padding: .5rem; border: 2px solid var(--dg-ink); background: var(--dg-bg); box-shadow: 0 .75rem 2rem color-mix(in srgb, var(--dg-ink) 20%, transparent); }
+  .mega--services { width: 31rem; grid-template-columns: 1fr 1fr; }
+  details[open] .mega { display: grid; }
+  .mega a { padding: .6rem .75rem; font-weight: 500; text-decoration: none; white-space: normal; }
+  .mega a:hover { background: var(--dg-accent-pale); color: var(--dg-accent-dark); }
+  .actions { display: flex; gap: .6rem; }
+  .actions .dg-btn { padding-inline: .8rem; font-size: .75rem; white-space: nowrap; }
+  .menu-toggle { display: none; margin-left: auto; padding: .65rem .8rem; border: 1px solid var(--dg-ink); background: transparent; font-weight: 800; text-transform: uppercase; }
+  @media (max-width: 70rem) {
+    .call { display: none; }
+    .nav { gap: 1rem; }
+  }
+  @media (max-width: 56rem) {
+    .topbar > div:first-child { display: none; }
+    .topbar { justify-content: flex-end; }
+    .menu-toggle { display: block; }
+    .nav { position: fixed; inset: calc(2.25rem + 4.25rem) 0 auto; display: none; max-height: calc(100vh - 6.5rem); overflow: auto; padding: 1rem var(--dg-gutter) 2rem; border-bottom: 2px solid var(--dg-ink); background: var(--dg-bg); }
+    .nav.is-open { display: block; }
+    .nav > a, .nav details { display: block; border-bottom: 1px solid var(--dg-rule); }
+    .mega, .mega--services { position: static; width: 100%; border-width: 1px 0 0; box-shadow: none; grid-template-columns: 1fr; }
+    .actions { display: none; }
+  }
+  @media (max-width: 34rem) { .topbar { display: none; } .nav { inset-block-start: 4.25rem; } }
+</style>

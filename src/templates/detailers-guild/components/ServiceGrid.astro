@@ -1,0 +1,34 @@
+---
+import GuildIcon from './GuildIcon.astro';
+import type { GuildServiceCard } from '../types';
+interface Props { heading: string; services: GuildServiceCard[]; intro?: string[]; sectionIndex?: string; }
+const { heading, services, intro = [], sectionIndex } = Astro.props;
+const count = String(services.length).padStart(2, '0');
+---
+
+<section class="services dg-section dg-accent-field">
+  <div class="dg-container dg-section-inner">
+    <header class="head dg-reveal"><h2 class="dg-heading">{heading}</h2>{sectionIndex && <strong>{sectionIndex} / {count} services</strong>}</header>
+    {intro.length > 0 && <div class="intro dg-reveal">{intro.map((p) => <p>{p}</p>)}</div>}
+    <div class="grid dg-reveal">{services.map((service, index) => <a class="card dg-grayscale" href={service.href}><img src={service.image.src} alt={service.image.alt} loading="lazy" /><span class="shade"></span><b class="index">{String(index + 1).padStart(2, '0')}</b><span class="title"><strong>{service.label}</strong><i aria-hidden="true"><GuildIcon name="diagonal" /></i></span></a>)}</div>
+  </div>
+</section>
+
+<style>
+  .head { display: flex; align-items: baseline; justify-content: space-between; gap: 2rem; margin-bottom: 2.5rem; }
+  .head > strong { flex: none; color: color-mix(in srgb, white 70%, transparent); font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; }
+  .intro { display: grid; max-width: 68ch; gap: 1rem; margin: -1rem 0 2.5rem; color: color-mix(in srgb, white 88%, transparent); }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  .card { position: relative; display: block; aspect-ratio: 4 / 3; overflow: hidden; border: 1px solid var(--dg-accent-dark); background: var(--dg-ink); color: white; text-decoration: none; }
+  .card :global(img) { height: 100%; object-fit: cover; transition: transform .45s ease; }
+  .shade { position: absolute; inset: 0; background: linear-gradient(to top, rgba(32,30,29,.94), rgba(32,30,29,.12) 70%); }
+  .index { position: absolute; top: 0; left: 0; padding: .35rem .65rem; background: var(--dg-ink); font-size: .7rem; }
+  .title { position: absolute; inset: auto 0 0; display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; padding: 1.1rem; border-bottom: 3px solid transparent; transition: border-color .3s ease; }
+  .title strong { font-size: 1.1rem; line-height: 1.15; }
+  .title i { display: grid; width: 2.1rem; height: 2.1rem; place-items: center; border: 1px solid #7d7979; font-style: normal; }
+  .card:hover :global(img) { transform: scale(1.06); }
+  .card:hover .title { border-color: var(--dg-accent); }
+  .card:hover i { border-color: var(--dg-accent); background: var(--dg-accent); }
+  @media (max-width: 64rem) { .grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 38rem) { .grid, .intro { grid-template-columns: 1fr; } .head { display: block; } .head > strong { display: block; margin-top: 1rem; } }
+</style>

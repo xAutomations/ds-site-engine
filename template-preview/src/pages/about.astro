@@ -1,0 +1,24 @@
+---
+import AboutPage from '../../../src/templates/detailers-guild/pages/AboutPage.astro';
+import {
+  aboutCta,
+  aboutHero,
+  aboutProcess,
+  aboutShell,
+  aboutStory,
+  services,
+} from '../fixtures/detailers-guild';
+---
+
+<AboutPage
+  shell={aboutShell}
+  hero={aboutHero}
+  story={aboutStory}
+  process={aboutProcess}
+  {services}
+  servicesIntro={[
+    'Whether it is a daily driver sedan, a family SUV, a recreational vehicle, a boat sitting on a trailer, or a private aircraft, the standard is the same. Thorough work, clean results, and a customer who is satisfied when we leave.',
+    'For customers looking for long-term paint protection, our ceramic coating service provides two to three years of hydrophobic defense against UV rays, road grime, bird droppings, and environmental contaminants.',
+  ]}
+  cta={aboutCta}
+/>

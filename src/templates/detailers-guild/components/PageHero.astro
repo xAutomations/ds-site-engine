@@ -1,0 +1,39 @@
+---
+import GuildIcon from './GuildIcon.astro';
+import type { GuildHeroData } from '../types';
+interface Props { hero: GuildHeroData; }
+const { hero } = Astro.props;
+const ticker = hero.ticker ? [...hero.ticker, ...hero.ticker] : [];
+---
+
+<section class:list={['hero', { compact: hero.compact }]}>
+  {hero.video && <div class="hero-image dg-grayscale"><video src={hero.video.src} poster={hero.image?.src} autoplay muted loop playsinline></video></div>}
+  {!hero.video && hero.image && <div class="hero-image dg-grayscale"><img src={hero.image.src} alt="" loading="eager" fetchpriority="high" /></div>}
+  <div class="wash"></div>
+  <div class="dg-container hero-inner">
+    <div class="dg-kicker dg-reveal">{hero.eyebrow}</div>
+    <h1 class="dg-display dg-reveal">{hero.heading}</h1>
+    {(hero.primaryAction || hero.secondaryAction) && <div class="actions dg-reveal">{hero.primaryAction && <a class="dg-btn dg-btn--primary" href={hero.primaryAction.href}>{hero.primaryAction.label}<GuildIcon name="arrow" /></a>}{hero.secondaryAction && <a class="dg-btn dg-btn--light" href={hero.secondaryAction.href}>{hero.secondaryAction.label}</a>}</div>}
+  </div>
+  {ticker.length > 0 && <div class="ticker" aria-hidden="true"><div>{ticker.map((item) => <span>{item}<b>■</b></span>)}</div></div>}
+</section>
+
+<style>
+  .hero { position: relative; display: flex; min-height: min(50rem, 80vh); flex-direction: column; justify-content: center; overflow: hidden; background: var(--dg-ink); color: white; }
+  .hero.compact { min-height: min(40rem, 68vh); }
+  .hero-image, .wash { position: absolute; inset: 0; }
+  .hero-image :global(img), .hero-image :global(video) { height: 100%; object-fit: cover; }
+  .wash { background: linear-gradient(135deg, color-mix(in srgb, var(--dg-accent) 20%, transparent), color-mix(in srgb, var(--dg-ink) 72%, transparent) 45%, color-mix(in srgb, var(--dg-ink) 90%, transparent)); }
+  .hero:has(.hero-image) .wash { background: linear-gradient(135deg, color-mix(in srgb, var(--dg-accent) 15%, transparent), transparent 55%, color-mix(in srgb, var(--dg-accent) 15%, transparent)), rgba(32, 30, 29, .5); }
+  .hero:not(:has(.hero-image)) .wash { background: repeating-linear-gradient(45deg, #262423 0 14px, var(--dg-ink) 14px 28px); }
+  .hero-inner { position: relative; display: flex; flex: 1; flex-direction: column; align-items: center; justify-content: center; padding-block: clamp(5rem, 12vh, 9rem); text-align: center; }
+  .dg-kicker { margin-bottom: 1.25rem; color: #bab6b6; }
+  .dg-kicker::after { width: 2.125rem; height: 2px; background: var(--dg-accent); content: ''; }
+  h1 { max-width: 20ch; }
+  .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: .8rem; margin-top: 2rem; }
+  .ticker { position: relative; overflow: hidden; border-top: 1px solid #444141; padding-block: .7rem; white-space: nowrap; }
+  .ticker > div { display: inline-flex; min-width: max-content; animation: ticker 30s linear infinite; }
+  .ticker span { display: inline-flex; align-items: center; gap: 2.5rem; margin-right: 2.5rem; color: #9b9797; font-size: .7rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+  .ticker b { color: var(--dg-accent); }
+  @keyframes ticker { to { transform: translateX(-50%); } }
+</style>

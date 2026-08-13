@@ -1,0 +1,29 @@
+---
+import GuildIcon from './GuildIcon.astro';
+import type { GuildImage, GuildNavItem } from '../types';
+interface Props { heading?: string; intro?: string; map?: GuildImage; areas: GuildNavItem[]; }
+const { heading = 'Areas We Serve', intro, map, areas } = Astro.props;
+---
+
+<section class="dg-section">
+  <div class="dg-container dg-section-inner inner">
+    <div class="lead dg-reveal">
+      <h2 class="dg-heading">{heading}</h2>
+      {intro && <p class="dg-prose">{intro}</p>}
+      {map && <figure class="dg-media dg-grayscale"><img src={map.src} alt={map.alt} loading="lazy" /></figure>}
+    </div>
+    <div class="areas dg-rule-list dg-reveal">
+      {areas.map((area) => <a href={area.href}>{area.label}<GuildIcon name="arrow" size={16} /></a>)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .inner { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(2.5rem, 6vw, 4rem); align-items: start; }
+  .lead p { margin: 1.25rem 0 1.6rem; }
+  .lead .dg-media { aspect-ratio: 16 / 10; min-height: 0; }
+  .areas a { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.05rem .25rem; color: var(--dg-ink); font-size: 1.2rem; font-weight: 800; letter-spacing: -0.01em; line-height: 1.15; text-decoration: none; transition: color .2s ease, padding-left .2s ease; }
+  .areas a:hover { padding-left: .75rem; color: var(--dg-accent-dark); }
+  .areas a :global(svg) { flex: none; }
+  @media (max-width: 48rem) { .inner { grid-template-columns: 1fr; } }
+</style>

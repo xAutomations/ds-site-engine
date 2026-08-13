@@ -1,0 +1,19 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import MediaSection from '../components/MediaSection.astro';
+import ServiceGrid from '../components/ServiceGrid.astro';
+import ConversionBanner from '../components/ConversionBanner.astro';
+import type { GuildContentSection, GuildCtaData, GuildHeroData, GuildServiceCard, GuildShellData } from '../types';
+
+interface Props { shell: GuildShellData; hero: GuildHeroData; story: GuildContentSection; process: GuildContentSection; services: GuildServiceCard[]; servicesIntro?: string[]; cta: GuildCtaData; }
+const { shell, hero, story, process, services, servicesIntro, cta } = Astro.props;
+---
+
+<SiteLayout {...shell}>
+  <PageHero {hero} />
+  <MediaSection content={story} />
+  <MediaSection content={process} />
+  <ServiceGrid heading="What We Detail" {services} intro={servicesIntro} />
+  <ConversionBanner content={cta} />
+</SiteLayout>

@@ -1,0 +1,38 @@
+---
+import GuildIcon from './GuildIcon.astro';
+import type { GuildContentSection } from '../types';
+interface Props { content: GuildContentSection; }
+const { content } = Astro.props;
+---
+
+<section class:list={['dg-section', { 'dg-pattern': content.patterned }]}>
+  <div class:list={['dg-container', 'inner', { reversed: content.reversed, solo: !content.image }]}>
+    {content.image && <figure class="dg-media dg-grayscale dg-reveal"><img src={content.image.src} alt={content.image.alt} loading="lazy" />{content.index && <span class="dg-media-index">{content.index}</span>}</figure>}
+    <div class="copy dg-reveal">
+      {content.eyebrow && <div class="dg-kicker">{content.eyebrow}</div>}
+      <h2 class="dg-heading">{content.heading}</h2>
+      <div class="dg-prose">{content.body.map((paragraph) => <p>{paragraph}</p>)}</div>
+      {content.stats && <div class="stats">{content.stats.map((stat) => <div><strong>{stat.value}</strong><span>{stat.label}</span></div>)}</div>}
+      {content.action && <a class="dg-btn dg-btn--primary" href={content.action.href}>{content.action.label}<GuildIcon name="arrow" size={14} /></a>}
+    </div>
+  </div>
+</section>
+
+<style>
+  .inner { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2.5rem, 6vw, 5rem); align-items: center; padding-block: var(--dg-section); }
+  .inner.reversed .dg-media { order: 2; }
+  .inner.solo { display: block; text-align: center; }
+  .solo .copy { max-width: 58rem; margin-inline: auto; }
+  .solo .dg-prose { max-width: none; }
+  .solo .dg-kicker { justify-content: center; }
+  .copy h2 { max-width: 18ch; margin-top: .8rem; }
+  .solo h2 { max-width: none; }
+  .dg-prose { margin-top: 1.25rem; }
+  .dg-btn { margin-top: 1.7rem; }
+  .dg-media { aspect-ratio: 4 / 3; }
+  .stats { display: flex; flex-wrap: wrap; gap: 1.75rem; margin-top: 1.5rem; padding-top: 1.25rem; border-top: 2px solid var(--dg-rule); }
+  .stats div { display: grid; gap: .2rem; }
+  .stats strong { color: var(--dg-accent-dark); font-size: 1.6rem; line-height: 1; }
+  .stats span { color: var(--dg-muted); font-size: .68rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+  @media (max-width: 48rem) { .inner { grid-template-columns: 1fr; } .inner.reversed .dg-media { order: 0; } }
+</style>

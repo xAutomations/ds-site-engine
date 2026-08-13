@@ -1,0 +1,75 @@
+---
+import GuildIcon from './GuildIcon.astro';
+import type { GuildNavItem, GuildSiteData } from '../types';
+
+interface Props { site: GuildSiteData; services: GuildNavItem[]; areas: GuildNavItem[]; }
+const { site, areas } = Astro.props;
+const { brand, contact, hours, socials, locationBlurb } = site;
+const iconFor = (label: string): 'facebook' | 'instagram' | 'tiktok' | null => {
+  const key = label.toLowerCase();
+  return key === 'facebook' || key === 'instagram' || key === 'tiktok' ? key : null;
+};
+---
+
+<footer class="footer">
+  <div class="dg-container footer-main">
+    <div class="brand-col">
+      <div class="mark"><i></i><strong>{brand.name}</strong></div>
+      <p>{brand.blurb}</p>
+    </div>
+    <div>
+      <h2>Locations We Serve</h2>
+      <ul class="locations">{areas.slice(0, 9).map((area) => <li><GuildIcon name="arrow" size={13} /><a href={area.href}>{area.label}</a></li>)}</ul>
+    </div>
+    <div class="contact-col">
+      {locationBlurb && <><h2>Our Location</h2><p>{locationBlurb}</p></>}
+      <h2>Contact Us</h2>
+      <p class="contact-lines">
+        <span><strong>Phone:</strong> <a href={`tel:${contact.phone}`}>{contact.phoneDisplay}</a></span>
+        <span><strong>Email:</strong> <a href={`mailto:${contact.email}`}>{contact.email}</a></span>
+        <span><strong>Address:</strong> {contact.address}</span>
+      </p>
+      <a class="dg-btn contact-btn" href="/get-quote">Contact Us</a>
+    </div>
+    <div>
+      <h2>Working Hours</h2>
+      {hours?.map((h) => <p class="hours">{h.days}: {h.hours}</p>)}
+      <h2>Social Media</h2>
+      <div class="socials">{socials.map((link) => {
+        const icon = iconFor(link.label);
+        return <a href={link.href} aria-label={link.label} rel="noreferrer" target="_blank">{icon ? <GuildIcon name={icon} size={16} /> : link.label}</a>;
+      })}</div>
+      <a class="dg-btn dg-btn--primary book-btn" href="/get-quote">Book Today</a>
+    </div>
+  </div>
+  <div class="credit dg-container"><span>Website proudly developed and managed by Detailer Systems — the all-in-one marketing platform helping car detailers get more bookings.</span><span><a href="/privacy-policy">Privacy Policy</a> · <a href="/tos">Terms of Service</a></span><span>All Rights Reserved | Detailer Systems | {brand.name} © {new Date().getFullYear()}</span></div>
+</footer>
+
+<style>
+  .footer { border-top: 2px solid var(--dg-rule); background: var(--dg-paper); color: var(--dg-ink); font-size: .875rem; }
+  .footer-main { display: grid; grid-template-columns: 3.5fr 2.5fr 3fr 3fr; gap: clamp(2rem, 4vw, 3.25rem); padding-block: 4rem 3.5rem; border-bottom: 1px solid var(--dg-rule); }
+  .mark { display: flex; align-items: center; gap: .65rem; margin-bottom: 1.15rem; font-size: 1.125rem; font-weight: 800; text-transform: uppercase; }
+  .mark i { width: 1.25rem; height: 1.25rem; background: var(--dg-accent); }
+  .brand-col p { max-width: 34rem; color: var(--dg-muted); }
+  h2 { display: inline-block; margin-bottom: 1.1rem; padding-bottom: .35rem; border-bottom: 2px solid var(--dg-ink); font-size: 1.15rem; letter-spacing: .05em; text-transform: uppercase; }
+  h2:not(:first-child) { margin-top: 1.75rem; }
+  .locations { margin: 0; padding: 0; list-style: none; }
+  .locations li { display: flex; align-items: center; gap: .55rem; line-height: 2.2; }
+  .locations li :global(svg) { flex: none; color: var(--dg-accent); }
+  .locations a, .contact-lines a { color: var(--dg-ink); text-decoration: none; }
+  .locations a:hover, .contact-lines a:hover { color: var(--dg-accent-dark); }
+  .contact-col p, .hours { color: var(--dg-muted); }
+  .contact-lines { display: flex; flex-direction: column; gap: .6rem; }
+  .contact-lines strong { color: var(--dg-ink); text-transform: uppercase; }
+  .contact-btn { margin-top: 1.4rem; justify-content: center; width: 100%; max-width: 16rem; border: 2px solid var(--dg-accent); color: var(--dg-accent-dark); }
+  .contact-btn:hover { border-color: var(--dg-accent); background: var(--dg-accent); color: white; }
+  .socials { display: flex; gap: .6rem; }
+  .book-btn { margin-top: 1.75rem; justify-content: center; width: 100%; max-width: 16rem; }
+  .socials a { display: grid; width: 2.5rem; height: 2.5rem; place-items: center; border: 1px solid var(--dg-rule); color: var(--dg-muted); transition: border-color .2s ease, color .2s ease; }
+  .socials a:hover { border-color: var(--dg-accent); color: var(--dg-accent); }
+  .credit { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; padding-block: 1.25rem; color: var(--dg-faint); font-size: .72rem; }
+  .credit a { color: inherit; text-decoration: none; }
+  .credit a:hover { color: var(--dg-accent-dark); }
+  @media (max-width: 60rem) { .footer-main { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 36rem) { .footer-main { grid-template-columns: 1fr; } }
+</style>

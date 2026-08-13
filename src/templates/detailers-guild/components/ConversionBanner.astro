@@ -1,0 +1,31 @@
+---
+import GuildIcon from './GuildIcon.astro';
+import type { GuildCtaData } from '../types';
+interface Props { content: GuildCtaData; }
+const { content } = Astro.props;
+---
+
+<section class="conversion dg-ink-field">
+  {content.image && <div class="image dg-grayscale"><img src={content.image.src} alt="" loading="lazy" /></div>}
+  <div class="wash"></div>
+  <div class="dg-container inner dg-reveal">
+    {content.eyebrow && <div class="dg-kicker">{content.eyebrow}</div>}
+    <h2 class="dg-display">{content.heading}</h2>
+    {content.body && <p>{content.body}</p>}
+    {content.emphasis && <strong>{content.emphasis}</strong>}
+    <a class="dg-btn dg-btn--primary" href={content.action.href}>{content.action.label}<GuildIcon name="arrow" size={16} /></a>
+  </div>
+</section>
+
+<style>
+  .conversion { position: relative; min-height: 35rem; overflow: hidden; }
+  .image, .wash { position: absolute; inset: 0; }
+  .image :global(img) { height: 100%; object-fit: cover; }
+  .wash { background: linear-gradient(135deg, color-mix(in srgb, var(--dg-accent) 24%, transparent), rgba(32,30,29,.82)); }
+  .conversion:not(:has(.image)) .wash { background: repeating-linear-gradient(135deg, #262423 0 16px, var(--dg-ink) 16px 32px); opacity: .92; }
+  .inner { position: relative; display: flex; min-height: 35rem; flex-direction: column; align-items: center; justify-content: center; gap: 1.4rem; padding-block: 6rem; text-align: center; }
+  h2 { max-width: 18ch; }
+  p { max-width: 70ch; color: #d7d3d3; font-size: 1rem; }
+  strong { font-size: clamp(1.3rem, 3vw, 1.8rem); }
+  .dg-kicker { color: #d7d3d3; }
+</style>

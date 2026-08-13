@@ -1,0 +1,36 @@
+---
+import GuildIcon from './GuildIcon.astro';
+import type { GuildSocialData } from '../types';
+interface Props { content: GuildSocialData; }
+const { content } = Astro.props;
+const iconFor = (label: string): 'facebook' | 'instagram' | 'tiktok' | null => {
+  const key = label.toLowerCase();
+  return key === 'facebook' || key === 'instagram' || key === 'tiktok' ? key : null;
+};
+---
+
+<section class="social dg-section dg-pattern">
+  <div class="dg-container dg-section-inner">
+    <div class="dg-reveal">
+      <h2 class="dg-heading">{content.heading}</h2>
+      {content.body && <p>{content.body}</p>}
+    </div>
+    <div class="links dg-reveal">
+      {content.links.map((link) => {
+        const icon = iconFor(link.label);
+        return <a href={link.href} aria-label={link.label} rel="noreferrer" target="_blank">{icon ? <GuildIcon name={icon} size={18} /> : link.label}</a>;
+      })}
+    </div>
+    {content.image && <figure class="dg-media dg-grayscale dg-reveal"><img src={content.image.src} alt={content.image.alt} loading="lazy" /></figure>}
+  </div>
+</section>
+
+<style>
+  .social { text-align: center; }
+  .dg-section-inner { display: flex; flex-direction: column; align-items: center; gap: 1.25rem; }
+  p { margin-top: .5rem; color: var(--dg-muted); }
+  .links { display: flex; flex-wrap: wrap; justify-content: center; gap: .75rem; }
+  .links a { display: grid; min-width: 2.875rem; min-height: 2.875rem; place-items: center; padding: .5rem; border: 1px solid var(--dg-rule); color: var(--dg-ink); font-size: .75rem; font-weight: 800; text-decoration: none; text-transform: uppercase; transition: background .2s ease, color .2s ease, border-color .2s ease; }
+  .links a:hover { border-color: var(--dg-ink); background: var(--dg-ink); color: var(--dg-bg); }
+  .dg-media { width: min(55rem, 100%); margin-top: 1.25rem; aspect-ratio: 16 / 9; }
+</style>
