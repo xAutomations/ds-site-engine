@@ -10,7 +10,7 @@ const count = String(services.length).padStart(2, '0');
   <div class="dg-container dg-section-inner">
     <header class="head dg-reveal"><h2 class="dg-heading">{heading}</h2>{sectionIndex && <strong>{sectionIndex} / {count} services</strong>}</header>
     {intro.length > 0 && <div class="intro dg-reveal">{intro.map((p) => <p>{p}</p>)}</div>}
-    <div class="grid dg-reveal">{services.map((service, index) => <a class="card dg-grayscale" href={service.href}><img src={service.image.src} alt={service.image.alt} loading="lazy" /><span class="shade"></span><b class="index">{String(index + 1).padStart(2, '0')}</b><span class="title"><strong>{service.label}</strong><i aria-hidden="true"><GuildIcon name="diagonal" /></i></span></a>)}</div>
+    <div class="grid dg-reveal">{services.map((service) => <a class="card dg-grayscale" href={service.href}><img src={service.image.src} alt={service.image.alt} loading="lazy" /><span class="shade"></span><span class="title"><strong>{service.label}</strong><i aria-hidden="true"><GuildIcon name="diagonal" /></i></span></a>)}</div>
   </div>
 </section>
 
@@ -22,7 +22,6 @@ const count = String(services.length).padStart(2, '0');
   .card { position: relative; display: block; aspect-ratio: 4 / 3; overflow: hidden; border: 1px solid var(--dg-accent-dark); background: var(--dg-ink); color: white; text-decoration: none; }
   .card :global(img) { height: 100%; object-fit: cover; transition: transform .45s ease; }
   .shade { position: absolute; inset: 0; background: linear-gradient(to top, rgba(32,30,29,.94), rgba(32,30,29,.12) 70%); }
-  .index { position: absolute; top: 0; left: 0; padding: .35rem .65rem; background: var(--dg-ink); font-size: .7rem; }
   .title { position: absolute; inset: auto 0 0; display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; padding: 1.1rem; border-bottom: 3px solid transparent; transition: border-color .3s ease; }
   .title strong { font-size: 1.1rem; line-height: 1.15; }
   .title i { display: grid; width: 2.1rem; height: 2.1rem; place-items: center; border: 1px solid #7d7979; font-style: normal; }

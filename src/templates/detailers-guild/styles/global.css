@@ -62,7 +62,6 @@ h1, h2, h3, h4 { font-weight: 800; line-height: 1.04; letter-spacing: -0.025em; 
 .dg-grayscale { filter: grayscale(1) contrast(1.08); }
 .dg-media { position: relative; min-height: 16rem; overflow: hidden; border: 1px solid var(--dg-rule); background: var(--dg-surface); }
 .dg-media img { height: 100%; object-fit: cover; }
-.dg-media-index { position: absolute; z-index: 2; top: -1px; left: -1px; padding: 0.4rem 0.75rem; background: var(--dg-ink); color: white; font-size: 0.75rem; font-weight: 800; }
 .dg-rule-list { border-top: 2px solid var(--dg-rule); }
 .dg-rule-list > * { border-bottom: 1px solid var(--dg-rule); }
 .dg-accent-field { background: var(--dg-accent); color: white; }

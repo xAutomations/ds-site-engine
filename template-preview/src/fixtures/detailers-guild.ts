@@ -1,4 +1,7 @@
 import type {
+  GuildFaqItem,
+  GuildIncludedData,
+  GuildProcessData,
   GuildAreaSectionData,
   GuildContentSection,
   GuildCtaData,
@@ -73,7 +76,6 @@ export const homeHero: GuildHeroData = {
 };
 
 export const homeIntroduction: GuildContentSection = {
-  index: '01',
   heading: 'No Shop. No Drop-Off. No Waiting.',
   body: [
     'Your car sits in the sun all day, collects road grime on your commute through the Beltway, and picks up dust from every parking lot in Northern Virginia. By the time you notice, the paint is fading, the interior smells, and the seats are stained. You do not have time to drop it off at a shop and wait. San Mob Detailing brings the detail to your driveway, your office parking lot, or wherever your vehicle sits.',
@@ -84,7 +86,6 @@ export const homeIntroduction: GuildContentSection = {
 };
 
 export const homePromise: GuildContentSection = {
-  index: '02',
   heading: 'Honest Pricing: No Hidden Fees.',
   body: [
     'Most local detailers quote a low starting price to get you on the hook, then upcharge the moment they see a stain on the seat or pet hair on the carpet. We refuse to operate that way.',
@@ -101,7 +102,6 @@ export const homePromise: GuildContentSection = {
 };
 
 export const homeAbout: GuildContentSection = {
-  index: '04',
   heading: 'Every Vehicle. Any Size. One Standard of Care.',
   body: [
     'San Mob Detailing was founded with one goal: to bring professional detailing directly to you — no facility required. Based in Alexandria, VA, we service the entire DMV region with a fully self-contained mobile unit that carries everything needed for every job.',
@@ -149,7 +149,6 @@ export const aboutStory: GuildContentSection = {
 };
 
 export const aboutProcess: GuildContentSection = {
-  index: '02',
   heading: 'How San Mob Detailing Works',
   body: [
     'We keep things straightforward. You call, text, or request a quote. We confirm the details, show up at the scheduled time, and get to work. No upselling at the door, no surprise charges, no cutting corners to squeeze in another appointment. Your vehicle gets the full time and attention it deserves.',
@@ -190,7 +189,6 @@ export const alexandriaIntro: GuildContentSection = {
 };
 
 export const alexandriaWhy: GuildContentSection = {
-  index: '01',
   heading: 'Why Mobile Detailing in Alexandria?',
   body: [
     'Alexandria is a commuter city. Between the Metro, the GW Parkway, 395, and the Beltway, most residents spend hours in their vehicles every day. That time in traffic adds up in the form of brake dust, road film, and interior wear. Dropping your car off at a detail shop means finding a ride, adjusting your schedule, and losing time you do not have.',
@@ -222,4 +220,143 @@ export const alexandriaCta: GuildCtaData = {
   body: "Your car sits in the same Alexandria weather and traffic as everyone else's. The difference is whether you let it accumulate or you do something about it. San Mob Detailing makes it easy.",
   action: { label: 'Book today', href: '#' },
   image: { src: '/assets/terrazzo-accent.png', alt: '' },
+};
+
+export const autoDetailShell: GuildShellData = {
+  ...homeShell,
+  title: 'Full Auto Detailing in Alexandria, VA | Detailer Guild',
+  description: 'Complete mobile interior and exterior detailing for sedans, SUVs, trucks, and minivans across the DMV.',
+  path: '/auto-detailing',
+};
+
+export const autoDetailHero: GuildHeroData = {
+  eyebrow: 'Our Services',
+  heading: 'Full Auto Detailing in Alexandria, VA',
+  primaryAction: { label: 'Get a quote', href: '#book' },
+  secondaryAction: { label: '(888) 900-5941', href: 'tel:+18889005941' },
+  compact: true,
+};
+
+export const autoDetailIntro: GuildContentSection = {
+  body: [
+    'Your car picks up more grime in a single week on the Beltway than most people realize. Brake dust embeds itself in the wheel wells. Road film coats the paint. Dust, crumbs, and spills build up on the seats and carpets until the interior feels grimy no matter how often you wipe things down. A basic car wash will not fix that. A full auto detail will.',
+    'San Mob Detailing provides complete interior and exterior detailing for sedans, SUVs, trucks, and minivans across the DMV. We are 100% mobile, which means we bring everything to your driveway, your office lot, or wherever your vehicle sits. No drop-off required.',
+  ],
+  image: { src: '/assets/ripples.png', alt: 'Preview placeholder for the owner detailing a car' },
+  seamless: true,
+};
+
+export const autoDetailOverview: GuildContentSection = {
+  heading: 'What Is Full Auto Detailing?',
+  body: [
+    'A full auto detail is a comprehensive, top-to-bottom restoration of your vehicle. It goes far beyond what a standard car wash or quick clean can do. We address every surface, both inside and outside, to remove contaminants, restore the finish, and protect the paint.',
+    'Think of it as a deep reset for your car. The goal is to bring it as close to showroom condition as possible, regardless of how long it has been since the last proper cleaning. Whether your vehicle has months of buildup or just needs a thorough seasonal refresh, a full detail covers it all.',
+  ],
+  image: { src: '/assets/funky-lines.png', alt: 'Preview placeholder for a full detail in progress' },
+  reversed: true,
+  action: { label: 'Get a quote', href: '#book' },
+  secondaryAction: { label: 'Call (888) 900-5941', href: 'tel:+18889005941' },
+};
+
+export const autoDetailIncluded: GuildIncludedData = {
+  heading: 'What Is Included',
+  panels: [
+    {
+      eyebrow: 'Wash & Protect',
+      heading: 'Exterior Wash & Detail',
+      image: { src: '/assets/terrazzo-accent.png', alt: 'Preview placeholder for exterior detailing' },
+      items: [
+        'Hand wash and dry using proper wash mitts and drying towels',
+        'Clay bar treatment to remove embedded surface contaminants',
+        'Wheel and tire cleaning, including the barrel and lug nuts',
+        'Tire dressing applied for a clean, even finish',
+        'Window and mirror cleaning inside and out',
+        'Door jamb cleaning and trim restoration where needed',
+        'Final wax or sealant application for paint protection and shine',
+      ],
+      action: { label: 'Book today', href: '#book' },
+    },
+    {
+      eyebrow: 'Clean & Perfect',
+      heading: 'Interior Detail & Clean',
+      image: { src: '/assets/waves-accent.png', alt: 'Preview placeholder for interior detailing' },
+      items: [
+        'Full vacuum of seats, carpets, floor mats, trunk, and all crevices',
+        'Steam cleaning or hot water extraction on fabric surfaces',
+        'Leather cleaning and conditioning (if applicable)',
+        'Dashboard, console, and door panel wipe-down and protection',
+        'Vent, cup holder, and storage compartment detailing',
+        'Pet hair removal included at no extra charge for all vehicles',
+        'Interior glass cleaning for a streak-free finish',
+      ],
+      action: { label: 'Book today', href: '#book' },
+    },
+  ],
+};
+
+export const autoDetailProcess: GuildProcessData = {
+  heading: 'Our Full Auto Detailing Process',
+  image: { src: '/assets/ripples.png', alt: 'Preview placeholder for the detailing process' },
+  steps: [
+    { title: 'Inspection', body: 'We walk around your vehicle and assess its condition. We note any trouble spots, stains, scratches, or areas that need extra attention.' },
+    { title: 'Interior First', body: 'We start inside. Remove floor mats, vacuum every surface, extract or steam clean the seats and carpets, clean and condition all hard surfaces, and detail every compartment and crevice.' },
+    { title: 'Exterior Wash', body: 'Hand wash the exterior with a foam cannon and proper wash mitts. No brushes, no automated systems. Clean the wheels, tires, and wheel wells individually.' },
+    { title: 'Decontamination', body: 'Clay bar the paint to remove bonded contaminants that washing alone cannot remove. This step prepares the surface for wax or sealant.' },
+    { title: 'Protection and Finishing', body: 'Apply a coat of wax or sealant to protect the paint. Dress the tires, restore trim, and clean all glass. Final walkthrough with you to make sure everything meets the standard.' },
+  ],
+};
+
+export const autoDetailAddOns: GuildContentSection[] = [
+  {
+    heading: 'Ozone Treatment',
+    small: true,
+    body: [
+      'Eliminates stubborn odors from smoke, pets, food, mildew, and bacteria that standard cleaning cannot reach. Our professional ozone generator works at the molecular level, neutralizing odor-causing compounds throughout your interior.',
+      'The result is a genuinely clean-smelling interior, not a fragrance masking the problem underneath. Most treatments take 30 to 60 minutes and can be added to any detailing service.',
+    ],
+    image: { src: '/assets/funky-lines.png', alt: 'Preview placeholder for ozone treatment' },
+  },
+  {
+    heading: 'Stain Removal',
+    small: true,
+    body: [
+      'Targeted deep extraction treatment for tough stains on seats, carpets, door panels, and upholstery that standard vacuuming and wiping cannot remove.',
+      'We use professional-grade hot water extraction and stain-specific chemistry to break down and lift coffee, juice, grease, ink, and biological stains at the fiber level. Pricing is per seat so you only pay for exactly what you need.',
+    ],
+    image: { src: '/assets/terrazzo-accent.png', alt: 'Preview placeholder for stain removal' },
+  },
+  {
+    heading: 'Pet Hair Removal',
+    small: true,
+    body: [
+      'Pet hair embeds deep into carpet fibers, seat fabric, and floor mat loops in ways that a standard vacuum simply cannot reach. We use specialized rubber extraction tools and high-powered vacuums to systematically pull embedded hair from every surface.',
+      'No matter how heavy the shedding, we do not stop until the interior is completely hair-free. Included at no additional charge with every full auto detail booking.',
+    ],
+    image: { src: '/assets/waves-accent.png', alt: 'Preview placeholder for pet hair removal' },
+  },
+];
+
+export const autoDetailWhy: GuildContentSection = {
+  heading: 'Why Auto Detailing Matters',
+  body: [
+    "Road grime, UV exposure, bird droppings, tree sap, and everyday use break down your paint and interior surfaces over time. A full detail removes those contaminants before they cause permanent damage. It also restores your vehicle's appearance, which directly impacts resale value.",
+    "If you plan on keeping your car for years, regular full details prevent the kind of wear that leads to expensive repairs or reupholstering. If you are looking to sell or trade in, a professional detail can add hundreds to your vehicle's perceived value.",
+    'For customers who want to maintain their vehicle between full details, San Mob Detailing offers a maintenance wash program exclusively for existing customers. And for those looking for long-term paint protection after a detail, consider our ceramic coating service or a paint correction to remove any existing scratches before sealing the finish.',
+  ],
+  image: { src: '/assets/ripples.png', alt: 'Preview placeholder for a finished detail' },
+};
+
+export const autoDetailFaqs: GuildFaqItem[] = [
+  { question: 'How long does a full auto detail take?', answer: 'A typical full auto detail takes between two and four hours depending on the size and condition of your vehicle. Larger vehicles like SUVs, trucks, and minivans take longer due to additional surface area. Heavily soiled vehicles may also require extra time.' },
+  { question: 'Do I need to be home during the detail?', answer: 'Not necessarily. As long as we have access to your vehicle and a reasonable workspace around it, you can go about your day. Many of our customers schedule details while they are at work or running errands.' },
+  { question: 'What do I need to provide?', answer: 'Just access to your vehicle. We bring all equipment, water, and supplies. If you have access to a water spigot or electrical outlet nearby, that helps, but it is not required. Our mobile setup is fully self-contained.' },
+  { question: 'How is this different from a car wash?', answer: 'A car wash cleans the surface. A full auto detail restores and protects every surface of your vehicle. We clean areas a car wash cannot reach, use professional-grade products, and spend the time necessary to get the job done right.' },
+  { question: 'How often should I get a full detail?', answer: 'For most daily drivers in the DMV area, two to three times per year is a solid schedule. Between full details, our maintenance wash keeps your vehicle looking sharp without needing another full session.' },
+];
+
+export const autoDetailCta: GuildCtaData = {
+  heading: 'Get Your Full Auto Detail Scheduled',
+  body: 'Your car is overdue. You know it, and so does everyone who rides in it. San Mob Detailing comes directly to you in Alexandria, VA and across the DMV. No drop-off, no waiting, no hassle.',
+  action: { label: 'Book today', href: '#' },
+  image: { src: '/assets/funky-lines.png', alt: '' },
 };

@@ -1,0 +1,30 @@
+---
+import ServicePage from '../../../src/templates/detailers-guild/pages/ServicePage.astro';
+import {
+  autoDetailAddOns,
+  autoDetailCta,
+  autoDetailFaqs,
+  autoDetailHero,
+  autoDetailIncluded,
+  autoDetailIntro,
+  autoDetailOverview,
+  autoDetailProcess,
+  autoDetailShell,
+  autoDetailWhy,
+  homeSocial,
+} from '../fixtures/detailers-guild';
+---
+
+<ServicePage
+  shell={autoDetailShell}
+  hero={autoDetailHero}
+  intro={autoDetailIntro}
+  overview={autoDetailOverview}
+  included={autoDetailIncluded}
+  process={autoDetailProcess}
+  addOns={autoDetailAddOns}
+  why={autoDetailWhy}
+  social={homeSocial}
+  faqs={autoDetailFaqs}
+  cta={autoDetailCta}
+/>

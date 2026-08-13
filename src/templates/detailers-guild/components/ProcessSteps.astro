@@ -1,0 +1,35 @@
+---
+import type { GuildProcessData } from '../types';
+interface Props { content: GuildProcessData; }
+const { content } = Astro.props;
+---
+
+<section class="dg-section">
+  <div class="dg-container dg-section-inner inner">
+    <div class="steps-col dg-reveal">
+      <h2 class="dg-heading">{content.heading}</h2>
+      <ol class="steps dg-rule-list">
+        {content.steps.map((step, index) => (
+          <li>
+            <b>{String(index + 1).padStart(2, '0')}</b>
+            <div><h3>{step.title}</h3><p>{step.body}</p></div>
+          </li>
+        ))}
+      </ol>
+    </div>
+    {content.image && <figure class="dg-media dg-grayscale dg-reveal"><img src={content.image.src} alt={content.image.alt} loading="lazy" /></figure>}
+  </div>
+</section>
+
+<style>
+  .inner { display: grid; grid-template-columns: 7fr 5fr; gap: clamp(2.5rem, 6vw, 4rem); align-items: start; }
+  .inner:not(:has(.dg-media)) { grid-template-columns: 1fr; }
+  h2 { margin-bottom: 2rem; }
+  .steps { margin: 0; padding: 0; list-style: none; }
+  .steps li { display: grid; grid-template-columns: 3rem 1fr; gap: 1rem; padding-block: 1.15rem; }
+  .steps b { color: var(--dg-accent); font-size: 1.35rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; }
+  .steps h3 { font-size: 1.1rem; }
+  .steps p { margin-top: .35rem; color: var(--dg-muted); }
+  .dg-media { position: sticky; top: 7rem; aspect-ratio: 4 / 5; }
+  @media (max-width: 48rem) { .inner { grid-template-columns: 1fr; } .dg-media { position: static; aspect-ratio: 4 / 3; } }
+</style>

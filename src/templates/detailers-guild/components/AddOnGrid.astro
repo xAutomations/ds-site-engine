@@ -1,0 +1,33 @@
+---
+import type { GuildContentSection } from '../types';
+interface Props { heading?: string; addOns: GuildContentSection[]; }
+const { heading = 'Add-On Services', addOns } = Astro.props;
+---
+
+<section class="dg-section">
+  <div class="dg-container dg-section-inner">
+    <h2 class="dg-heading dg-reveal">{heading}</h2>
+    <div class="grid dg-reveal">
+      {addOns.map((addOn) => (
+        <article class="card">
+          {addOn.image && <figure class="dg-media dg-grayscale"><img src={addOn.image.src} alt={addOn.image.alt} loading="lazy" /></figure>}
+          <div class="body">
+            <h3>{addOn.heading}</h3>
+            <div class="dg-prose">{addOn.body.map((paragraph) => <p>{paragraph}</p>)}</div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  h2 { margin-bottom: 2.5rem; }
+  .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; align-items: stretch; }
+  .card { display: flex; flex-direction: column; border: 1px solid var(--dg-rule); background: var(--dg-paper); }
+  .card .dg-media { min-height: 0; border: 0; border-bottom: 1px solid var(--dg-rule); aspect-ratio: 16 / 10; }
+  .body { display: flex; flex: 1; flex-direction: column; padding: 1.5rem; }
+  h3 { font-size: 1.3rem; }
+  .body .dg-prose { margin-top: .9rem; font-size: .9rem; }
+  @media (max-width: 60rem) { .grid { grid-template-columns: 1fr; } .card { max-width: 34rem; } }
+</style>

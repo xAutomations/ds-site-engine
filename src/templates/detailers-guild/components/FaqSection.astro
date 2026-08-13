@@ -1,0 +1,31 @@
+---
+import GuildIcon from './GuildIcon.astro';
+import type { GuildFaqItem } from '../types';
+interface Props { heading?: string; items: GuildFaqItem[]; }
+const { heading = 'Frequently Asked Questions', items } = Astro.props;
+---
+
+<section class="dg-section">
+  <div class="dg-container dg-section-inner inner">
+    <h2 class="dg-heading dg-reveal">{heading}</h2>
+    <div class="faqs dg-rule-list dg-reveal">
+      {items.map((item) => (
+        <details>
+          <summary><span>{item.question}</span><i aria-hidden="true"><GuildIcon name="chevron" size={14} /></i></summary>
+          <p>{item.answer}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  h2 { margin-bottom: 2rem; }
+  .inner { max-width: min(100%, 58rem); }
+  summary { display: flex; align-items: center; justify-content: space-between; gap: 1.25rem; padding-block: 1.15rem; cursor: pointer; font-size: 1.1rem; font-weight: 800; letter-spacing: -0.01em; line-height: 1.3; list-style: none; }
+  summary::-webkit-details-marker { display: none; }
+  summary:hover { color: var(--dg-accent-dark); }
+  summary i { display: grid; flex: none; width: 2.1rem; height: 2.1rem; place-items: center; border: 1px solid var(--dg-rule); font-style: normal; transition: transform .25s ease, background .2s ease, color .2s ease, border-color .2s ease; }
+  details[open] summary i { transform: rotate(180deg); border-color: var(--dg-accent); background: var(--dg-accent); color: white; }
+  details p { max-width: 62ch; padding-bottom: 1.35rem; color: var(--dg-muted); }
+</style>

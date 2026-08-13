@@ -1,0 +1,50 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import MediaSection from '../components/MediaSection.astro';
+import IncludedSection from '../components/IncludedSection.astro';
+import AddOnGrid from '../components/AddOnGrid.astro';
+import ProcessSteps from '../components/ProcessSteps.astro';
+import SocialSection from '../components/SocialSection.astro';
+import FaqSection from '../components/FaqSection.astro';
+import ConversionBanner from '../components/ConversionBanner.astro';
+import type {
+  GuildContentSection,
+  GuildCtaData,
+  GuildFaqItem,
+  GuildHeroData,
+  GuildIncludedData,
+  GuildProcessData,
+  GuildShellData,
+  GuildSocialData,
+} from '../types';
+
+interface Props {
+  shell: GuildShellData;
+  hero: GuildHeroData;
+  intro: GuildContentSection;
+  overview: GuildContentSection;
+  included?: GuildIncludedData;
+  process?: GuildProcessData;
+  addOnsHeading?: string;
+  addOns?: GuildContentSection[];
+  why: GuildContentSection;
+  social?: GuildSocialData;
+  faqs?: GuildFaqItem[];
+  cta: GuildCtaData;
+}
+const { shell, hero, intro, overview, included, process, addOnsHeading = 'Add-On Services', addOns = [], why, social, faqs = [], cta } = Astro.props;
+---
+
+<SiteLayout {...shell}>
+  <PageHero {hero} />
+  <MediaSection content={intro} />
+  <MediaSection content={overview} />
+  {included && <IncludedSection content={included} />}
+  {process && <ProcessSteps content={process} />}
+  {addOns.length > 0 && <AddOnGrid heading={addOnsHeading} {addOns} />}
+  <MediaSection content={why} />
+  {social && <SocialSection content={social} />}
+  {faqs.length > 0 && <FaqSection items={faqs} />}
+  <ConversionBanner content={cta} />
+</SiteLayout>

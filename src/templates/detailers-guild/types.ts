@@ -80,7 +80,6 @@ export interface GuildAreaSectionData {
 }
 
 export interface GuildContentSection {
-  index?: string;
   eyebrow?: string;
   heading?: string;
   /** Renders the heading a step larger (between dg-heading and dg-display). */
@@ -93,7 +92,38 @@ export interface GuildContentSection {
   secondaryAction?: GuildLink;
   reversed?: boolean;
   patterned?: boolean;
+  /** Drops the section's bottom rule so it flows into the next section. */
+  seamless?: boolean;
   stats?: Array<{ value: string; label: string }>;
+}
+
+export interface GuildProcessStep {
+  title: string;
+  body: string;
+}
+
+export interface GuildProcessData {
+  heading: string;
+  steps: GuildProcessStep[];
+  image?: GuildImage;
+}
+
+export interface GuildFaqItem {
+  question: string;
+  answer: string;
+}
+
+export interface GuildIncludedPanel {
+  eyebrow?: string;
+  heading: string;
+  image?: GuildImage;
+  items: string[];
+  action?: GuildLink;
+}
+
+export interface GuildIncludedData {
+  heading: string;
+  panels: GuildIncludedPanel[];
 }
 
 export interface GuildServiceCard extends GuildNavItem {

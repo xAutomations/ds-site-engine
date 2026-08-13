@@ -1,0 +1,39 @@
+---
+import GuildIcon from './GuildIcon.astro';
+import type { GuildIncludedData } from '../types';
+interface Props { content: GuildIncludedData; }
+const { content } = Astro.props;
+---
+
+<section class="dg-section dg-pattern">
+  <div class="dg-container dg-section-inner">
+    <h2 class="dg-heading dg-reveal">{content.heading}</h2>
+    {content.panels.map((panel, index) => (
+      <div class:list={['panel', 'dg-reveal', { reversed: index % 2 === 1 }]}>
+        {panel.image && <figure class="dg-media dg-grayscale"><img src={panel.image.src} alt={panel.image.alt} loading="lazy" /></figure>}
+        <div>
+          {panel.eyebrow && <div class="dg-kicker">{panel.eyebrow}</div>}
+          <h3 class="dg-subheading">{panel.heading}</h3>
+          <ul>
+            {panel.items.map((item) => <li><GuildIcon name="arrow" size={13} /><span>{item}</span></li>)}
+          </ul>
+          {panel.action && <a class="dg-btn dg-btn--primary" href={panel.action.href}>{panel.action.label}<GuildIcon name="arrow" size={14} /></a>}
+        </div>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  h2 { margin-bottom: 3rem; }
+  .panel { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2.5rem, 6vw, 5rem); align-items: center; }
+  .panel + .panel { margin-top: var(--dg-section); }
+  .panel.reversed .dg-media { order: 2; }
+  .panel .dg-media { aspect-ratio: 4 / 3; }
+  h3 { margin-top: .8rem; }
+  ul { display: grid; gap: .7rem; margin: 1.4rem 0 0; padding: 0; list-style: none; }
+  li { display: flex; gap: .6rem; color: var(--dg-muted); }
+  li :global(svg) { flex: none; margin-top: .3rem; color: var(--dg-accent); }
+  .dg-btn { margin-top: 1.7rem; }
+  @media (max-width: 48rem) { .panel { grid-template-columns: 1fr; } .panel.reversed .dg-media { order: 0; } }
+</style>
