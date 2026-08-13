@@ -55,8 +55,9 @@ export const siteConfig = {
     label: 'the Northeast — NY, NJ, PA, CT, MD, DE, and VA',
   },
 
-  // TODO(fact-needed): opening hours not supplied.
-  hours: [{ days: 'PLACEHOLDER — hours not supplied', hours: 'PLACEHOLDER' }],
+  // No published hours, by decision: AOG dispatch is 24/7 and everything else is
+  // quote-first, so a Mon–Fri line would be an invented fact. Omitted, the
+  // LocalBusiness JSON-LD carries no openingHoursSpecification.
 
   socials: {
     // Instagram is the only account; the rest are skipped by decision.
@@ -64,8 +65,8 @@ export const siteConfig = {
   },
 
   ghl: {
-    // TODO(fact-needed): GHL quote form not published yet.
-    quoteUrl: 'https://example.com/PLACEHOLDER-quote-form',
+    // No external quote page, by decision: the GHL form is embedded on /get-quote.
+    embed: true,
   },
 
   tracking: {
@@ -93,8 +94,7 @@ export const siteConfig = {
   },
 
   legal: {
-    // TODO(fact-needed): effective date not set.
-    effectiveDate: 'PLACEHOLDER',
+    effectiveDate: 'August 13, 2026',
     // JetSpa supplied its own Privacy Policy and Terms of Service, with aviation
     // liability and warranty clauses the shared template cannot express. That text
     // has NOT been through Detailer Systems' legal review.

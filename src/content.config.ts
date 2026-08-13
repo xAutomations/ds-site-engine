@@ -14,6 +14,7 @@ import {
   aviationAirportSchema,
   aviationFaqSchema,
   aviationHomeSchema,
+  aviationQuoteReceivedSchema,
 } from './templates/aviation-editorial/schema';
 
 const BASE = './client/content';
@@ -270,6 +271,12 @@ const getQuote = defineCollection({
   }),
 });
 
+/** /quote-received copy — the form's post-submit confirmation page. */
+const quoteReceived = defineCollection({
+  loader: glob({ base: BASE, pattern: 'quote-received.md' }),
+  schema: aviationQuoteReceivedSchema,
+});
+
 /**
  * Recipe E — authored legal override.
  *
@@ -343,6 +350,7 @@ export const collections = {
   about,
   faqs,
   getQuote,
+  quoteReceived,
   legal,
   blog,
 };

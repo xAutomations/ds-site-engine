@@ -297,6 +297,70 @@ export const aviationFaqSchema = z.object({
 
 export type AviationFaq = z.infer<typeof aviationFaqSchema>;
 
+/**
+ * /quote-received — the post-submit confirmation page. Contact details, phone
+ * numbers, and social URLs all come from site config at render time; the payload
+ * authors only the prose, so nothing here can drift from the config record.
+ */
+export const aviationQuoteReceivedSchema = z.object({
+  metaDescription: prose.max(160),
+  title: prose,
+  masthead: z.object({
+    eyebrow: prose,
+    headline: prose,
+    body: prose,
+    status: z.object({
+      label: prose,
+      headline: prose,
+      rows: z.array(z.object({ label: prose, value: prose })).min(1).max(4),
+    }),
+  }),
+  sequence: z.object({
+    eyebrow: prose,
+    heading: prose,
+    note: prose,
+    steps: z
+      .array(z.object({ timing: prose, title: prose, body: prose }))
+      .min(2)
+      .max(4),
+    footnote: z.object({ left: prose, right: prose }).optional(),
+  }),
+  ready: z.object({
+    eyebrow: prose,
+    heading: prose,
+    intro: prose,
+    items: z.array(z.object({ title: prose, body: prose })).min(1).max(5),
+  }),
+  aog: z.object({
+    statusLabel: prose,
+    heading: prose,
+    /** Supports an [inline link](/aog-emergency-cleaning) to the service page. */
+    body: prose,
+    callLabel: prose,
+    note: prose,
+  }),
+  whileYouWait: z.object({
+    heading: prose,
+    note: prose,
+    links: z
+      .array(z.object({ kind: prose, title: prose, description: prose, href: z.string().min(1) }))
+      .min(1)
+      .max(4),
+  }),
+  /** Rendered only when the config actually carries social URLs. */
+  connect: z.object({ heading: prose, note: prose }),
+  cta: z.object({
+    eyebrow: prose,
+    heading: prose,
+    body: prose,
+    media: mediaSlot,
+    alsoUsefulLabel: prose,
+    alsoUseful: z.array(z.object({ label: prose, href: z.string().min(1) })).min(1).max(4),
+  }),
+});
+
+export type AviationQuoteReceived = z.infer<typeof aviationQuoteReceivedSchema>;
+
 export const aviationAirportSchema = z.object({
   officialName: prose,
   locationLabel: prose,

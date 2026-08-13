@@ -121,6 +121,12 @@ function checkDrift(slug, intake, config) {
     const truth = get(intake, intakePath);
     if (truth === null || truth === undefined) continue; // pending — check-intake's job
     const shown = get(config, configPath);
+    // Decided-none: intake records "the client has none of these, by decision" as []
+    // (hours) or false (quoteUrl), and the config expresses the same fact by omitting
+    // the now-optional key. That is agreement, not drift.
+    if ((truth === false || (Array.isArray(truth) && truth.length === 0)) && shown === undefined) {
+      continue;
+    }
     if (!agrees(truth, shown)) {
       err(
         file,

@@ -180,10 +180,14 @@ export function localBusinessJsonLd(
       geoRadius: serviceArea.radiusMiles * 1609, // miles → metres
     },
     knowsAbout: seo.category,
-    openingHoursSpecification: hours.map((h) => ({
-      '@type': 'OpeningHoursSpecification',
-      description: `${h.days}: ${h.hours}`,
-    })),
+    ...(hours?.length
+      ? {
+          openingHoursSpecification: hours.map((h) => ({
+            '@type': 'OpeningHoursSpecification',
+            description: `${h.days}: ${h.hours}`,
+          })),
+        }
+      : {}),
     ...(sameAs.length ? { sameAs } : {}),
   };
 }

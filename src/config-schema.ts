@@ -78,9 +78,15 @@ export const siteConfigSchema = z.object({
     label: z.string().min(1),
   }),
 
+  /**
+   * Optional: a business that publishes no opening hours (24/7 dispatch, quote-first
+   * scheduling) omits the field, and the LocalBusiness JSON-LD then carries no
+   * openingHoursSpecification rather than a fabricated one.
+   */
   hours: z
     .array(z.object({ days: z.string().min(1), hours: z.string().min(1) }))
-    .min(1),
+    .min(1)
+    .optional(),
 
   socials: z.object({
     facebook: z.url().optional(),
@@ -90,8 +96,12 @@ export const siteConfigSchema = z.object({
   }),
 
   ghl: z.object({
-    /** GHL form/funnel URL used by the active template's quote page. */
-    quoteUrl: z.url(),
+    /**
+     * GHL form/funnel URL for templates whose quote page links out. Optional: a
+     * client whose form is embedded on /get-quote (or who quotes by phone only)
+     * has no external quote page at all.
+     */
+    quoteUrl: z.url().optional(),
     /** Optional "leave us a review" destination. */
     reviewUrl: z.url().optional(),
     /**

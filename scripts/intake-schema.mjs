@@ -101,7 +101,8 @@ export const intakeSchema = z.object({
     label: pending(z.string().min(1)),
   }),
 
-  hours: pending(z.array(z.object({ days: z.string().min(1), hours: z.string().min(1) })).min(1)),
+  /** `null` = not yet supplied; `[]` = the business publishes no hours, by decision. */
+  hours: pending(z.array(z.object({ days: z.string().min(1), hours: z.string().min(1) }))),
 
   socials: z.object({
     facebook: z.url().nullish(),
@@ -113,7 +114,8 @@ export const intakeSchema = z.object({
   }),
 
   ghl: z.object({
-    quoteUrl: pending(url),
+    /** `null` = not yet supplied; `false` = no external quote page, by decision. */
+    quoteUrl: pending(z.union([url, z.literal(false)])),
     /** Embed the form inline on /get-quote rather than linking out. */
     embed: z.boolean().default(false),
   }),

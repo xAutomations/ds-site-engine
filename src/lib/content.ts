@@ -13,6 +13,7 @@ const RESERVED_SLUGS = new Set([
   'about',
   'faqs',
   'get-quote',
+  'quote-received',
   'privacy-policy',
   'tos',
   'styleguide',
@@ -93,7 +94,7 @@ export function areaLabel(area: { name: string; state?: string }): string {
 }
 
 /** Singleton pages. Throw loudly rather than rendering an empty page. */
-async function getSingleton<C extends 'home' | 'about' | 'faqs' | 'getQuote'>(
+async function getSingleton<C extends 'home' | 'about' | 'faqs' | 'getQuote' | 'quoteReceived'>(
   collection: C,
   file: string,
 ) {
@@ -118,6 +119,7 @@ export const getHome = () => getSingleton('home', 'home');
 export const getAbout = () => getSingleton('about', 'about');
 export const getFaqs = () => getSingleton('faqs', 'faqs');
 export const getGetQuote = () => getSingleton('getQuote', 'get-quote');
+export const getQuoteReceived = () => getSingleton('quoteReceived', 'quote-received');
 
 /**
  * Authored legal override. Returns undefined when the payload does not carry one,

@@ -29,7 +29,7 @@
     "radiusMiles": null,
     "label": "the Northeast — NY, NJ, PA, CT, MD, DE, and VA"
   },
-  "hours": null,
+  "hours": [],
   "socials": {
     "facebook": null,
     "instagram": "https://www.instagram.com/jet_spa",
@@ -38,8 +38,8 @@
     "reviewUrl": null
   },
   "ghl": {
-    "quoteUrl": null,
-    "embed": false
+    "quoteUrl": false,
+    "embed": true
   },
   "tracking": {
     "gtmId": null
@@ -53,7 +53,7 @@
     "credentialBadge": null
   },
   "legal": {
-    "effectiveDate": null,
+    "effectiveDate": "August 13, 2026",
     "source": "client",
     "governingState": "New Jersey"
   },
@@ -206,6 +206,9 @@
     "Trust signals repeated site-wide and treated as facts: ADA (Aircraft Detailing Association) certification, OEM-approved chemistry, $200K general liability + $1.5M hangar liability insurance, badge access at all four airports. Verify each before publishing; none is verifiable from the export.",
     "Morristown's ICAO is KMMU (the onboarding call said 'MMA', which is wrong).",
     "PLACEHOLDERS ARE IN USE, by decision: site.config.ts carries stand-in values for the facts still null here, so the site can be built and reviewed before onboarding completes. This file stays the honest record — a field that is null here has not been supplied, whatever site.config.ts says. Every placeholder contains the string 'PLACEHOLDER', is listed on every build by src/lib/site-config.ts, and fails the build under DS_STRICT=1. Assets are no longer stand-ins: logo, hero video, poster and every page image now come from the client's own site (see the asset note above). What remains placeholder is text and URLs, not imagery.",
-    "Instagram is the only social account; Facebook, TikTok, YouTube and the Google review link are deliberately skipped. The authored FAQ and quote surfaces must remain Instagram-only."
+    "Instagram is the only social account; Facebook, TikTok, YouTube and the Google review link are deliberately skipped. The authored FAQ and quote surfaces must remain Instagram-only.",
+    "hours is [] by decision (2026-08-13): the business publishes no opening hours — AOG dispatch is 24/7 and everything else is quote-first. The site and its LocalBusiness JSON-LD carry no hours.",
+    "ghl.quoteUrl is false by decision (2026-08-13): there is no external GHL quote page. The quote form is embedded directly on /get-quote (embed: true).",
+    "legal.effectiveDate set to August 13, 2026 — the date the placeholders were resolved, not a client-supplied fact."
   ]
 }

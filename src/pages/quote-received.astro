@@ -1,0 +1,13 @@
+---
+import { getQuoteReceived } from '../lib/content';
+import { siteConfig } from '../lib/site-config';
+import AviationEditorialQuoteReceived from '../templates/aviation-editorial/pages/QuoteReceivedPage.astro';
+
+const entry = await getQuoteReceived();
+
+if (siteConfig.template !== 'aviation-editorial') {
+  throw new Error(`No quote-received page registered for template "${siteConfig.template}".`);
+}
+---
+
+<AviationEditorialQuoteReceived {entry} />
