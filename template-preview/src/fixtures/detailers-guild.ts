@@ -167,3 +167,59 @@ export const aboutCta: GuildCtaData = {
 };
 
 export { services };
+
+export const alexandriaShell: GuildShellData = {
+  ...homeShell,
+  title: 'Mobile Auto Detailing in Alexandria, VA | Detailer Guild',
+  description: 'Mobile detailing at your home or office anywhere in Alexandria, VA — Old Town, Del Ray, Potomac Yard, and beyond.',
+  path: '/alexandria-va',
+};
+
+export const alexandriaHero: GuildHeroData = {
+  eyebrow: 'Areas We Serve',
+  heading: 'Mobile Auto Detailing in Alexandria, VA',
+  primaryAction: { label: 'Get a quote', href: '#book' },
+  secondaryAction: { label: '(888) 900-5941', href: 'tel:+18889005941' },
+  compact: true,
+};
+
+export const alexandriaIntro: GuildContentSection = {
+  body: [
+    'We are 100% mobile. We detail vehicles at your home in Del Ray, at your office in Eisenhower East, in the parking lot of your Old Town condo, or wherever you park. No shop visits, no waiting rooms.',
+  ],
+};
+
+export const alexandriaWhy: GuildContentSection = {
+  index: '01',
+  heading: 'Why Mobile Detailing in Alexandria?',
+  body: [
+    'Alexandria is a commuter city. Between the Metro, the GW Parkway, 395, and the Beltway, most residents spend hours in their vehicles every day. That time in traffic adds up in the form of brake dust, road film, and interior wear. Dropping your car off at a detail shop means finding a ride, adjusting your schedule, and losing time you do not have.',
+    'Mobile detailing solves that. We show up at your location on your schedule. For residents in Old Town, Potomac Yard, Landmark, Cameron Station, or anywhere in the city, we come to you.',
+  ],
+  image: { src: '/assets/funky-lines.png', alt: 'Preview placeholder for mobile detailing in Alexandria' },
+  action: { label: 'Get a quote', href: '#book' },
+  secondaryAction: { label: 'Call (888) 900-5941', href: 'tel:+18889005941' },
+};
+
+export const alexandriaNeighborhoods: GuildContentSection = {
+  heading: 'Neighborhoods We Serve in Alexandria',
+  small: true,
+  body: [
+    'Old Town Alexandria. Del Ray. Potomac Yard. Eisenhower East. Cameron Station. Landmark. Seminary Hill. Beverley Hills. North Ridge. Rosemont. Arlandria. Parkfairfax. We cover all of Alexandria and the surrounding neighborhoods within the city limits.',
+  ],
+};
+
+export const alexandriaGuarantee: GuildContentSection = {
+  heading: 'The San Mob Detailing Guarantee',
+  large: true,
+  body: [
+    'Alexandria is home base for San Mob Detailing. We live and work here. Our reputation depends on the quality of work we deliver to our neighbors. Every vehicle we touch gets the same standard of care. No shortcuts, no rushing, no excuses.',
+  ],
+};
+
+export const alexandriaCta: GuildCtaData = {
+  heading: 'Schedule Your Detail in Alexandria',
+  body: "Your car sits in the same Alexandria weather and traffic as everyone else's. The difference is whether you let it accumulate or you do something about it. San Mob Detailing makes it easy.",
+  action: { label: 'Book today', href: '#' },
+  image: { src: '/assets/terrazzo-accent.png', alt: '' },
+};

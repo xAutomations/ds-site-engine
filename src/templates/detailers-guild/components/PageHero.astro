@@ -20,7 +20,7 @@ const ticker = hero.ticker ? [...hero.ticker, ...hero.ticker] : [];
 
 <style>
   .hero { position: relative; display: flex; min-height: min(50rem, 80vh); flex-direction: column; justify-content: center; overflow: hidden; background: var(--dg-ink); color: white; }
-  .hero.compact { min-height: min(40rem, 68vh); }
+  .hero.compact { min-height: 80vh; }
   .hero-image, .wash { position: absolute; inset: 0; }
   .hero-image :global(img), .hero-image :global(video) { height: 100%; object-fit: cover; }
   .wash { background: linear-gradient(135deg, color-mix(in srgb, var(--dg-accent) 20%, transparent), color-mix(in srgb, var(--dg-ink) 72%, transparent) 45%, color-mix(in srgb, var(--dg-ink) 90%, transparent)); }

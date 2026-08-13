@@ -1,0 +1,26 @@
+---
+import LocationPage from '../../../src/templates/detailers-guild/pages/LocationPage.astro';
+import {
+  alexandriaCta,
+  alexandriaGuarantee,
+  alexandriaHero,
+  alexandriaIntro,
+  alexandriaNeighborhoods,
+  alexandriaShell,
+  alexandriaWhy,
+  homeSocial,
+  services,
+} from '../fixtures/detailers-guild';
+---
+
+<LocationPage
+  shell={alexandriaShell}
+  hero={alexandriaHero}
+  intro={alexandriaIntro}
+  why={alexandriaWhy}
+  {services}
+  neighborhoods={alexandriaNeighborhoods}
+  social={homeSocial}
+  guarantee={alexandriaGuarantee}
+  cta={alexandriaCta}
+/>

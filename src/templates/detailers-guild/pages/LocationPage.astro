@@ -1,0 +1,33 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import MediaSection from '../components/MediaSection.astro';
+import ServiceGrid from '../components/ServiceGrid.astro';
+import SocialSection from '../components/SocialSection.astro';
+import ConversionBanner from '../components/ConversionBanner.astro';
+import type { GuildContentSection, GuildCtaData, GuildHeroData, GuildServiceCard, GuildShellData, GuildSocialData } from '../types';
+
+interface Props {
+  shell: GuildShellData;
+  hero: GuildHeroData;
+  intro: GuildContentSection;
+  why: GuildContentSection;
+  services: GuildServiceCard[];
+  neighborhoods: GuildContentSection;
+  social?: GuildSocialData;
+  guarantee: GuildContentSection;
+  cta: GuildCtaData;
+}
+const { shell, hero, intro, why, services, neighborhoods, social, guarantee, cta } = Astro.props;
+---
+
+<SiteLayout {...shell}>
+  <PageHero {hero} />
+  <MediaSection content={intro} />
+  <MediaSection content={why} />
+  <ServiceGrid heading="Our Mobile Detailing Services" {services} />
+  <MediaSection content={neighborhoods} />
+  {social && <SocialSection content={social} />}
+  <MediaSection content={guarantee} />
+  <ConversionBanner content={cta} />
+</SiteLayout>

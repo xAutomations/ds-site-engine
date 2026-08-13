@@ -25,7 +25,7 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; background: var(--dg-bg); }
-body { margin: 0; background: var(--dg-bg); color: var(--dg-ink); font-family: var(--dg-font); font-size: 0.9375rem; line-height: 1.65; }
+body { margin: 0; background: var(--dg-bg); color: var(--dg-ink); font-family: var(--dg-font); font-size: 1rem; line-height: 1.65; }
 body.dg-menu-open { overflow: hidden; }
 img, video { display: block; width: 100%; }
 a { color: inherit; }

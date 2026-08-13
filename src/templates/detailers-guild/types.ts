@@ -82,10 +82,15 @@ export interface GuildAreaSectionData {
 export interface GuildContentSection {
   index?: string;
   eyebrow?: string;
-  heading: string;
+  heading?: string;
+  /** Renders the heading a step larger (between dg-heading and dg-display). */
+  large?: boolean;
+  /** Renders the heading a step smaller than the default dg-heading. */
+  small?: boolean;
   body: string[];
   image?: GuildImage;
   action?: GuildLink;
+  secondaryAction?: GuildLink;
   reversed?: boolean;
   patterned?: boolean;
   stats?: Array<{ value: string; label: string }>;
