@@ -139,6 +139,21 @@ export interface GuildServiceCard extends GuildNavItem {
   image: GuildImage;
 }
 
+export interface GuildQuoteData {
+  eyebrow?: string;
+  heading: string;
+  /** Hours shown on the quote page (may differ from the footer's). */
+  hours?: Array<{ days: string; hours: string }>;
+  /** Short tagline under the contact details, e.g. "Based in Alexandria, VA — we come to you". */
+  note?: string;
+  /** Image shown below the note in the details column. */
+  image?: GuildImage;
+  /** Form embed URL; when absent a placeholder box marks the iframe slot. */
+  formSrc?: string;
+  /** Minimum height reserved for the embedded form. */
+  formHeight?: string;
+}
+
 export interface GuildCtaData {
   eyebrow?: string;
   heading: string;

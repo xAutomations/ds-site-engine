@@ -1,0 +1,67 @@
+---
+import GuildIcon from './GuildIcon.astro';
+import type { GuildQuoteData, GuildSiteData } from '../types';
+
+interface Props { content: GuildQuoteData; site: GuildSiteData; }
+const { content, site } = Astro.props;
+const { contact, socials } = site;
+const hours = content.hours ?? site.hours ?? [];
+const iconFor = (label: string): 'facebook' | 'instagram' | 'tiktok' | null => {
+  const key = label.toLowerCase();
+  return key === 'facebook' || key === 'instagram' || key === 'tiktok' ? key : null;
+};
+---
+
+<section class="dg-section">
+  <div class="dg-container dg-section-inner inner">
+    <div class="details dg-reveal">
+      {content.eyebrow && <div class="dg-kicker">{content.eyebrow}</div>}
+      <h2 class="dg-heading">{content.heading}</h2>
+      <div class="rows">
+        <div><small>Phone</small><a href={`tel:${contact.phone}`}>{contact.phoneDisplay}</a></div>
+        <div><small>Email</small><a href={`mailto:${contact.email}`}>{contact.email}</a></div>
+        <div>
+          <small>Working hours</small>
+          {hours.map((h) => <span><strong>{h.days}:</strong> {h.hours}</span>)}
+        </div>
+        <div>
+          <small>Follow us</small>
+          <span class="socials">{socials.map((link) => {
+            const icon = iconFor(link.label);
+            return <a class="social" href={link.href} aria-label={link.label} rel="noreferrer" target="_blank">{icon ? <GuildIcon name={icon} size={16} /> : link.label}</a>;
+          })}</span>
+        </div>
+      </div>
+      {content.note && <p class="note"><GuildIcon name="arrow" size={13} />{content.note}</p>}
+      {content.image && <figure class="dg-media dg-grayscale"><img src={content.image.src} alt={content.image.alt} loading="lazy" /></figure>}
+    </div>
+    <div class="form dg-reveal" style={`--form-min-height:${content.formHeight ?? '52rem'}`}>
+      {content.formSrc
+        ? <iframe src={content.formSrc} title="Quote request form" loading="lazy"></iframe>
+        : <div class="placeholder"><span>Quote form embed</span></div>}
+    </div>
+  </div>
+</section>
+
+<style>
+  .inner { display: grid; grid-template-columns: 5fr 7fr; gap: clamp(2.5rem, 6vw, 5rem); align-items: start; }
+  h2 { max-width: 14ch; margin-top: .8rem; }
+  .rows { display: grid; gap: 1.4rem; margin-top: 2.25rem; padding-top: 1.75rem; border-top: 2px solid var(--dg-rule); }
+  .rows > div { display: grid; gap: .3rem; justify-items: start; }
+  small { color: var(--dg-ink); font-size: .85rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  .rows a:not(.social) { color: var(--dg-ink); font-size: 1.15rem; font-weight: 800; text-decoration: none; }
+  .rows a:not(.social):hover { color: var(--dg-accent-dark); }
+  .rows span:not(.socials) { color: var(--dg-muted); }
+  .rows strong { color: var(--dg-ink); }
+  .socials { display: flex; gap: .6rem; }
+  .social { display: grid; width: 2.5rem; height: 2.5rem; place-items: center; border: 1px solid var(--dg-rule); color: var(--dg-muted); transition: border-color .2s ease, color .2s ease; }
+  .social:hover { border-color: var(--dg-accent); color: var(--dg-accent); }
+  .note { display: flex; align-items: center; gap: .6rem; margin-top: 2rem; font-weight: 800; letter-spacing: .02em; text-transform: uppercase; }
+  .note :global(svg) { color: var(--dg-accent); }
+  .details .dg-media { margin-top: 1.5rem; aspect-ratio: 4 / 3; }
+  .form { min-height: var(--form-min-height); border: 1px solid var(--dg-rule); background: white; }
+  .form iframe { display: block; width: 100%; height: 100%; min-height: var(--form-min-height); border: 0; }
+  .placeholder { display: grid; min-height: var(--form-min-height); place-items: center; }
+  .placeholder span { padding: .5rem 1rem; border: 1px dashed var(--dg-faint); color: var(--dg-faint); font-family: monospace; font-size: .8rem; }
+  @media (max-width: 56rem) { .inner { grid-template-columns: 1fr; } }
+</style>

@@ -8,6 +8,7 @@ import type {
   GuildCtaData,
   GuildHeroData,
   GuildServiceCard,
+  GuildQuoteData,
   GuildShellData,
   GuildSocialData,
 } from '../../../src/templates/detailers-guild/types';
@@ -440,4 +441,35 @@ export const faqCta: GuildCtaData = {
   body: 'Not sure if your vehicle needs a heavy paint correction or just a standard wash? We are here to help you make the right call.',
   action: { label: 'Book today', href: '#' },
   image: { src: '/assets/waves-accent.png', alt: '' },
+};
+
+export const quoteShell: GuildShellData = {
+  ...homeShell,
+  title: 'Get a Quote | Detailer Guild',
+  description: 'Request a free mobile detailing quote. We come to you anywhere in the DMV.',
+  path: '/get-quote',
+};
+
+export const quoteHero: GuildHeroData = {
+  eyebrow: 'Get a Quote',
+  heading: 'Book Your Detail Today',
+  secondaryAction: { label: 'Call (888) 900-5941', href: 'tel:+18889005941' },
+  compact: true,
+};
+
+export const quoteData: GuildQuoteData = {
+  eyebrow: 'Book Your Detail Today',
+  heading: 'Contact San Mob Detailing Today',
+  hours: [
+    { days: 'Monday – Saturday', hours: '10:00 AM – 10:00 PM' },
+    { days: 'Sunday', hours: 'Appointments Only' },
+  ],
+  note: 'Based in Alexandria, VA — we come to you',
+  image: { src: '/assets/terrazzo-accent.png', alt: 'Preview placeholder for the mobile detailing unit' },
+};
+
+export const quoteCta: GuildCtaData = {
+  heading: 'Ready to Get Your Vehicle Detailed?',
+  action: { label: 'Book today', href: '#' },
+  image: { src: '/assets/ripples.png', alt: '' },
 };

@@ -1,0 +1,21 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import QuoteSection from '../components/QuoteSection.astro';
+import ConversionBanner from '../components/ConversionBanner.astro';
+import type { GuildCtaData, GuildHeroData, GuildQuoteData, GuildShellData } from '../types';
+
+interface Props {
+  shell: GuildShellData;
+  hero: GuildHeroData;
+  quote: GuildQuoteData;
+  cta?: GuildCtaData;
+}
+const { shell, hero, quote, cta } = Astro.props;
+---
+
+<SiteLayout {...shell}>
+  <PageHero {hero} />
+  <QuoteSection content={quote} site={shell.site} />
+  {cta && <ConversionBanner content={cta} />}
+</SiteLayout>
