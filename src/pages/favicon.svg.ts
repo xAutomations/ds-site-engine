@@ -10,13 +10,14 @@
  */
 import type { APIRoute } from 'astro';
 import { siteConfig } from '../lib/site-config';
-import { getPreset, pickOnAccent } from '../styles/presets';
+import { pickOnAccent } from '../styles/contrast';
 
 export const GET: APIRoute = () => {
-  const { accentColor, preset } = siteConfig.theme;
-  // Same derivation as --ds-on-accent, so the mark cannot end up with an
-  // illegible glyph on a light accent while the buttons on the page are fine.
-  const onAccent = pickOnAccent(accentColor, getPreset(preset).colors.onAccent);
+  const { accentColor } = siteConfig.theme;
+  // Same derivation the templates use for a label on an accent fill, so the mark
+  // cannot end up with an illegible glyph on a light accent while the buttons on
+  // the page are fine.
+  const onAccent = pickOnAccent(accentColor, '#ffffff');
 
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
 <rect width="32" height="32" rx="7" fill="${accentColor}"/>

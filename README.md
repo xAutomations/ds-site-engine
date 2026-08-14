@@ -13,7 +13,7 @@ pnpm use jetspa       # repoint client/ → clients/jetspa
 pnpm use              # re-link from DS_CLIENT, or keep the current link
 ```
 
-`dev`, `build`, `preview`, `check` and `stress` all re-establish the link first (the
+`dev`, `build`, `preview` and `check` all re-establish the link first (the
 `pre*` scripts in package.json), so a stale link cannot silently build the wrong
 client. In CI, set `DS_CLIENT` instead of running `pnpm use`:
 
@@ -33,13 +33,13 @@ stay put — the link moves instead.
 > `Missing payload file` for a file that is plainly on disk.
 >
 > This matters because the link also moves as a **side effect** — `DS_CLIENT=jetspa pnpm
-> build` or `pnpm run stress` in another terminal repoints the shared link, so the dev
-> server you are looking at can go stale from a command you did not run. Set
+> build` in another terminal repoints the shared link, so the dev server you are
+> looking at can go stale from a command you did not run. Set
 > `DS_NO_DEV_RESTART=1` to be warned instead of restarted.
 >
 > Two hard-won details of *how* it restarts (scripts/dev-server.mjs):
 >
-> - **Deferred past the build.** Under `prebuild`/`prestress` the restart waits for the
+> - **Deferred past the build.** Under `prebuild` the restart waits for the
 >   matching `post*` hook — a dev server booting while an `astro build` runs in the same
 >   directory races it over `.astro/` and comes up corrupted.
 > - **Clean-slate, never `--force`.** `.astro/data-store.json` is deleted between stop
@@ -217,9 +217,9 @@ print which pages would move. Empty output means the bump is mechanically safe; 
 else gets read before promoting. This generalises the text-diff used as the regression
 check while making the engine client-shape-agnostic — comparing rendered text rather than
 bytes, since markup and hashed filenames churn for reasons that do not reach the page.
-`pnpm run stress` already covers the rest (links, og:image, contrast, Lighthouse,
-responsive overflow). Worth writing before the second client goes live, which is the
-first time a pin bump has stakes.
+`pnpm build` covers schema validation, accent contrast, asset budgets, and (via
+verify-dist) internal links. Worth writing before the second client goes live, which is
+the first time a pin bump has stakes.
 
 ### Also before the first deploy
 
@@ -234,41 +234,39 @@ first time a pin bump has stakes.
 
 ## Theme
 
-A client's whole design decision is `theme.preset` plus `theme.accentColor`. Everything
-else — palette, type, radii, dividers, card and button treatment, hero composition,
-motion — comes from the preset.
+A client's whole design decision is `theme.accentColor` — one hex value. Everything
+else (palette, type, radii, dividers, card and button treatment, hero composition,
+motion) belongs to the **template**, in its own `styles/global.css`. A template is a
+content contract and a design language together; a client picks a template, not a skin.
 
-| preset | surfaces | character |
-| --- | --- | --- |
-| `fresh` | light | Space Grotesk, curved dividers, pill buttons, split hero |
-| `stealth` | light, near-black bands | Oswald condensed uppercase, square buttons, full-bleed hero |
-| `chrome` | light | Sora, overlapping cards, centred hero |
-| `bold` | light | Anton, hard offset shadows, poster-card hero |
-| `noir` | **near-black** | stealth's language inverted — for a *light* accent |
+> There used to be a `theme.preset` field naming one of five skins (`fresh`, `stealth`,
+> `chrome`, `bold`, `noir`) with structural motifs applied as data attributes. None of
+> it was ever wired — both templates read `accentColor` straight into their own custom
+> property — so it was removed rather than left as a field every payload filled in and
+> no page reflected. `src/styles/contrast.ts` is what remains, and it is the part that
+> was doing real work.
 
-**Pick `noir` when the brand colour is light** — brass, champagne, bronze, pale gold.
-This is not a taste call, it is arithmetic: WCAG AA wants 3:1 for an accent fill against
-the page, and brass `#c6a46c` manages 2.12:1 on `stealth`'s `#f3f3f4` versus 8.32:1 on
-`#0c0c0c`. `assertAccentContrast` fails the build rather than shipping it, so a light
-accent on a light preset is not a thing you can talk the engine into.
+**The accent is validated, not trusted.** Each template checks the client's colour
+against its *own* surfaces at build time:
 
-Two things are derived per accent rather than authored, so most accents just work:
-`--ds-on-accent` (the label on an accent fill) flips to dark when white would be
-illegible, and `--ds-accent-ink` moves toward or away from white depending on whether
-the preset's surfaces are dark or light.
-
-`/styleguide/{preset}` renders the payload under any preset for comparison, and reports
-in-page when the accent would not pass there — only the shipping preset fails the build.
-
-## Checks
-
-```
-pnpm check                 # types
-pnpm build                 # schema validation, contrast, asset budgets
-pnpm run stress -- fresh    # + links, og:image, Lighthouse, responsive overflow
-pnpm run stress             # all five presets
+- **The label is derived, not assumed.** `pickOnAccent` flips text on an accent fill to
+  dark when white cannot clear 4.5:1. A light brand colour (brass, champagne) moves the
+  *label* rather than being rejected — telling a client their brand is wrong is a bad
+  answer when the label can change instead.
+- **Accent-as-text is derived too.** `deriveTextSafe` darkens or lightens the accent
+  until it clears AA on the template's paper, instead of a fixed mix that is a guess in
+  both directions.
+- **The build fails for what derivation cannot fix.** An accent within 3:1 of the page
+  makes every fill on the site invisible, and no label colour changes that. The error
+  carries the arithmetic and the ratio it needed.
+pnpm build                 # schema validation, accent contrast, asset budgets,
+                           #   missing assets, then verify-dist for internal links
+pnpm lint                  # payload shape
+pnpm test                  # unit tests
 ```
 
-A sweep skips any preset the payload's accent cannot meet AA under, and says so. That is
-reported rather than counted as a failure: an accent only has to pass on the preset its
-client ships.
+A client's `theme.accentColor` is validated against the active template's own surfaces
+at build time (`styles/contrast.ts`). The label colour on an accent fill is derived
+rather than assumed, so a light brand colour moves the *label* instead of being
+rejected; the build fails only when the accent is too close to the page for any fill to
+be visible.

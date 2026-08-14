@@ -7,10 +7,6 @@
  */
 import { z } from 'astro/zod';
 
-/** Agents pick one of these. They never author raw token values (spec §13). */
-export const PRESETS = ['stealth', 'fresh', 'chrome', 'bold', 'noir'] as const;
-export type Preset = (typeof PRESETS)[number];
-
 export const TEMPLATES = ['aviation-editorial', 'detailers-guild'] as const;
 export type Template = (typeof TEMPLATES)[number];
 
@@ -139,8 +135,16 @@ export const siteConfigSchema = z.object({
   }),
 
   theme: z.object({
-    preset: z.enum(PRESETS),
-    /** The only raw design value an agent may set. Contrast-validated in Phase 4. */
+    /**
+     * The only design value a client supplies. Each template derives its own legible
+     * label and text colours from it (styles/contrast.ts) and fails the build when
+     * no derivation can save it.
+     *
+     * There used to be a `preset` alongside this, naming one of five skins. Nothing
+     * ever read it: both templates define their own surfaces, which is the model the
+     * engine actually follows. It was removed rather than left as a field every
+     * payload had to fill in and no page reflected.
+     */
     accentColor: hexColor,
   }),
 

@@ -125,14 +125,6 @@ export const intakeSchema = z.object({
   }),
 
   theme: z.object({
-    /**
-     * Must stay in step with PRESETS in src/config-schema.ts — this list is a second
-     * copy, because the scripts are plain .mjs and cannot import the engine's TS.
-     *
-     * `noir` is the only dark-surface preset, and the only one a light accent (brass,
-     * champagne, bronze) can pass WCAG AA against as a fill.
-     */
-    preset: z.enum(['stealth', 'fresh', 'chrome', 'bold', 'noir']),
     /** The only raw design value anyone may set. Contrast-validated at build. */
     accentColor: hex,
   }),

@@ -82,7 +82,6 @@ const DRIFT_MAP = [
   ['hours', 'hours'],
   ['ghl.quoteUrl', 'ghl.quoteUrl'],
   ['tracking.gtmId', 'tracking.gtmId'],
-  ['theme.preset', 'theme.preset'],
   ['theme.accentColor', 'theme.accentColor'],
   ['legal.effectiveDate', 'legal.effectiveDate'],
   ['legal.source', 'legal.source'],
@@ -163,13 +162,23 @@ function checkMeta(file, data, seen) {
   else seen.set(normalise(meta), file);
 }
 
+/**
+ * Image slots the template renders as decoration, with a hardcoded `alt=""`.
+ *
+ * A CTA background sits behind its own heading; a screen reader announcing
+ * "detailer washing a car" mid-sentence is noise, so the schema lets the alt be
+ * empty there. Warning about it would be asking for text nothing will ever read.
+ */
+const DECORATIVE_ALT_SLOTS = [/(^|\.)cta\.image$/];
+
 function checkAlts(file, data, brandName) {
   const walk = (node, trail) => {
     if (Array.isArray(node)) return node.forEach((v, i) => walk(v, `${trail}[${i}]`));
     if (node && typeof node === 'object') {
       if (typeof node.src === 'string' && 'alt' in node) {
         const alt = node.alt ?? '';
-        if (alt.trim().length < 12) {
+        const decorative = DECORATIVE_ALT_SLOTS.some((re) => re.test(trail));
+        if (!decorative && alt.trim().length < 12) {
           warn(file, `${trail}.alt is "${alt}" — too thin to describe the image (spec: "{subject} — ${brandName} in {City}, {ST}" where sensible)`);
         }
       }

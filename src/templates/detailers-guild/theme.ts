@@ -6,9 +6,9 @@
  * button fills, the services band, section badges, and link hovers — so whether the
  * site is legible is decided here, by arithmetic, rather than by eye.
  *
- * The engine's preset system carries this maths already (styles/presets.ts) but
- * nothing was calling it: both templates read accentColor straight into a CSS
- * variable and hoped. This module is where Guild stops hoping.
+ * The maths lives in styles/contrast.ts. Nothing used to call it: both templates
+ * read accentColor straight into a CSS variable and hoped. This module is where
+ * Guild stops hoping.
  *
  * TWO DERIVED VALUES, ONE ASSERTION
  *   --dg-on-accent    the label colour on an accent fill. Derived, because the part
@@ -20,7 +20,7 @@
  *   The assertion is reserved for what derivation cannot fix — an accent fill that
  *   is invisible against the page it sits on.
  */
-import { contrastRatio, deriveTextSafe, pickOnAccent } from '../../styles/presets';
+import { AA_LARGE, AA_NORMAL, contrastRatio, deriveTextSafe, pickOnAccent } from '../../styles/contrast';
 
 /**
  * Surfaces from styles/global.css. Duplicated as constants because CSS custom
@@ -29,12 +29,6 @@ import { contrastRatio, deriveTextSafe, pickOnAccent } from '../../styles/preset
  */
 const PAPER = '#f3f2f2';
 const SURFACE = '#eae9e9';
-const INK = '#201e1d';
-
-/** Body text minimum. Buttons and nav labels are normal-sized text. */
-const AA_NORMAL = 4.5;
-/** Non-text minimum: a fill only has to be distinguishable from its background. */
-const AA_LARGE = 3;
 
 export interface GuildAccentTokens {
   accent: string;

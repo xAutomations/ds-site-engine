@@ -19,9 +19,6 @@
     "precheck": "node scripts/use-client.mjs",
     "check": "astro check",
     "postcheck": "node scripts/finish-dev-restart.mjs",
-    "prestress": "node scripts/use-client.mjs",
-    "stress": "node scripts/stress.mjs",
-    "poststress": "node scripts/finish-dev-restart.mjs",
     "images": "node scripts/generate-images.mjs",
     "import": "node scripts/import-notion.mjs",
     "intake": "node scripts/check-intake.mjs",
@@ -37,8 +34,6 @@
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",
-    "chrome-launcher": "1.2.1",
-    "lighthouse": "13.4.1",
     "sharp": "0.35.3",
     "typescript": "6.0.3",
     "vitest": "4.1.10",

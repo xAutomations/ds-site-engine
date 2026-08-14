@@ -64,7 +64,6 @@ export const siteConfig = {
   },
 
   theme: {
-    preset: 'stealth' as const,
     accentColor: '#0f766e',
   },
 

@@ -76,7 +76,6 @@ export const siteConfig = {
   },
 
   theme: {
-    preset: 'noir' as const,
     accentColor: '#b4915c',
   },
 
