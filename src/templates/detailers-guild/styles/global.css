@@ -73,5 +73,7 @@ h1, h2, h3, h4 { font-weight: 800; line-height: 1.04; letter-spacing: -0.025em; 
 
 @media (max-width: 48rem) {
   .dg-section-inner { padding-block: 4rem; }
-  .dg-display { font-size: clamp(2.4rem, 12vw, 3.6rem); }
+  .dg-display { font-size: clamp(2rem, 9vw, 2.9rem); }
+  .dg-heading { font-size: clamp(1.75rem, 7vw, 2.4rem); }
+  .dg-subheading { font-size: clamp(1.25rem, 5vw, 1.6rem); }
 }
