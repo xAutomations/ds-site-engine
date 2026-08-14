@@ -11,9 +11,6 @@ hero:
 intro:
   body:
     - Galax is a short run up Route 58 from Derrick's home base, which makes it one of the easiest towns on his schedule. He details at houses, businesses, and anywhere a vehicle can sit still for a few hours.
-  image:
-    src: ./assets/intro.jpg
-    alt: A vehicle being detailed at a home in Galax, VA
 why:
   heading: Why Galax Drivers Book Mobile
   body:
@@ -26,6 +23,12 @@ neighborhoods:
   heading: Where Derrick Works Around Galax
   body:
     - From downtown near Main Street and Felts Park, home of the Old Fiddlers' Convention, out to Oldtown, Woodlawn, and the homes along the New River Trail corridor, Derrick covers Galax and the country around it. If you are between Galax and Independence, you are square in his territory.
+social:
+  heading: Follow Mr. Brown's on Social Media
+  body: Before and after shots, fresh details, and booking updates from around the Twin Counties.
+  image:
+    src: ./assets/intro.jpg
+    alt: Derrick Brown with a freshly detailed vehicle
 guarantee:
   heading: The Mr. Brown's Guarantee
   body:

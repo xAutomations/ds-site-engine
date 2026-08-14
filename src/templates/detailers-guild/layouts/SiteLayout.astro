@@ -26,10 +26,12 @@ const {
 <!doctype html>
 <html
   lang="en"
+  data-dg-mode={site.mode === 'dark' ? 'dark' : undefined}
   style={[
     `--dg-client-accent:${site.accentColor}`,
     site.onAccent && `--dg-client-on-accent:${site.onAccent}`,
     site.accentDark && `--dg-client-accent-dark:${site.accentDark}`,
+    site.accentOnLight && `--dg-client-accent-on-light:${site.accentOnLight}`,
   ]
     .filter(Boolean)
     .join(';')}

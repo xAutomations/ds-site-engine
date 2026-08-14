@@ -22,6 +22,12 @@ neighborhoods:
   heading: Neighborhoods We Serve in Alexandria
   body:
     - Old Town. Del Ray. Potomac Yard. Cameron Station. Landmark. Rosemont.
+social:
+  heading: Follow Us On Social Media
+  body: Smoke copy for the follow band on this page.
+  image:
+    src: ./assets/intro.jpg
+    alt: Owner with the mobile detailing unit
 guarantee:
   heading: The Smoke Detailing Guarantee
   body:

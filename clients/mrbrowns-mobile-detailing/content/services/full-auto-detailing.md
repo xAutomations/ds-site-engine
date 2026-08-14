@@ -70,12 +70,21 @@ addOns:
   - heading: Pet Hair Removal
     body:
       - Dog hair woven into carpet and seat fabric takes special tools and real patience. Tell Derrick about your shedding passengers when you book and he will plan the time to get it all.
+    image:
+      src: ./assets/intro.jpg
+      alt: Removing pet hair from a vehicle's carpet
   - heading: Headlight Restoration
     body:
       - Cloudy, yellowed lenses get polished back to clear, which sharpens the vehicle's look and makes a real difference on dark country roads.
+    image:
+      src: ./assets/intro.jpg
+      alt: Polishing a cloudy headlight lens back to clear
   - heading: Undercarriage Wash
     body:
       - Mud, road salt, and clay build up where you cannot see them. An undercarriage rinse clears out the grime that causes rust from below.
+    image:
+      src: ./assets/intro.jpg
+      alt: Rinsing mud and road grime from a truck's undercarriage
 why:
   heading: Why a Real Detail Matters Out Here
   body:
@@ -84,6 +93,12 @@ why:
   image:
     src: ./assets/intro.jpg
     alt: A clean truck parked on a gravel drive after a full detail
+social:
+  heading: Follow Mr. Brown's on Social Media
+  body: Before and after shots, fresh details, and booking updates from around the Twin Counties.
+  image:
+    src: ./assets/intro.jpg
+    alt: Derrick Brown with a freshly detailed vehicle
 faqs:
   - question: How long does a full detail take?
     answer: It depends on the vehicle's size and condition. A well-kept sedan goes quicker than a three-row SUV that hauls dogs and kids every week. Derrick will give you an honest time estimate when he quotes the job.

@@ -11,9 +11,6 @@ hero:
 intro:
   body:
     - Independence is home base. Derrick lives here, and this is where Mr. Brown's Mobile Detailing starts every morning, which means nobody in town waits long for a spot on the schedule.
-  image:
-    src: ./assets/intro.jpg
-    alt: A vehicle being detailed in a driveway in Independence, VA
 why:
   heading: Why Mobile Detailing Fits Independence
   body:
@@ -26,6 +23,12 @@ neighborhoods:
   heading: Where Derrick Works Around Independence
   body:
     - From the square by the Historic 1908 Courthouse out along both forks of US-58 and US-21, Derrick covers the whole of Grayson County's home turf, including Elk Creek, Baywood, Fries, and out toward Mouth of Wilson. If you are on a farm road between them, that counts too.
+social:
+  heading: Follow Mr. Brown's on Social Media
+  body: Before and after shots, fresh details, and booking updates from around the Twin Counties.
+  image:
+    src: ./assets/intro.jpg
+    alt: Derrick Brown with a freshly detailed vehicle
 guarantee:
   heading: The Mr. Brown's Guarantee
   body:

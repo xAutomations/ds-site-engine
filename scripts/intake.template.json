@@ -52,7 +52,7 @@
 
   "tracking": { "gtmId": null },
 
-  "theme": { "accentColor": "#000000" },
+  "theme": { "accentColor": "#000000", "mode": null },
 
   "legal": {
     "effectiveDate": null,

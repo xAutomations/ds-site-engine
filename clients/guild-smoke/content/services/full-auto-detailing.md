@@ -79,6 +79,12 @@ why:
   image:
     src: ./assets/intro.jpg
     alt: A finished detail
+social:
+  heading: Follow Us On Social Media
+  body: Smoke copy for the follow band on this page.
+  image:
+    src: ./assets/intro.jpg
+    alt: Owner with the mobile detailing unit
 faqs:
   - question: How long does a full auto detail take?
     answer: Between two and four hours depending on size and condition.

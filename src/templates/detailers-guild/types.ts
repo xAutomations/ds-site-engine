@@ -38,6 +38,10 @@ export interface GuildSiteData {
    */
   onAccent?: string;
   accentDark?: string;
+  /** Accent as text on a white fill (see theme.ts). Optional for template-preview. */
+  accentOnLight?: string;
+  /** Which template surface palette renders — theme.mode from config. */
+  mode?: 'light' | 'dark';
   brand: {
     name: string;
     blurb: string;

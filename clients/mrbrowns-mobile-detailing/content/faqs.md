@@ -5,7 +5,9 @@ hero:
   heading: Frequently Asked Questions
 intro:
   body:
-    - Straight answers to the questions Derrick hears most. If yours is not here, call or send a quote request and he will get back to you.
+    - Straight answers to the questions Derrick hears most.
+  bodyHtml:
+    - If yours is not here, call <a href="tel:+12766203494">(276) 620-3494</a> and ask him directly. You will be talking to the owner, not a call center.
 groups:
   - heading: Booking and Coverage
     items:

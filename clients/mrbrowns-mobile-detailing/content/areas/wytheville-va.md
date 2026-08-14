@@ -11,9 +11,6 @@ hero:
 intro:
   body:
     - Wytheville sits at the crossroads of I-81 and I-77, and Derrick runs up Route 21 from Independence to detail vehicles at homes and workplaces all over town.
-  image:
-    src: ./assets/intro.jpg
-    alt: A vehicle being detailed at a home in Wytheville, VA
 why:
   heading: Why Wytheville Vehicles Need It
   body:
@@ -26,6 +23,12 @@ neighborhoods:
   heading: Where Derrick Works Around Wytheville
   body:
     - From the Main Street blocks near the town's famous oversized pencil out to Fort Chiswell, Max Meadows, Rural Retreat, and Speedwell, Derrick covers Wytheville and the Wythe County communities around it. Home, farm, or workplace parking lot, he meets the vehicle where it sits.
+social:
+  heading: Follow Mr. Brown's on Social Media
+  body: Before and after shots, fresh details, and booking updates from around the Twin Counties.
+  image:
+    src: ./assets/intro.jpg
+    alt: Derrick Brown with a freshly detailed vehicle
 guarantee:
   heading: The Mr. Brown's Guarantee
   body:

@@ -7,6 +7,12 @@ hero:
     src: ./assets/intro.jpg
     alt: Derrick Brown, owner of Mr. Brown's Mobile Detailing in Independence, VA
 story:
+  eyebrow: How It Works
+  heading: How Working With Derrick Goes
+  body:
+    - Request a quote or give him a call, and tell him what you drive and what it needs. He quotes it straight, and the quote is the price. On the day, he comes to your home or workplace, walks the vehicle with you, and gets to work while you get on with your day.
+    - Before he leaves, you do a final walk-around together. If something is not right, he makes it right before he pulls out of the driveway.
+process:
   eyebrow: The Story
   heading: From Learning the Trade to Owning It
   body:
@@ -16,17 +22,12 @@ story:
   image:
     src: ./assets/intro.jpg
     alt: Derrick Brown at work on a vehicle interior
-process:
-  eyebrow: How It Works
-  heading: How Working With Derrick Goes
-  body:
-    - Request a quote or give him a call, and tell him what you drive and what it needs. He quotes it straight, and the quote is the price. On the day, he comes to your home or workplace, walks the vehicle with you, and gets to work while you get on with your day.
-    - Before he leaves, you do a final walk-around together. If something is not right, he makes it right before he pulls out of the driveway.
 servicesIntro:
   - From daily drivers to RVs and boats, every service comes to you.
 cta:
   heading: Give Your Vehicle the Mr. Brown's Treatment
   body: Get a quote and see what a real detail looks like, right in your own driveway.
+  emphasis: If your vehicle needs attention, do not put it off another season.
   image:
     src: ./assets/hero-poster.jpg
     alt: ''

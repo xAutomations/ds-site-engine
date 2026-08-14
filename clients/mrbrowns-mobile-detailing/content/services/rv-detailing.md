@@ -24,6 +24,58 @@ overview:
   image:
     src: ./assets/intro.jpg
     alt: Cleaning streaks from an RV sidewall
+included:
+  heading: What Is Included
+  panels:
+    - eyebrow: The Full Wall
+      heading: Exterior Wash and De-Streak
+      image:
+        src: ./assets/intro.jpg
+        alt: Washing the tall sidewall of a motorhome
+      items:
+        - Complete top-to-bottom exterior wash
+        - Black streak and roof-runoff line removal
+        - Bug, sap, and road film removal from the front cap
+        - Wheels, tires, and wheel wells cleaned
+        - Exterior windows and mirrors
+    - eyebrow: The Finish
+      heading: Bring the Shine Back
+      image:
+        src: ./assets/intro.jpg
+        alt: A motorhome sidewall gleaming after a detail
+      items:
+        - Oxidation and mildew staining worked out of the finish
+        - Entry steps and door areas wiped down
+        - Protective finish to slow the next season's buildup
+        - Final walk-around with you before pack-up
+process:
+  heading: How an RV Detail Goes
+  image:
+    src: ./assets/intro.jpg
+    alt: Detailing equipment staged beside a camper
+  steps:
+    - title: Size It Up
+      body: Derrick walks the rig with you, notes the trouble spots, and quotes by length and condition. The quote is the price.
+    - title: Wash Top Down
+      body: The whole exterior gets washed in sections, top down, so nothing gets rinsed onto a clean panel.
+    - title: Work the Stains
+      body: Black streaks, mildew, and oxidation get treated panel by panel. This is the slow part, and it is the part that shows.
+    - title: Protect and Walk Through
+      body: A protective finish goes on, and you walk the rig with Derrick before he leaves. Not right means he makes it right.
+addOnsHeading: Popular Add-Ons
+addOns:
+  - heading: Pet Hair Removal
+    body:
+      - Dogs ride in RVs more than in any other vehicle, and their hair works deep into carpet and upholstery. Mention your travel companions when you book and Derrick plans the time for it.
+    image:
+      src: ./assets/intro.jpg
+      alt: Removing pet hair from RV carpet and upholstery
+  - heading: Headlight Restoration
+    body:
+      - A rig that sits in the sun all season gets cloudy lenses like anything else. Clear headlights matter twice as much on mountain roads at night.
+    image:
+      src: ./assets/intro.jpg
+      alt: Restoring the headlights on a motorhome
 why:
   heading: Why Your RV Needs More Than a Rinse
   body:
@@ -32,6 +84,12 @@ why:
   image:
     src: ./assets/intro.jpg
     alt: A detailed camper parked at a homestead in the Twin Counties
+social:
+  heading: Follow Mr. Brown's on Social Media
+  body: Before and after shots, fresh details, and booking updates from around the Twin Counties.
+  image:
+    src: ./assets/intro.jpg
+    alt: Derrick Brown with a freshly detailed vehicle
 faqs:
   - question: Do you come to campgrounds and storage lots?
     answer: Yes, as long as the site allows washing and is within the service area. Derrick details RVs wherever they are parked, at home, on the land, or at a seasonal site around the Twin Counties.

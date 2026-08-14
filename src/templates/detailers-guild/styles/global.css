@@ -11,14 +11,22 @@
   --dg-surface: #eae9e9;
   --dg-paper: #f8f4f4;
   --dg-ink: #201e1d;
+  /*
+   * The dark bands — hero, topbar, conversion banner, 404. A separate token rather
+   * than --dg-ink used as a background, because in dark mode ink flips light while
+   * these bands stay dark in both modes; white text on a field is always safe.
+   */
+  --dg-field: #201e1d;
   --dg-accent: var(--dg-client-accent, #ec3013);
   /*
-   * Both derived per client by theme.ts so the accent clears AA on this template's
+   * All derived per client by theme.ts so the accent clears AA on this template's
    * surfaces. The fallbacks are what template-preview uses, where there is no config
    * to derive from.
    */
   --dg-on-accent: var(--dg-client-on-accent, white);
   --dg-accent-dark: var(--dg-client-accent-dark, color-mix(in srgb, var(--dg-accent) 76%, black));
+  /* Accent as text on a white fill, which stays white in both modes. */
+  --dg-accent-on-light: var(--dg-client-accent-on-light, var(--dg-accent-dark));
   --dg-accent-pale: color-mix(in srgb, var(--dg-accent) 18%, white);
   --dg-rule: color-mix(in srgb, var(--dg-ink) 40%, transparent);
   --dg-muted: #605d5d;
@@ -27,6 +35,24 @@
   --dg-max: 80rem;
   --dg-section: clamp(4.5rem, 8vw, 7rem);
   --dg-font: 'Archivo', system-ui, sans-serif;
+}
+
+/*
+ * Dark surface palette — selected by theme.mode in site config (the layout stamps
+ * data-dg-mode). The template owns both palettes; the client only picks between
+ * them. Keep the four surface values in step with SURFACES in theme.ts, which runs
+ * the build-time contrast assertions against this set.
+ */
+:root[data-dg-mode='dark'] {
+  --dg-bg: #000000;
+  --dg-surface: #16181b;
+  --dg-paper: #101214;
+  --dg-ink: #edecea;
+  /* The page is true black, so the bands lift instead of deepen to keep reading as bands. */
+  --dg-field: #131518;
+  --dg-accent-pale: color-mix(in srgb, var(--dg-accent) 22%, var(--dg-bg));
+  --dg-muted: #a9a6a3;
+  --dg-faint: #716e6b;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -65,10 +91,10 @@ h1, h2, h3, h4 { font-weight: 800; line-height: 1.04; letter-spacing: -0.025em; 
 .dg-rule-list { border-top: 2px solid var(--dg-rule); }
 .dg-rule-list > * { border-bottom: 1px solid var(--dg-rule); }
 .dg-accent-field { background: var(--dg-accent); color: var(--dg-on-accent); }
-.dg-ink-field { background: var(--dg-ink); color: white; }
+.dg-ink-field { background: var(--dg-field); color: white; }
 .dg-reveal { opacity: 0; transform: translateY(0.875rem); transition: opacity .5s ease, transform .5s ease; }
 .dg-reveal.is-visible { opacity: 1; transform: none; }
-.dg-skip { position: fixed; z-index: 1000; top: 0.5rem; left: 0.5rem; padding: 0.75rem 1rem; background: white; color: var(--dg-ink); transform: translateY(-150%); }
+.dg-skip { position: fixed; z-index: 1000; top: 0.5rem; left: 0.5rem; padding: 0.75rem 1rem; background: var(--dg-paper); color: var(--dg-ink); transform: translateY(-150%); }
 .dg-skip:focus { transform: none; }
 
 @media (prefers-reduced-motion: reduce) {

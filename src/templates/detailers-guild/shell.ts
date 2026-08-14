@@ -37,7 +37,7 @@ import type { GuildNavItem, GuildServiceCard, GuildShellData, GuildSiteData } fr
  * and a failure should stop the build immediately rather than on whichever page
  * happens to render first.
  */
-assertGuildAccent(siteConfig.theme.accentColor);
+assertGuildAccent(siteConfig.theme.accentColor, siteConfig.theme.mode);
 
 /**
  * The Guild collections, ordered the way the nav and grids render them.
@@ -99,12 +99,14 @@ export function guildSite(): GuildSiteData {
     ['YouTube', socials.youtube],
   ].flatMap(([label, href]) => (href ? [{ label: label as string, href }] : []));
 
-  const accent = resolveGuildAccent(theme.accentColor);
+  const accent = resolveGuildAccent(theme.accentColor, theme.mode);
 
   return {
     accentColor: accent.accent,
     onAccent: accent.onAccent,
     accentDark: accent.accentDark,
+    accentOnLight: accent.accentOnLight,
+    mode: theme.mode,
     brand: { name: brand.name, blurb: brand.blurb },
     contact: {
       phone: contact.phone,

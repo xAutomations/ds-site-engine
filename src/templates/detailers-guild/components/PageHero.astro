@@ -29,13 +29,13 @@ const posterSrc = hero.image ? await guildPosterUrl(hero.image.src) : undefined;
 </section>
 
 <style>
-  .hero { position: relative; display: flex; min-height: min(50rem, 80vh); flex-direction: column; justify-content: center; overflow: hidden; background: var(--dg-ink); color: white; }
+  .hero { position: relative; display: flex; min-height: min(50rem, 80vh); flex-direction: column; justify-content: center; overflow: hidden; background: var(--dg-field); color: white; }
   .hero.compact { min-height: 80vh; }
   .hero-image, .wash { position: absolute; inset: 0; }
   .hero-image :global(img), .hero-image :global(video) { height: 100%; object-fit: cover; }
   .wash { background: linear-gradient(135deg, color-mix(in srgb, var(--dg-accent) 20%, transparent), color-mix(in srgb, var(--dg-ink) 72%, transparent) 45%, color-mix(in srgb, var(--dg-ink) 90%, transparent)); }
   .hero:has(.hero-image) .wash { background: linear-gradient(135deg, color-mix(in srgb, var(--dg-accent) 15%, transparent), transparent 55%, color-mix(in srgb, var(--dg-accent) 15%, transparent)), rgba(32, 30, 29, .5); }
-  .hero:not(:has(.hero-image)) .wash { background: repeating-linear-gradient(45deg, #262423 0 14px, var(--dg-ink) 14px 28px); }
+  .hero:not(:has(.hero-image)) .wash { background: repeating-linear-gradient(45deg, #262423 0 14px, var(--dg-field) 14px 28px); }
   .hero-inner { position: relative; display: flex; flex: 1; flex-direction: column; align-items: center; justify-content: center; padding-block: clamp(5rem, 12vh, 9rem); text-align: center; }
   .dg-kicker { margin-bottom: 1.25rem; color: #bab6b6; }
   .dg-kicker::after { width: 2.125rem; height: 2px; background: var(--dg-accent); content: ''; }

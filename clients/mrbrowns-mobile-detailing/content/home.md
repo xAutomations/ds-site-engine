@@ -45,9 +45,18 @@ about:
   image:
     src: ./assets/intro.jpg
     alt: A lineup of freshly detailed vehicles, Mr. Brown's Mobile Detailing in the Twin Counties
+social:
+  heading: Follow Mr. Brown's on Social Media
+  body: Before and after shots, fresh details, and booking updates from around the Twin Counties.
+  image:
+    src: ./assets/intro.jpg
+    alt: Derrick Brown with a freshly detailed vehicle
 areaSection:
   heading: Serving the Twin Counties and Beyond
   intro: Based in Independence, VA and fully mobile, Derrick travels up to 45 miles across Grayson and Carroll counties and over the state line, covering Wytheville, Galax, Hillsville, and Mt. Airy, NC.
+  map:
+    src: ./assets/intro.jpg
+    alt: Service radius map for Mr. Brown's Mobile Detailing around Independence, VA
 cta:
   heading: Ready to Get Your Vehicle Detailed?
   body: Get a quote today and Derrick will bring the detail shop to your driveway.

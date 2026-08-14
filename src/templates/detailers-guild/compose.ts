@@ -20,6 +20,7 @@ import type {
   GuildContentSection,
   GuildCtaData,
   GuildHeroData,
+  GuildIncludedData,
   GuildOwnerCtaData,
   GuildSocialData,
 } from './types';
@@ -57,12 +58,43 @@ export interface SectionFlags {
   large?: boolean;
   small?: boolean;
   lead?: boolean;
+  /**
+   * Renders the quote/call button pair under the copy. A slot decision like the
+   * rest: the stakes sections ("Why X Matters", "Why Mobile Detailing in {Area}")
+   * end on a conversion beat, and the actions are derived here so a writer can
+   * never author a button (the same rule as heroes and closing bands).
+   */
+  actions?: boolean;
 }
 
-type AuthoredSection = Omit<GuildContentSection, keyof SectionFlags>;
+type AuthoredSection = Omit<GuildContentSection, keyof SectionFlags | 'action' | 'secondaryAction'>;
 
 export function sectionFrom(section: AuthoredSection, flags: SectionFlags = {}): GuildContentSection {
-  return { ...section, ...flags };
+  const { actions, ...layout } = flags;
+  return {
+    ...section,
+    ...layout,
+    ...(actions ? { action: quoteAction(), secondaryAction: callAction(siteConfig.contact) } : {}),
+  };
+}
+
+/** Authored checklist panels, before the template adds their action. */
+interface AuthoredIncluded {
+  heading: string;
+  panels: Array<Omit<GuildIncludedData['panels'][number], 'action'>>;
+}
+
+/**
+ * The what's-included checklist. Every panel closes on the booking action — the
+ * checklist is the page's "this is what you get" moment, so the button under it
+ * books (or falls back to the quote page via routes.booking, like every booking
+ * button on the site). Derived here, never authored, same rule as everywhere else.
+ */
+export function includedFrom(included: AuthoredIncluded): GuildIncludedData {
+  return {
+    ...included,
+    panels: included.panels.map((panel) => ({ ...panel, action: bookingAction(routeOptions) })),
+  };
 }
 
 /**

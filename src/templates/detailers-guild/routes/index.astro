@@ -20,7 +20,7 @@ const shell = await guildShell({
 <HomePage
   {shell}
   hero={heroFrom(data.hero, { compact: false })}
-  introduction={sectionFrom(data.introduction)}
+  introduction={sectionFrom(data.introduction, { actions: true })}
   promise={sectionFrom(data.promise, { reversed: true })}
   services={await guildServiceCards()}
   about={sectionFrom(data.about)}

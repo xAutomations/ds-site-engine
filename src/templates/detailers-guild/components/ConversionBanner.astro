@@ -22,8 +22,8 @@ const { content } = Astro.props;
   .conversion { position: relative; min-height: 35rem; overflow: hidden; }
   .image, .wash { position: absolute; inset: 0; }
   .image :global(img) { height: 100%; object-fit: cover; }
-  .wash { background: linear-gradient(135deg, color-mix(in srgb, var(--dg-accent) 24%, transparent), rgba(32,30,29,.82)); }
-  .conversion:not(:has(.image)) .wash { background: repeating-linear-gradient(135deg, #262423 0 16px, var(--dg-ink) 16px 32px); opacity: .92; }
+  .wash { background: linear-gradient(135deg, color-mix(in srgb, var(--dg-accent) 24%, transparent), color-mix(in srgb, var(--dg-field) 82%, transparent)); }
+  .conversion:not(:has(.image)) .wash { background: repeating-linear-gradient(135deg, #262423 0 16px, var(--dg-field) 16px 32px); opacity: .92; }
   .inner { position: relative; display: flex; min-height: 35rem; flex-direction: column; align-items: center; justify-content: center; gap: 1.4rem; padding-block: 6rem; text-align: center; }
   h2 { max-width: 18ch; }
   h2.small { max-width: none; font-size: clamp(2.1rem, 4.2vw, 3rem); }

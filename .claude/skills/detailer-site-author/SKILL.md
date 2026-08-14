@@ -109,14 +109,31 @@ copy does not depend on the GTM ID.
 
 Then write `site.config.ts` **from** the intake. Every fact present in both
 files must agree exactly — `pnpm lint <slug>` enforces this drift check.
-Model the file on an existing client's config, not from memory. `theme.accentColor`
-is the only design value; the template derives everything else and fails the
-build if the colour cannot be made legible.
+Model the file on an existing client's config, not from memory. The client's
+design input is two values: `theme.accentColor`, and `theme.mode` ('light' |
+'dark') selecting which of the template's surface palettes renders. The
+template owns both palettes and derives everything else, failing the build if
+the accent cannot be made legible on the chosen surfaces.
 
 ## Step 3 — Author the Content
 
 One file per page, all prose in frontmatter, **empty markdown body**. Match
 `guild-smoke`'s YAML shape exactly; the schema names below are the contract.
+
+**The template is the demand side; the source material is only supply.** The
+schema and the smoke payload define what content is required, how much, and
+where. Onboarding input supplies facts to pour into that structure — its
+thinness must never thin the output. Every slot the template's smoke payload
+fills, you fill; an empty slot requires either a client-confirmed fact ("we
+take no bookings") or the user's explicit sign-off, never silence in the form.
+
+Author **slot-for-slot against guild-smoke**, including its omissions: where
+the smoke payload leaves an optional field empty (the area intro's image),
+that omission is the proven composition, not an oversight. Filling an optional
+slot the reference leaves empty is a layout decision you are not supposed to
+be making — and `pnpm lint <slug>` enforces the other direction mechanically:
+its composition parity check warns on every slot the smoke fills that your
+payload leaves empty.
 
 ### Voice, for every field
 
@@ -157,11 +174,21 @@ One file per page, all prose in frontmatter, **empty markdown body**. Match
 - `hero.heading`: "{Service} in {City}, {ST}". `intro` opens on the pain
   point the service solves; its heading is optional because the H1 carries it.
 - `overview`: the educational "What Is X?" block.
-- `included`: only if the service genuinely has an inclusion checklist. 1–3
-  panels, 4–10 items each, items in the client's actual scope of work.
-- `process`: only if there is a real process worth publishing — 3–6 steps.
-  A maintenance wash has no five-step process; do not invent one.
-- `addOns` (max 4): the add-ons confirmed onto this page in Step 1.
+- `included` (1–3 panels, 4–10 items) and `process` (3–6 steps): every service
+  page carries both unless the *client confirmed* the service has no such
+  structure. A thin onboarding form is not a reason for a thin page — the
+  no-fabrication rule protects client FACTS (prices, insurance, credentials,
+  what surfaces they coat, whether they do interiors), never trade-standard
+  structure: how a ceramic coating is applied is true of every detailer and is
+  domain knowledge you may author. When the intake lacks scope detail for a
+  service the client definitely sells, write the trade-standard scope in the
+  client's voice, keep every uncertain capability out of it, and record it in
+  intake notes as a draft the client must confirm. Omission is a decision the
+  user signs off on, never a silent default.
+- `addOns` (max 4): clients list one add-on menu, not per-service menus —
+  assign each add-on to every service page it plausibly pairs with (pet hair
+  belongs on RV pages too), so no service page ships without the grid unless
+  the user signs off on the omission.
 - `why`: the stakes block — why this service matters for the vehicle, local
   conditions included. This is where in-prose internal links belong when a
   section supports `bodyHtml`; anchor text is descriptive, never "click here."

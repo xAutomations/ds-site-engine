@@ -7,6 +7,9 @@ quote:
   eyebrow: Talk to Derrick
   heading: Tell Him What You Drive
   note: Based in Independence, VA. Fully mobile across the Twin Counties and Mt. Airy, NC.
+  image:
+    src: ./assets/intro.jpg
+    alt: Derrick Brown's mobile detailing setup ready for the day
 cta:
   heading: Prefer to Talk It Through?
   body: Call Derrick and describe your vehicle. He will quote it straight, and the quote is the price.

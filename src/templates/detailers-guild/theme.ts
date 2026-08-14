@@ -23,26 +23,40 @@
 import { AA_LARGE, AA_NORMAL, contrastRatio, deriveTextSafe, pickOnAccent } from '../../styles/contrast';
 
 /**
- * Surfaces from styles/global.css. Duplicated as constants because CSS custom
- * properties do not exist at build time, and the contrast maths has to run then.
- * Keep in step with the tokens — they are the same three colours the design uses.
+ * Surfaces from styles/global.css, per mode. Duplicated as constants because CSS
+ * custom properties do not exist at build time, and the contrast maths has to run
+ * then. Keep in step with the tokens — the dark set mirrors the
+ * `[data-dg-mode='dark']` block exactly.
  */
-const PAPER = '#f3f2f2';
-const SURFACE = '#eae9e9';
+export type GuildMode = 'light' | 'dark';
+
+const SURFACES: Record<GuildMode, { bg: string; surface: string; paper: string }> = {
+  light: { bg: '#f3f2f2', surface: '#eae9e9', paper: '#f8f4f4' },
+  dark: { bg: '#000000', surface: '#16181b', paper: '#101214' },
+};
 
 export interface GuildAccentTokens {
   accent: string;
   /** Text on an accent fill — buttons, the services band, section badges. */
   onAccent: string;
-  /** Accent as text on paper — link hovers, emphasis lines. */
+  /** Accent as text on the page surfaces — link hovers, emphasis lines. */
   accentDark: string;
+  /**
+   * Accent as text on a white fill, which stays white in both modes (the inverted
+   * button inside the accent-field checklist). accentDark cannot serve here: in
+   * dark mode it is derived light for the dark page, and light-on-white fails.
+   */
+  accentOnLight: string;
 }
 
-export function resolveGuildAccent(accent: string): GuildAccentTokens {
+export function resolveGuildAccent(accent: string, mode: GuildMode = 'light'): GuildAccentTokens {
+  const s = SURFACES[mode];
+  const pageSurfaces = mode === 'light' ? [s.bg, s.surface, s.paper, '#ffffff'] : [s.bg, s.surface, s.paper];
   return {
     accent,
     onAccent: pickOnAccent(accent, '#ffffff'),
-    accentDark: deriveTextSafe(accent, [PAPER, SURFACE, '#ffffff'], AA_NORMAL),
+    accentDark: deriveTextSafe(accent, pageSurfaces, AA_NORMAL),
+    accentOnLight: deriveTextSafe(accent, ['#ffffff'], AA_NORMAL),
   };
 }
 
@@ -53,15 +67,16 @@ export function resolveGuildAccent(accent: string): GuildAccentTokens {
  * matches. An accent within 3:1 of the paper makes every button, badge, and band on
  * the site melt into the page, and no choice of label colour changes that.
  */
-export function assertGuildAccent(accent: string): void {
-  const ratio = contrastRatio(accent, PAPER);
+export function assertGuildAccent(accent: string, mode: GuildMode = 'light'): void {
+  const bg = SURFACES[mode].bg;
+  const ratio = contrastRatio(accent, bg);
   if (ratio >= AA_LARGE) return;
 
   throw new Error(
-    `theme.accentColor "${accent}" is too close to the Detailers Guild page ` +
-      `background (${ratio.toFixed(2)}:1 against ${PAPER}, needs ${AA_LARGE}:1).\n\n` +
-      `Buttons, section badges, and the services band are all accent fills on paper — ` +
-      `at this contrast they disappear into the page. A darker or more saturated ` +
-      `version of the same brand colour usually clears it.`,
+    `theme.accentColor "${accent}" is too close to the Detailers Guild ${mode} page ` +
+      `background (${ratio.toFixed(2)}:1 against ${bg}, needs ${AA_LARGE}:1).\n\n` +
+      `Buttons, section badges, and the services band are all accent fills on the page — ` +
+      `at this contrast they disappear into it. A ${mode === 'dark' ? 'lighter' : 'darker'} ` +
+      `or more saturated version of the same brand colour usually clears it.`,
   );
 }

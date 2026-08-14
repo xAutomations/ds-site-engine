@@ -84,6 +84,7 @@ const DRIFT_MAP = [
   ['ghl.quoteUrl', 'ghl.quoteUrl'],
   ['tracking.gtmId', 'tracking.gtmId'],
   ['theme.accentColor', 'theme.accentColor'],
+  ['theme.mode', 'theme.mode'],
   ['legal.effectiveDate', 'legal.effectiveDate'],
   ['legal.source', 'legal.source'],
 ];
@@ -189,6 +190,112 @@ function checkAlts(file, data, brandName) {
   walk(data, '');
 }
 
+/* -------------------------------------------- composition parity vs smoke */
+
+/*
+ * THE PARITY CHECK
+ * zod enforces shape; this enforces completeness. The template's smoke payload
+ * (clients/<x>-smoke, same template) exercises every slot the design fills, which
+ * makes it an executable composition spec: any slot the smoke fills that a payload
+ * leaves empty is a composition decision someone made silently — the exact class
+ * of drift a schema full of optional fields cannot catch. One-directional: a
+ * payload may be richer than the smoke, never quieter without sign-off.
+ * Warnings, not errors: legitimate omissions exist, and a human owns the call.
+ */
+
+/** Slots that are client facts, not composition — absence is data, not drift. */
+const PARITY_FACT_SLOTS = new Set(['title', 'state', 'shortName', 'quote.hours']);
+
+/** Every dotted path the frontmatter fills. Arrays recurse via their first element as `path[]`. */
+function slotPaths(value, prefix = '') {
+  const paths = [];
+  if (Array.isArray(value)) {
+    if (prefix) paths.push(prefix);
+    if (value.length && typeof value[0] === 'object' && value[0] !== null) {
+      paths.push(...slotPaths(value[0], `${prefix}[]`));
+    }
+    return paths;
+  }
+  if (value && typeof value === 'object') {
+    for (const [k, v] of Object.entries(value)) {
+      const p = prefix ? `${prefix}.${k}` : k;
+      if (v === null || v === undefined || v === '') continue;
+      if (typeof v === 'object') paths.push(...slotPaths(v, p));
+      else paths.push(p);
+    }
+    return paths;
+  }
+  return prefix ? [prefix] : [];
+}
+
+/** Does the payload fill this path? `[]` segments mean every element must. */
+function fillsSlot(data, path) {
+  const [head, ...rest] = path.split('[]');
+  const walk = (obj, dotted) => dotted.split('.').filter(Boolean).reduce((o, k) => o?.[k], obj);
+  const base = walk(data, head.replace(/\.$/, ''));
+  if (base === null || base === undefined || base === '') return false;
+  if (!rest.length) return true;
+  if (!Array.isArray(base) || !base.length) return false;
+  return base.every((el) => fillsSlot(el, rest.join('[]').replace(/^\./, '')));
+}
+
+/** The smoke payload for this template, or null when the template has none yet. */
+async function findSmoke(template, ownSlug) {
+  for (const entry of await readdir('clients', { withFileTypes: true })) {
+    if (!entry.isDirectory() || entry.name === ownSlug || !entry.name.includes('smoke')) continue;
+    const cfg = path.join('clients', entry.name, 'site.config.ts');
+    if (!existsSync(cfg)) continue;
+    const { siteConfig } = await import(path.resolve(cfg));
+    if (siteConfig.template === template) return entry.name;
+  }
+  return null;
+}
+
+async function checkParity(slug, config) {
+  if (slug.includes('smoke') || !config) return;
+  const smoke = await findSmoke(config.template, slug);
+  if (!smoke) return; // template has no smoke yet — nothing to compare against
+
+  /** content-relative reference page → payload page(s) it specs. */
+  const refFiles = (await mdFiles(path.join('clients', smoke, 'content'))).filter(
+    (f) => !f.includes('/blog/') && !f.includes('/legal/'),
+  );
+
+  for (const refFile of refFiles) {
+    const rel = path.relative(path.join('clients', smoke, 'content'), refFile);
+    const refData = frontmatter(await readFile(refFile, 'utf8'))?.data;
+    if (!refData) continue;
+    const required = slotPaths(refData).filter(
+      (p) =>
+        !PARITY_FACT_SLOTS.has(p.split('.').pop()) &&
+        ![...PARITY_FACT_SLOTS].some((f) => p === f || p.startsWith(`${f}.`) || p.startsWith(`${f}[]`)),
+    );
+
+    /** Singletons map by filename; collection dirs spec every payload file in them. */
+    const dir = path.dirname(rel);
+    const targets =
+      dir === '.'
+        ? [path.join('clients', slug, 'content', rel)]
+        : await mdFiles(path.join('clients', slug, 'content', dir));
+
+    for (const target of targets) {
+      if (!existsSync(target)) {
+        // A missing booking page is config, not drift, when the client opted out.
+        if (rel === 'booking.md' && config.routes?.booking === false) continue;
+        warn(target, `page missing — the ${smoke} reference publishes ${rel}`);
+        continue;
+      }
+      const data = frontmatter(await readFile(target, 'utf8'))?.data;
+      if (!data) continue;
+      for (const p of required) {
+        if (!fillsSlot(data, p)) {
+          warn(target, `slot "${p}" empty — the ${smoke} reference fills it; omission needs sign-off`);
+        }
+      }
+    }
+  }
+}
+
 /* ------------------------------------------------------------------- runner */
 
 async function lintClient(slug) {
@@ -198,13 +305,17 @@ async function lintClient(slug) {
   // Config + intake, for drift. Either missing → report and move on.
   const intakeFile = path.join(clientDir, 'source', 'intake.json');
   const configFile = path.join(clientDir, 'site.config.ts');
-  if (existsSync(intakeFile) && existsSync(configFile)) {
+  const config = existsSync(configFile)
+    ? (await import(path.resolve(configFile))).siteConfig
+    : null;
+  if (existsSync(intakeFile) && config) {
     const intake = JSON.parse(await readFile(intakeFile, 'utf8'));
-    const { siteConfig } = await import(path.resolve(configFile));
-    checkDrift(slug, intake, siteConfig);
+    checkDrift(slug, intake, config);
   } else {
     warn(clientDir, `drift check skipped — missing ${existsSync(intakeFile) ? 'site.config.ts' : 'source/intake.json'}`);
   }
+
+  await checkParity(slug, config);
 
   const brandName = '{Brand}';
   const seenMeta = new Map();

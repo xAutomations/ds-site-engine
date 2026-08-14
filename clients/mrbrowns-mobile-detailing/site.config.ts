@@ -46,7 +46,11 @@ export const siteConfig = {
 
   hours: [{ days: 'Monday to Sunday', hours: '9am to 6pm' }],
 
-  socials: {},
+  socials: {
+    // DUMMY for layout preview only — the real page is pending; replace before
+    // launch, and mirror it into source/intake.json when it lands.
+    facebook: 'https://facebook.com/mrbrownsmobiledetailing',
+  },
 
   ghl: {
     embed: false,
@@ -62,6 +66,8 @@ export const siteConfig = {
 
   theme: {
     accentColor: '#2f6fb4',
+    // "Blue & Silver with dark theme background" — the dark surface palette honors it.
+    mode: 'dark' as const,
   },
 
   seo: {

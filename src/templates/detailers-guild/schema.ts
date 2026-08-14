@@ -234,7 +234,11 @@ export const guildServiceSchema = z.object({
     .optional(),
 
   addOnsHeading: prose.optional(),
-  addOns: z.array(section).max(4).default([]),
+  /**
+   * `image` is required here, unlike the base section: add-ons render as a card
+   * grid, and a card without its image is a visible hole, not a layout choice.
+   */
+  addOns: z.array(section.extend({ image })).max(4).default([]),
 
   /** "Why Auto Detailing Matters" — the stakes block, and where internal links belong. */
   why: section,
@@ -268,8 +272,13 @@ export const guildAreaSchema = z.object({
   title: prose.optional(),
 
   hero,
-  /** One-paragraph "we come to you here" opener above the fold. */
-  intro: leadSection,
+  /**
+   * One-paragraph "we come to you here" opener above the fold. Text only, by
+   * design: it renders as the centered solo lead directly under the hero, and an
+   * image here turns it into a two-column block that fights the hero. The image
+   * slots on this page are `why` and `guarantee`.
+   */
+  intro: leadSection.omit({ image: true }),
   /** "Why Mobile Detailing in Alexandria?" — the local-conditions argument. */
   why: section,
   /** The neighbourhood list. Genuinely local proof, so it is required, not optional. */
@@ -287,9 +296,14 @@ export const guildAboutSchema = z.object({
   metaDescription,
   title: prose.optional(),
   hero,
-  /** Founding story. */
-  story: section,
-  /** "How {Brand} Works" — the operating standard. */
+  /**
+   * The opening block directly under the hero — the operating pitch ("How Working
+   * With Us Goes"). Text only, by design: it renders as the solo lead, and the
+   * page's image belongs to the block after it. The slot names are historical;
+   * what the design fixes is the shape — text lead first, image block second.
+   */
+  story: section.omit({ image: true }),
+  /** The image-backed second block — typically the founder story, owner portrait beside it. */
   process: section,
   /** Optional copy above the service grid. */
   servicesIntro: z.array(prose).max(2).optional(),

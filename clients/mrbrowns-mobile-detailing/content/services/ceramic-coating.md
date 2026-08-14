@@ -24,6 +24,65 @@ overview:
   image:
     src: ./assets/intro.jpg
     alt: A glossy coated hood reflecting the sky
+included:
+  heading: What Every Coating Job Includes
+  panels:
+    - eyebrow: The Foundation
+      heading: Preparation Comes First
+      image:
+        src: ./assets/intro.jpg
+        alt: Decontaminating paint before a ceramic coating
+      items:
+        - Full hand wash before any coating work begins
+        - Chemical and clay decontamination of the paint
+        - Surface prep so the coating bonds to paint, not grime
+        - Panel-by-panel inspection before application
+    - eyebrow: The Payoff
+      heading: Protection That Stays
+      image:
+        src: ./assets/intro.jpg
+        alt: Water beading on freshly coated paint
+      items:
+        - Ceramic coating applied panel by panel
+        - Deep gloss and water beading across every coated surface
+        - Resistance to UV fade, road grime, and bug etching
+        - Aftercare guidance so the coating cures right
+process:
+  heading: How a Coating Job Goes
+  image:
+    src: ./assets/intro.jpg
+    alt: Applying ceramic coating with an applicator pad
+  steps:
+    - title: Talk It Through
+      body: Derrick looks at the vehicle, discusses the coating options and years of protection, and quotes it straight.
+    - title: Deep Clean and Decontaminate
+      body: The paint gets washed and decontaminated until it is genuinely clean. Coating over grime wastes everyone's money.
+    - title: Prep the Surface
+      body: The paint is prepped so the coating has a clean surface to bond to. If it needs more correction than expected, you hear about it before, not after.
+    - title: Apply and Level
+      body: The coating goes on panel by panel and gets leveled before it flashes, so the finish is even everywhere.
+    - title: Cure and Handoff
+      body: Derrick walks you through the do's and don'ts while the coating cures, so the protection lasts the way it should.
+addOnsHeading: Popular Add-Ons
+addOns:
+  - heading: Interior Cleaning
+    body:
+      - A coating protects the outside. Pair it with a full interior clean and the whole vehicle comes back at once, in the same visit.
+    image:
+      src: ./assets/intro.jpg
+      alt: Interior cleaning added to a ceramic coating job
+  - heading: Headlight Restoration
+    body:
+      - Fresh coated paint next to yellowed headlights looks half-finished. Restoring the lenses completes the front end and helps on dark roads.
+    image:
+      src: ./assets/intro.jpg
+      alt: Restoring headlight lenses alongside a coating
+  - heading: Undercarriage Wash
+    body:
+      - Start the coating's life on a clean truck from below too. Mud, clay, and road salt rinse out before they cause trouble you cannot see.
+    image:
+      src: ./assets/intro.jpg
+      alt: Undercarriage wash before a ceramic coating
 why:
   heading: Why Coat a Vehicle in the Twin Counties?
   body:
@@ -32,6 +91,12 @@ why:
   image:
     src: ./assets/intro.jpg
     alt: A coated SUV parked in front of Blue Ridge hills
+social:
+  heading: Follow Mr. Brown's on Social Media
+  body: Before and after shots, fresh details, and booking updates from around the Twin Counties.
+  image:
+    src: ./assets/intro.jpg
+    alt: Derrick Brown with a freshly detailed vehicle
 faqs:
   - question: How long does a ceramic coating last?
     answer: It depends on the coating package you choose. Options run from a couple of years of protection up to longer-term coatings, and Derrick will walk you through what fits your vehicle and budget when he quotes it.

@@ -101,11 +101,47 @@
       "prompt": "A bowrider boat on its trailer in a gravel yard, hull half-cleaned showing a sharp contrast between polished glossy gelcoat and a dull water-stained section, cleaning supplies on a step stool alongside, Appalachian ridge line in the distance."
     },
     {
+      "id": "coverage-map",
+      "out": "coverage-map.webp",
+      "alt": "Service radius map for Mr. Brown's Mobile Detailing around Independence, VA",
+      "usedBy": [
+        "content/home.md -> areaSection.map (repoint from ./assets/intro.jpg)"
+      ],
+      "prompt": "Stylized overhead terrain map illustration of a mountainous rural region, muted blue and silver cartographic palette on a dark ground, soft ridgelines and river valleys, a subtle glowing circle marking a service radius around a small unlabeled town point. Absolutely no text, place names, roads with labels, or legends."
+    },
+    {
+      "id": "addon-pet-hair",
+      "out": "addon-pet-hair.webp",
+      "alt": "Removing pet hair from a vehicle's carpet",
+      "usedBy": [
+        "content/services/full-auto-detailing.md -> addOns[0].image (repoint from ./assets/intro.jpg)"
+      ],
+      "prompt": "Close-up of a gloved hand using a rubber pet-hair brush on a car's grey carpeted floor, a gathered clump of dog hair beside the stroke path, vacuum nozzle resting in frame, soft daylight through the open door."
+    },
+    {
+      "id": "addon-headlight",
+      "out": "addon-headlight.webp",
+      "alt": "Polishing a cloudy headlight lens back to clear",
+      "usedBy": [
+        "content/services/full-auto-detailing.md -> addOns[1].image (repoint from ./assets/intro.jpg)"
+      ],
+      "prompt": "A headlight mid-restoration, masked off with blue tape, one half hazy yellow and the other half polished glass-clear, a polishing pad held against the lens, driveway setting with soft overcast light."
+    },
+    {
+      "id": "addon-undercarriage",
+      "out": "addon-undercarriage.webp",
+      "alt": "Rinsing mud and road grime from a truck's undercarriage",
+      "usedBy": [
+        "content/services/full-auto-detailing.md -> addOns[2].image (repoint from ./assets/intro.jpg)"
+      ],
+      "prompt": "Low angle beside a lifted pickup truck as a pressure-washer wand sprays up into the wheel well and undercarriage, muddy water sheeting off onto a gravel driveway, work boots and hose visible at the frame edge."
+    },
+    {
       "id": "area-independence-va",
       "out": "area-independence-va.webp",
       "alt": "Mobile detailing at a home outside Independence, VA",
       "usedBy": [
-        "content/areas/independence-va.md -> intro.image (repoint from ./assets/intro.jpg)"
+        "content/areas/independence-va.md -> why.image (repoint from ./assets/intro.jpg)"
       ],
       "prompt": "A clean pickup truck parked on a long gravel farm driveway leading to a white farmhouse with a wraparound porch, split-rail fence and green pasture on both sides, high Blue Ridge ridgeline behind, clear morning light. Classic rural Grayson County Virginia scene."
     },
@@ -114,7 +150,7 @@
       "out": "area-wytheville-va.webp",
       "alt": "Mobile detailing at a home in Wytheville, VA",
       "usedBy": [
-        "content/areas/wytheville-va.md -> intro.image (repoint from ./assets/intro.jpg)"
+        "content/areas/wytheville-va.md -> why.image (repoint from ./assets/intro.jpg)"
       ],
       "prompt": "A freshly detailed silver sedan in the paved driveway of a tidy brick ranch house in a small-town neighborhood, mature maple trees along the street, a hint of a highway overpass far in the background haze, bright midday light."
     },
@@ -123,7 +159,7 @@
       "out": "area-galax-va.webp",
       "alt": "Mobile detailing at a home in Galax, VA",
       "usedBy": [
-        "content/areas/galax-va.md -> intro.image (repoint from ./assets/intro.jpg)"
+        "content/areas/galax-va.md -> why.image (repoint from ./assets/intro.jpg)"
       ],
       "prompt": "A gleaming dark SUV parked in front of a small-town craftsman house with a covered porch, bicycles leaning by the steps, tree-lined street sloping toward low mountains, warm late-afternoon light."
     },
@@ -132,7 +168,7 @@
       "out": "area-hillsville-va.webp",
       "alt": "Mobile detailing at a farm near Hillsville, VA",
       "usedBy": [
-        "content/areas/hillsville-va.md -> intro.image (repoint from ./assets/intro.jpg)"
+        "content/areas/hillsville-va.md -> why.image (repoint from ./assets/intro.jpg)"
       ],
       "prompt": "A clean work truck parked beside a red barn on a hilltop farm, morning fog lying in the valley below and rolling Blue Ridge ridges fading into the mist, dew on the grass, soft diffused light. Carroll County Virginia mountain farm scene."
     },
@@ -141,7 +177,7 @@
       "out": "area-mt-airy-nc.webp",
       "alt": "Mobile detailing at a home in Mt. Airy, NC",
       "usedBy": [
-        "content/areas/mt-airy-nc.md -> intro.image (repoint from ./assets/intro.jpg)"
+        "content/areas/mt-airy-nc.md -> why.image (repoint from ./assets/intro.jpg)"
       ],
       "prompt": "A polished classic-style sedan parked on the driveway of a neat mid-century brick home with white trim, small-town street with granite curbing and dogwood trees, gentle piedmont hills in the distance, nostalgic golden-hour light."
     }

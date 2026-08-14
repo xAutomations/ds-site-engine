@@ -146,6 +146,14 @@ export const siteConfigSchema = z.object({
      * payload had to fill in and no page reflected.
      */
     accentColor: hexColor,
+    /**
+     * Which of the template's two surface palettes the site renders on. The
+     * template still owns both palettes completely (its styles/global.css and
+     * theme.ts) — this only selects between them, and the same AA contrast
+     * assertions run against whichever is active. Default light, so existing
+     * payloads are untouched.
+     */
+    mode: z.enum(['light', 'dark']).default('light'),
   }),
 
   seo: z.object({

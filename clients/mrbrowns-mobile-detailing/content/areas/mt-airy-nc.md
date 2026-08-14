@@ -11,9 +11,6 @@ hero:
 intro:
   body:
     - The state line does not stop the schedule. Mt. Airy sits within Derrick's 45-mile range, and it is familiar ground. He learned the detailing trade just up the road in Pilot Mountain, working on everything from daily drivers to country club vehicles.
-  image:
-    src: ./assets/intro.jpg
-    alt: A vehicle being detailed at a home in Mt. Airy, NC
 why:
   heading: Why Mt. Airy Books Mr. Brown's
   body:
@@ -26,6 +23,12 @@ neighborhoods:
   heading: Where Derrick Works Around Mt. Airy
   body:
     - From downtown's Main Street, the one that gave Mayberry its look, out to White Plains, Flat Rock, Toast, and the homes along the Ararat River, Derrick covers Mt. Airy and the Surry County side of the line. Pilot Mountain way, where he cut his teeth, is familiar territory too.
+social:
+  heading: Follow Mr. Brown's on Social Media
+  body: Before and after shots, fresh details, and booking updates from around the Twin Counties.
+  image:
+    src: ./assets/intro.jpg
+    alt: Derrick Brown with a freshly detailed vehicle
 guarantee:
   heading: The Mr. Brown's Guarantee
   body:

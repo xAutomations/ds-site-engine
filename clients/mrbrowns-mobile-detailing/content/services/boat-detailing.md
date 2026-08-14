@@ -24,6 +24,57 @@ overview:
   image:
     src: ./assets/intro.jpg
     alt: Polishing the gelcoat on a boat hull
+included:
+  heading: What Is Included
+  panels:
+    - eyebrow: The Hull
+      heading: Hull Wash and Waterline
+      image:
+        src: ./assets/intro.jpg
+        alt: Cleaning the waterline stains from a boat hull
+      items:
+        - Complete wash down of the hull and topsides
+        - Waterline scum and stain removal
+        - Bug, spider, and grime removal from every surface
+        - Trailer-splash and road film cleaned off
+    - eyebrow: The Finish
+      heading: Gelcoat Cleaned and Protected
+      image:
+        src: ./assets/intro.jpg
+        alt: Polished gelcoat shining on a boat hull
+      items:
+        - Gelcoat cleaned to bring the color back
+        - Protective finish against sun and water
+        - Exterior glass and bright surfaces wiped down
+        - Final walk-around on the trailer before pack-up
+process:
+  heading: How a Boat Detail Goes
+  image:
+    src: ./assets/intro.jpg
+    alt: A boat on its trailer being detailed in a gravel yard
+  steps:
+    - title: Look It Over
+      body: Derrick checks the hull, the waterline, and the gelcoat with you, then quotes by size and condition. The quote is the price.
+    - title: Wash It Down
+      body: The whole vessel gets a proper wash, bow to stern, on its trailer at your place.
+    - title: Cut the Waterline
+      body: Scum lines and set-in stains get worked out of the gelcoat. Long-neglected hulls take longer, and he will tell you that up front.
+    - title: Protect and Hand Back
+      body: A protective finish goes on to fight the sun, and you look it over together before he pulls out.
+addOnsHeading: Popular Add-Ons
+addOns:
+  - heading: Interior Cleaning
+    body:
+      - Cockpit, seating, and storage compartments collect a season of sunscreen, snacks, and river grit. Add the interior clean and the whole boat comes back ready.
+    image:
+      src: ./assets/intro.jpg
+      alt: Cleaning a boat's cockpit and seating
+  - heading: Pet Hair Removal
+    body:
+      - Plenty of dogs love the water as much as their owners do. Carpeted decks and seat cushions get the same deep hair removal as any truck cab.
+    image:
+      src: ./assets/intro.jpg
+      alt: Removing pet hair from a boat's carpeted deck
 why:
   heading: Why Boats Need Their Own Detail
   body:
@@ -32,6 +83,12 @@ why:
   image:
     src: ./assets/intro.jpg
     alt: A clean boat on its trailer ready for the season
+social:
+  heading: Follow Mr. Brown's on Social Media
+  body: Before and after shots, fresh details, and booking updates from around the Twin Counties.
+  image:
+    src: ./assets/intro.jpg
+    alt: Derrick Brown with a freshly detailed vehicle
 faqs:
   - question: Where do you detail boats?
     answer: At your home or wherever the boat sits on its trailer, anywhere in the service area around Independence, VA. If the boat is in the water at a dock, ask, and Derrick will tell you what is workable.

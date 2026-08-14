@@ -53,7 +53,8 @@
   },
 
   "theme": {
-    "accentColor": "#2f6fb4"
+    "accentColor": "#2f6fb4",
+    "mode": "dark"
   },
 
   "legal": {
@@ -155,10 +156,11 @@
     "Business is not registered as an entity; no legal name exists.",
     "Logo: client wants a Memoji-style logo designed. Brand colors blue and silver on a dark theme.",
     "No usable photography: the form's logo, work-photo, and headshot uploads are one identical screenshot. All imagery comes from generation; placeholders until then.",
-    "Google Business Profile claimed, verification pending. Facebook page pending; no other socials.",
+    "Google Business Profile claimed, verification pending. Facebook page pending; no other socials. The 'Follow Us' band is authored on every page that supports it but renders only once a social URL exists in config; it appears site-wide automatically when the Facebook link lands.",
     "routes.booking is false until GHL service calendars exist. Every booking button resolves to /get-quote.",
     "Travel fee applies beyond the 45-mile radius (amount internal, per no-prices rule).",
     "Form answers 'None' to the water/electricity question; ambiguous whether he needs hookups or brings his own. Do not claim self-contained until confirmed with Derrick.",
-    "Internal pricing reference from the form: exterior-only and full-detail package tiers by vehicle size; ceramic, RV, and boat quoted by size. Add-ons: pet hair, headlight restoration, undercarriage. Never rendered on pages."
+    "Internal pricing reference from the form: exterior-only and full-detail package tiers by vehicle size; ceramic, RV, and boat quoted by size. Add-ons: pet hair, headlight restoration, undercarriage. Never rendered on pages.",
+    "DRAFT SCOPES TO CONFIRM WITH DERRICK: the ceramic-coating, rv-detailing, and boat-detailing pages carry trade-standard included/process sections because the form gave no scope detail for them. Nothing in them asserts a client-specific fact, but Derrick should read them and confirm the scope matches what he actually does (e.g. RV oxidation work, boat gelcoat protection, coating options)."
   ]
 }

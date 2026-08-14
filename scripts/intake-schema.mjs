@@ -135,6 +135,12 @@ export const intakeSchema = z.object({
   theme: z.object({
     /** The only raw design value anyone may set. Contrast-validated at build. */
     accentColor: hex,
+    /**
+     * Which of the template's surface palettes the site renders on. Omit/null for
+     * the template default (light). The template owns both palettes; this only
+     * selects between them.
+     */
+    mode: z.enum(['light', 'dark']).nullish(),
   }),
 
   legal: z.object({

@@ -11,9 +11,6 @@ hero:
 intro:
   body:
     - Hillsville and the Carroll County countryside around it are firmly inside Derrick's range. He comes to your place, sets up, and hands back a vehicle that looks nothing like the one he found.
-  image:
-    src: ./assets/intro.jpg
-    alt: A vehicle being detailed at a home in Hillsville, VA
 why:
   heading: Why Hillsville Vehicles Earn Their Dirt
   body:
@@ -26,6 +23,12 @@ neighborhoods:
   heading: Where Derrick Works Around Hillsville
   body:
     - From town near the courthouse, out through Woodlawn, Sylvatus, Laurel Fork, and down to Fancy Gap by the Blue Ridge Parkway, Derrick covers Hillsville and the communities across Carroll County. Flea market week included, if you can find him a parking spot.
+social:
+  heading: Follow Mr. Brown's on Social Media
+  body: Before and after shots, fresh details, and booking updates from around the Twin Counties.
+  image:
+    src: ./assets/intro.jpg
+    alt: Derrick Brown with a freshly detailed vehicle
 guarantee:
   heading: The Mr. Brown's Guarantee
   body:
