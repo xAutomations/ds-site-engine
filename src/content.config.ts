@@ -12,10 +12,13 @@ import { existsSync } from 'node:fs';
 import { z } from 'astro/zod';
 import {
   aviationAboutSchema,
-  aviationAirportSchema,
+  aviationAreaSchema,
+  aviationBlogPostSchema,
   aviationFaqSchema,
+  aviationGetQuoteSchema,
   aviationHomeSchema,
   aviationQuoteReceivedSchema,
+  aviationServiceSchema,
 } from './templates/aviation-editorial/schema';
 import {
   guildAboutSchema,
@@ -85,150 +88,11 @@ const prose = z
     'unresolved merge field — every {{custom_values.*}} token must be resolved at import time',
   );
 
-/** A reusable authored heading and body pair. */
-const proseBlock = z.object({
-  heading: prose,
-  body: prose,
-});
-
 /** Meta description is hand-tuned per page; the ≤160 cap is enforced, not trusted. */
 const metaDescription = prose.max(
   160,
   'metaDescription must be 160 characters or fewer (SEO formula, spec §10)',
 );
-
-const image = z.object({
-  src: z.string().min(1),
-  /** Pattern: "{subject} — {Brand} in {City}, {ST}" where sensible. */
-  alt: prose,
-});
-
-/**
- * URL safety only. This deliberately does NOT encode what a page *is* — an earlier
- * version required area slugs to end in `-{st}`, which quietly assumed every service
- * area is a US city and rejected clients whose areas are airports, ports, or regions.
- * Cross-collection collisions are caught by assertUniqueSlugs() in lib/content.ts.
- */
-const slug = z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'slug must be lowercase, hyphen-separated');
-
-/**
- * Optional authored overrides for the two strings normally produced by the SEO
- * formulas in lib/seo.ts. Clients whose page generator already emits a tuned H1 and
- * title supply them here; everyone else gets the formula.
- */
-const headingOverrides = {
-  title: prose.optional(),
-  h1: prose.optional(),
-};
-
-/**
- * A page block extends authored prose with optional media and an action. These remain
- * content facts; each template decides how to compose them.
- */
-const pageBlock = proseBlock.extend({
-  image: image.optional(),
-  cta: z
-    .object({
-      label: prose,
-      href: z.string().min(1),
-    })
-    .optional(),
-});
-
-/** Before/after pair. Two images per instance — mind the asset budget. */
-const beforeAfter = z
-  .object({
-    before: image,
-    after: image,
-    beforeLabel: prose.default('Before'),
-    afterLabel: prose.default('After'),
-    caption: prose.optional(),
-  })
-  .optional();
-
-const aviationServiceSchema = z.object({
-    name: prose,
-    /** Must match the filename and the live URL: /{slug} */
-    slug,
-    order: z.number().int().nonnegative(),
-    /** One-liner reused by service directories and related-service links. */
-    shortDescription: prose,
-    metaDescription,
-    ...headingOverrides,
-
-    heroImage: image,
-    /** Hero body copy. The H1 comes from `h1` when set, else formula (spec §10). */
-    heroIntro: prose,
-
-    /** Optional before/after proof, rendered between the process steps and add-ons. */
-    beforeAfter,
-
-    intro: proseBlock,
-    /** Optional "What Is {Service}" educational block. */
-    explainer: proseBlock.optional(),
-
-    /**
-     * Product tiers, where the client sells them. Optional: plenty of businesses
-     * quote per job and publish no tiers at all, and inventing package cards to
-     * satisfy a schema would be inventing a product structure.
-     */
-    packages: z
-      .array(
-        z.object({
-          name: prose,
-          /**
-           * The second-line subtitle above package body copy
-           * (e.g. "Clean From Every Angle"). Schema extension — see PHASE-0-NOTES.md.
-           */
-          tagline: prose,
-          /** e.g. "2–3 years" — only where the client actually states a duration. */
-          durationBadge: prose.optional(),
-          image: image.optional(),
-          body: prose,
-        }),
-      )
-      .min(1)
-      .optional(),
-
-    processHeading: prose,
-    processSteps: z
-      .array(
-        z.object({
-          /** Optional when a process step is a single sentence with no lead-in. */
-          title: prose.optional(),
-          body: prose,
-          image: image.optional(),
-        }),
-      )
-      .min(1),
-    /** Trailing requirement note under the steps (water/power access, etc.). */
-    processNote: prose.optional(),
-
-    /** Optional for the same reason as `packages`. */
-    addons: z
-      .array(
-        z.object({
-          name: prose,
-          image: image.optional(),
-          body: prose,
-        }),
-      )
-      .min(1)
-      .optional(),
-
-    /**
-     * Internal-linking block ("We Detail Every Vehicle Type"). Schema extension —
-     * Some payloads use this slot instead of `whyItMatters`.
-     */
-    crossSell: proseBlock,
-    /** Optional "Why {Service} Matters" local-conditions block. */
-    whyItMatters: proseBlock.optional(),
-
-    faqs: z.array(z.object({ q: prose, a: prose })).min(1),
-
-    /** Service-specific closing call-to-action headline. */
-    ctaHeadline: prose,
-});
 
 const services = defineCollection({
   loader: aviationLoader(`${BASE}/services`, '**/*.md'),
@@ -238,59 +102,6 @@ const services = defineCollection({
 const guildServices = defineCollection({
   loader: guildLoader(`${BASE}/services`, '**/*.md'),
   schema: guildServiceSchema,
-});
-
-const aviationAreaSchema = z.object({
-    /** Display name. A city ("Ashburn"), but equally an airport or a region. */
-    name: prose,
-    slug,
-    /**
-     * Optional. Set for US-city areas, where every label reads "{name}, {ST}" and the
-     * LocalBusiness areaServed entry is a City. Omit for areas that are not cities —
-     * an airport is a Place, and "Teterboro Airport (KTEB), NJ" is not how anyone
-     * writes it. Read through areaLabel() in lib/content.ts, never inline.
-     */
-    state: z
-      .string()
-      .length(2)
-      .regex(/^[A-Z]{2}$/)
-      .optional(),
-    /** Compact label for nav and tiles where the full name is too long ("KTEB"). */
-    shortName: prose.optional(),
-    order: z.number().int().nonnegative(),
-    /** Marks the home base; rendered as "HQ" in nav. */
-    isHeadquarters: z.boolean().default(false),
-    metaDescription,
-    ...headingOverrides,
-
-    /**
-      * Optional area-card image. Most clients have no
-     * per-city photography, so this falls back to the hero poster when unset —
-     * but the variant only earns its place when the images actually differ.
-     */
-    image: image.optional(),
-
-    heroIntro: prose,
-    /** Intro above the service directory on this page. Authored — the engine has no
-     *  business asserting that services "come to you". */
-    servicesIntro: prose,
-
-    /** "Why {Area} Residents Choose Mobile Detailing" — the hyper-local block. */
-    localCopy: pageBlock,
-    /**
-     * Second local block, for clients whose area pages carry genuinely page-specific
-     * detail (an airport's FBOs, weather, and scheduling constraints) beyond the
-     * "why here" pitch. Rendered after localCopy.
-     */
-    localDetail: pageBlock.optional(),
-    /** "Why {Brand} for {Area}" trust block. */
-    whyUs: pageBlock,
-
-    beforeAfter,
-
-    ctaHeadline: prose,
-    /** Structured operational data for aviation-editorial airport pages. */
-    airport: aviationAirportSchema.optional(),
 });
 
 const areas = defineCollection({
@@ -356,17 +167,7 @@ const guildBlogIndex = defineCollection({
 /** /get-quote copy. The active template owns the form integration and composition. */
 const getQuote = defineCollection({
   loader: aviationLoader(BASE, 'get-quote.md'),
-  schema: z.object({
-    metaDescription,
-    title: prose,
-    heroHeadline: prose,
-    heroIntro: prose,
-    /** Heading above the service link list. */
-    servicesHeading: prose,
-    /** Heading on the contact/hours sidebar panel. */
-    panelHeading: prose,
-    ctaHeadline: prose,
-  }),
+  schema: aviationGetQuoteSchema,
 });
 
 const guildGetQuote = defineCollection({
@@ -429,35 +230,7 @@ const legal = defineCollection({
 
 const blog = defineCollection({
   loader: aviationLoader(`${BASE}/blog`, '**/*.md'),
-  schema: z.object({
-    title: prose,
-    slug,
-    date: z.coerce.string(),
-    author: prose,
-    authorBio: prose.optional(),
-    authorImage: image.optional(),
-    category: prose,
-    tags: z.array(prose).optional(),
-    metaTitle: prose,
-    metaDescription,
-    heroImage: image,
-    ctaImage: image.optional(),
-    ctaEyebrow: prose.optional(),
-    ctaHeadline: prose.optional(),
-    ctaBody: prose.optional(),
-    body: z.array(z.string()).min(1),
-    faq: z.array(z.object({ q: prose, a: prose })).min(1),
-    images: z.array(z.object({
-      id: z.number(),
-      type: z.enum(['hero', 'inline']),
-      section: prose,
-      idea: prose,
-      alt: prose,
-      prompt: prose,
-      src: z.string().min(1).optional(),
-      afterHeading: prose.optional(),
-    })).min(1),
-  }),
+  schema: aviationBlogPostSchema,
 });
 
 /** Posts for detailers-guild, validated against that template's own contract. */
@@ -475,6 +248,7 @@ export const collections = {
   faqs,
   getQuote,
   quoteReceived,
+  blog,
   // detailers-guild
   guildServices,
   guildAreas,
@@ -487,5 +261,4 @@ export const collections = {
   guildBlog,
   // shared — same shape for both templates
   legal,
-  blog,
 };
