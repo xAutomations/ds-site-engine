@@ -67,11 +67,6 @@ export const siteConfig = {
     accentColor: '#0f766e',
   },
 
-  modules: {
-    topBar: true,
-    howItWorks: true,
-  },
-
   seo: {
     category: 'Mobile Auto Detailing',
     region: 'Northern Virginia',

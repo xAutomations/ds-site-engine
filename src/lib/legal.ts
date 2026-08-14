@@ -17,6 +17,11 @@ export interface LegalSection {
 
 export interface LegalDocument {
   intro: string[];
+  /**
+   * Accent line closing the intro. Optional: a template that has no such treatment
+   * ignores it, and an authored payload may supply its own.
+   */
+  emphasis?: string;
   sections: LegalSection[];
   contact: { heading: string; intro: string };
 }
@@ -43,6 +48,7 @@ export function privacyPolicy(config: SiteConfig): LegalDocument {
       `This Privacy Policy describes how ${brand.name} (${site.url}) collects, uses, and protects your personal information when you use our website or services.`,
       'We will never sell your personal information to third parties.',
     ],
+    emphasis: `By using our website or booking a service with ${brand.name}, you agree to this Privacy Policy.`,
     sections: [
       {
         heading: 'Information We Collect',
@@ -138,6 +144,7 @@ export function termsOfService(config: SiteConfig, serviceNames: string[]): Lega
       `These Terms of Service govern your use of ${site.url} and the mobile detailing services provided by ${brand.name}.`,
       'By using our website or booking our services, you agree to the following terms. Please read them carefully.',
     ],
+    emphasis: `By booking a service with ${brand.name}, you agree to the following terms and policies.`,
     sections: [
       {
         heading: 'Acceptance of Terms',

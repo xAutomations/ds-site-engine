@@ -1,10 +1,18 @@
 /**
- * Prototype content contract for the Detailers Guild template.
+ * The Detailers Guild *render* contract — what the components take as props.
  *
- * These interfaces deliberately live beside the template rather than in
- * content.config.ts. They describe what the finished compositions need; the next
- * phase can translate the proven contract into Zod collections without forcing the
- * design to conform to the aviation template's content model.
+ * Not to be confused with schema.ts, which is the *authored* contract: what an agent
+ * writes into client/content/*.md. They are deliberately different sets, and the
+ * difference is the point:
+ *
+ *   schema.ts   words and pictures — everything a writer should decide
+ *   types.ts    the above, plus what the template decides: composition flags
+ *               (`reversed`, `seamless`, `large`, `small`, `lead`, `compact`),
+ *               derived actions, nav, canonical URL, and structured data
+ *
+ * routes/ turns one into the other (see compose.ts and shell.ts). Collapsing them
+ * would put layout decisions in a content file, which is how a template stops being
+ * a contract and becomes a pile of options.
  */
 export interface GuildImage {
   src: string;

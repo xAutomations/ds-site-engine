@@ -63,6 +63,12 @@ export async function guildServiceEntries() {
   return services.sort((a, b) => a.data.order - b.data.order);
 }
 
+/** Posts, newest first. Guild's own collection, so its own contract. */
+export async function guildBlogEntries() {
+  const posts = await getCollection('guildBlog');
+  return posts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+}
+
 export async function guildAreaEntries() {
   const { areas } = await guildCollections();
   return areas.sort((a, b) => a.data.order - b.data.order);

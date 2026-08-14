@@ -31,6 +31,7 @@ export async function resolveLegalDoc(id: LegalId): Promise<GuildLegalDoc> {
     return {
       title: authored.data.title,
       intro: authored.data.intro,
+      emphasis: authored.data.emphasis,
       sections: authored.data.sections,
       contact: authored.data.contact ?? defaultLegalContact(siteConfig, title.toLowerCase()),
     };
@@ -45,6 +46,7 @@ export async function resolveLegalDoc(id: LegalId): Promise<GuildLegalDoc> {
   return {
     title,
     intro: generated.intro,
+    emphasis: generated.emphasis,
     sections: generated.sections,
     contact: generated.contact,
   };

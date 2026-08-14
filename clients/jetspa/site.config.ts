@@ -79,14 +79,6 @@ export const siteConfig = {
     accentColor: '#b4915c',
   },
 
-  modules: {
-    // Off: the strip shows hours + service area, and JetSpa's hours are still
-    // placeholders while its coverage story ("the Northeast — NY, NJ, PA, CT,
-    // MD, DE, and VA") is too long for a one-liner.
-    topBar: false,
-    howItWorks: true,
-  },
-
   seo: {
     category: 'Aircraft Detailing',
     region: 'the Northeast',

@@ -51,12 +51,7 @@
 
   "tracking": { "gtmId": null },
 
-  "theme": { "preset": "fresh", "accentColor": "#000000" },
-
-  "modules": {
-    "howItWorks": true,
-    "credentialBadge": null
-  },
+  "theme": { "accentColor": "#000000" },
 
   "legal": {
     "effectiveDate": null,

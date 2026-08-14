@@ -148,21 +148,6 @@ export const siteConfigSchema = z.object({
     accentColor: hexColor,
   }),
 
-  modules: z.object({
-    /**
-     * The announcement strip above the header: opening hours + service-area line +
-     * socials. All derived from config, so it costs a client nothing to keep — but a
-     * client whose hours or coverage story doesn't fit a one-liner turns it off here.
-     */
-    topBar: z.boolean().default(true),
-    /** Home "How It Works" section. */
-    howItWorks: z.boolean(),
-    /** Optional credential badge on the About page (spec §11 decision 2). */
-    credentialBadge: z
-      .object({ image: z.string().min(1), alt: z.string().min(1), href: z.url().optional() })
-      .optional(),
-  }),
-
   seo: z.object({
     /** e.g. "Mobile Auto Detailing" — the {Category} token in every SEO formula. */
     category: z.string().min(1),

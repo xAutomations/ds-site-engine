@@ -129,14 +129,6 @@ export const intakeSchema = z.object({
     accentColor: hex,
   }),
 
-  modules: z.object({
-    /** Home "How It Works" steps. */
-    howItWorks: z.boolean().default(true),
-    credentialBadge: z
-      .object({ image: z.string().min(1), alt: z.string().min(1), href: z.url().nullish() })
-      .nullish(),
-  }),
-
   legal: z.object({
     /** e.g. "July 2026". */
     effectiveDate: pending(z.string().min(1)),

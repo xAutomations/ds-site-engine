@@ -48,10 +48,6 @@
     "preset": "noir",
     "accentColor": "#b4915c"
   },
-  "modules": {
-    "howItWorks": true,
-    "credentialBadge": null
-  },
   "legal": {
     "effectiveDate": "August 13, 2026",
     "source": "client",

@@ -5,11 +5,10 @@
  */
 import type { InferGetStaticPropsType } from 'astro';
 import BlogPostPage from '../../pages/BlogPostPage.astro';
-import { getBlogPosts } from '../../../../lib/content';
-import { guildShell } from '../../shell';
+import { guildBlogEntries, guildShell } from '../../shell';
 
 export const getStaticPaths = async () => {
-  const posts = await getBlogPosts();
+  const posts = await guildBlogEntries();
   return posts.map((entry) => ({
     params: { slug: entry.data.slug },
     props: { entry },

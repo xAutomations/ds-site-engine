@@ -6,6 +6,7 @@
  */
 import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { existsSync } from 'node:fs';
 // Astro 7 deprecates the `z` re-export from `astro:content`; `astro/zod` is the
 // supported path and keeps the engine on a single zod instance (see config-schema.ts).
 import { z } from 'astro/zod';
@@ -20,6 +21,7 @@ import {
   guildAboutSchema,
   guildAreaSchema,
   guildBlogIndexSchema,
+  guildBlogPostSchema,
   guildBookingSchema,
   guildFaqsSchema,
   guildHomeSchema,
@@ -374,7 +376,7 @@ const guildGetQuote = defineCollection({
 
 /** /quote-received copy — the form's post-submit confirmation page. */
 const quoteReceived = defineCollection({
-  loader: glob({ base: BASE, pattern: 'quote-received.md' }),
+  loader: aviationLoader(BASE, 'quote-received.md'),
   schema: aviationQuoteReceivedSchema,
 });
 
@@ -391,17 +393,31 @@ const quoteReceived = defineCollection({
  * that the text has not been through Detailer Systems' legal review.
  */
 const legal = defineCollection({
-  loader: glob({ base: `${BASE}/legal`, pattern: '**/*.md' }),
+  /*
+   * Optional for both templates, so the directory is usually absent — and the glob
+   * loader warns once per build about a base directory that does not exist. That is
+   * a warning for the normal case, which is how builds end up with noise nobody
+   * reads, so an absent directory simply loads nothing.
+   */
+  loader: existsSync(`${BASE}/legal`) ? glob({ base: `${BASE}/legal`, pattern: '**/*.md' }) : empty,
   schema: z.object({
     title: prose,
     metaDescription,
     intro: z.array(prose).min(1),
+    /** Accent line closing the intro, e.g. "By booking, you agree to these terms." */
+    emphasis: prose.optional(),
     sections: z
       .array(
         z.object({
           heading: prose,
           body: z.array(prose).optional(),
           bullets: z.array(z.object({ term: prose.optional(), text: prose })).optional(),
+          /**
+           * Pulled out of the body into a tinted callout — fees, limits, deadlines.
+           * The detailers-guild legal page renders these; a template that does not
+           * simply ignores the field.
+           */
+          note: prose.optional(),
         }),
       )
       .min(1),
@@ -412,7 +428,7 @@ const legal = defineCollection({
 });
 
 const blog = defineCollection({
-  loader: glob({ base: `${BASE}/blog`, pattern: '**/*.md' }),
+  loader: aviationLoader(`${BASE}/blog`, '**/*.md'),
   schema: z.object({
     title: prose,
     slug,
@@ -444,6 +460,12 @@ const blog = defineCollection({
   }),
 });
 
+/** Posts for detailers-guild, validated against that template's own contract. */
+const guildBlog = defineCollection({
+  loader: guildLoader(`${BASE}/blog`, '**/*.md'),
+  schema: guildBlogPostSchema,
+});
+
 export const collections = {
   // aviation-editorial
   services,
@@ -462,6 +484,7 @@ export const collections = {
   guildGetQuote,
   guildBooking,
   guildBlogIndex,
+  guildBlog,
   // shared — same shape for both templates
   legal,
   blog,
