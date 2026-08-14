@@ -188,6 +188,7 @@ export interface GuildQuoteData {
 export interface GuildCtaData {
   eyebrow?: string;
   heading: string;
+  small?: boolean;
   body?: string;
   emphasis?: string;
   action: GuildLink;

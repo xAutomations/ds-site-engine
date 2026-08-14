@@ -10,7 +10,7 @@ const { content } = Astro.props;
   <div class="wash"></div>
   <div class="dg-container inner dg-reveal">
     {content.eyebrow && <div class="dg-kicker">{content.eyebrow}</div>}
-    <h2 class="dg-display">{content.heading}</h2>
+    <h2 class:list={['dg-display', { small: content.small }]}>{content.heading}</h2>
     {content.body && <p>{content.body}</p>}
     {content.emphasis && <strong>{content.emphasis}</strong>}
     <a class="dg-btn dg-btn--primary" href={content.action.href}>{content.action.label}<GuildIcon name="arrow" size={16} /></a>
@@ -25,6 +25,7 @@ const { content } = Astro.props;
   .conversion:not(:has(.image)) .wash { background: repeating-linear-gradient(135deg, #262423 0 16px, var(--dg-ink) 16px 32px); opacity: .92; }
   .inner { position: relative; display: flex; min-height: 35rem; flex-direction: column; align-items: center; justify-content: center; gap: 1.4rem; padding-block: 6rem; text-align: center; }
   h2 { max-width: 18ch; }
+  h2.small { max-width: none; font-size: clamp(2.1rem, 4.2vw, 3rem); }
   p { max-width: 70ch; color: #d7d3d3; font-size: 1rem; }
   strong { font-size: clamp(1.3rem, 3vw, 1.8rem); }
   .dg-kicker { color: #d7d3d3; }

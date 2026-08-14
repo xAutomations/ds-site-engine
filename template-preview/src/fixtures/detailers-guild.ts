@@ -18,11 +18,11 @@ const services: GuildServiceCard[] = [
   'Full Auto Detailing', 'Interior Detailing', 'Ceramic Coating', 'Paint Correction',
   'RV Detailing', 'Boat Detailing', 'Motorcycle Detailing', 'Aircraft Detailing',
   'Commercial Fleet Detailing', 'ATV Detailing', 'Golf Cart Detailing', 'Maintenance Wash',
-].map((label, index) => ({
+].map((label) => ({
   label,
   href: '#services',
   image: {
-    src: `/assets/${['funky-lines.png', 'ripples.png', 'terrazzo-accent.png', 'waves-accent.png'][index % 4]}`,
+    src: '/assets/photo-placeholder.svg',
     alt: `${label} preview image placeholder`,
   },
 }));
@@ -84,7 +84,7 @@ export const homeIntroduction: GuildContentSection = {
     'Your car sits in the sun all day, collects road grime on your commute through the Beltway, and picks up dust from every parking lot in Northern Virginia. By the time you notice, the paint is fading, the interior smells, and the seats are stained. You do not have time to drop it off at a shop and wait. San Mob Detailing brings the detail to your driveway, your office parking lot, or wherever your vehicle sits.',
     'We are a 100% mobile detailing service based in Alexandria, VA, serving the entire DMV region. From sedans and SUVs to RVs, boats, motorcycles, and aircraft — we handle every vehicle type with the same level of care. No shortcuts, no rushing, no excuses.',
   ],
-  image: { src: '/assets/funky-lines.png', alt: 'Preview placeholder for a detailer working in a driveway' },
+  image: { src: '/assets/photo-placeholder.svg', alt: 'Preview placeholder for a detailer working in a driveway' },
   action: { label: 'Book today', href: '#book' },
 };
 
@@ -94,7 +94,7 @@ export const homePromise: GuildContentSection = {
     'Most local detailers quote a low starting price to get you on the hook, then upcharge the moment they see a stain on the seat or pet hair on the carpet. We refuse to operate that way.',
     'When you book with San Mob Detailing, pet hair removal is included in every service at no extra charge. The price we quote is the price you pay. No surprises, no upsells at the door, no excuses.',
   ],
-  image: { src: '/assets/ripples.png', alt: 'Preview placeholder for an interior detail close-up' },
+  image: { src: '/assets/photo-placeholder.svg', alt: 'Preview placeholder for an interior detail close-up' },
   reversed: true,
   patterned: true,
   stats: [
@@ -110,7 +110,7 @@ export const homeAbout: GuildContentSection = {
     'San Mob Detailing was founded with one goal: to bring professional detailing directly to you — no facility required. Based in Alexandria, VA, we service the entire DMV region with a fully self-contained mobile unit that carries everything needed for every job.',
     'Cars, trucks, SUVs, minivans, RVs, boats, motorcycles, ATVs, golf carts, commercial trucks, and aircraft. If it has a surface, we detail it. Every vehicle gets individual attention. We do not rush through vehicles to hit a quota. Your car gets the time it needs, every single time.',
   ],
-  image: { src: '/assets/terrazzo-accent.png', alt: 'Preview placeholder for the mobile detailing unit' },
+  image: { src: '/assets/photo-placeholder.svg', alt: 'Preview placeholder for the mobile detailing unit' },
   action: { label: 'Get a quote', href: '#book' },
 };
 
@@ -121,12 +121,12 @@ export const homeSocial: GuildSocialData = {
     { label: 'Facebook', href: '#' },
     { label: 'Instagram', href: '#' },
   ],
-  image: { src: '/assets/ripples.png', alt: 'Preview placeholder for the owner with the mobile detailing unit' },
+  image: { src: '/assets/photo-placeholder.svg', alt: 'Preview placeholder for the owner with the mobile detailing unit' },
 };
 
 export const homeAreaSection: GuildAreaSectionData = {
   intro: 'Based in Alexandria, VA. Fully mobile and traveling up to 40 miles across DC, Virginia, and Maryland. Extended service available beyond 40 miles.',
-  map: { src: '/assets/funky-lines.png', alt: 'Preview placeholder for the 40-mile service radius map' },
+  map: { src: '/assets/photo-placeholder.svg', alt: 'Preview placeholder for the 40-mile service radius map' },
 };
 
 export const homeCta: GuildCtaData = {
@@ -157,7 +157,7 @@ export const aboutProcess: GuildContentSection = {
     'We keep things straightforward. You call, text, or request a quote. We confirm the details, show up at the scheduled time, and get to work. No upselling at the door, no surprise charges, no cutting corners to squeeze in another appointment. Your vehicle gets the full time and attention it deserves.',
     'That approach applies to every vehicle we touch. Whether it is a daily driver sedan, a family SUV, a recreational vehicle, a boat sitting on a trailer, or a private aircraft, the standard is the same. Thorough work, clean results, and a customer who is satisfied when we leave.',
   ],
-  image: { src: '/assets/waves-accent.png', alt: 'Preview placeholder for the owner of San Mob Detailing' },
+  image: { src: '/assets/photo-placeholder.svg', alt: 'Preview placeholder for the owner of San Mob Detailing' },
   patterned: true,
 };
 
@@ -186,6 +186,7 @@ export const alexandriaHero: GuildHeroData = {
 };
 
 export const alexandriaIntro: GuildContentSection = {
+  seamless: true,
   body: [
     'We are 100% mobile. We detail vehicles at your home in Del Ray, at your office in Eisenhower East, in the parking lot of your Old Town condo, or wherever you park. No shop visits, no waiting rooms.',
   ],
@@ -197,7 +198,7 @@ export const alexandriaWhy: GuildContentSection = {
     'Alexandria is a commuter city. Between the Metro, the GW Parkway, 395, and the Beltway, most residents spend hours in their vehicles every day. That time in traffic adds up in the form of brake dust, road film, and interior wear. Dropping your car off at a detail shop means finding a ride, adjusting your schedule, and losing time you do not have.',
     'Mobile detailing solves that. We show up at your location on your schedule. For residents in Old Town, Potomac Yard, Landmark, Cameron Station, or anywhere in the city, we come to you.',
   ],
-  image: { src: '/assets/funky-lines.png', alt: 'Preview placeholder for mobile detailing in Alexandria' },
+  image: { src: '/assets/photo-placeholder.svg', alt: 'Preview placeholder for mobile detailing in Alexandria' },
   action: { label: 'Get a quote', href: '#book' },
   secondaryAction: { label: 'Call (888) 900-5941', href: 'tel:+18889005941' },
 };
@@ -220,9 +221,10 @@ export const alexandriaGuarantee: GuildContentSection = {
 
 export const alexandriaCta: GuildCtaData = {
   heading: 'Schedule Your Detail in Alexandria',
+  small: true,
   body: "Your car sits in the same Alexandria weather and traffic as everyone else's. The difference is whether you let it accumulate or you do something about it. San Mob Detailing makes it easy.",
   action: { label: 'Book today', href: '#' },
-  image: { src: '/assets/terrazzo-accent.png', alt: '' },
+  image: { src: '/assets/photo-placeholder.svg', alt: '' },
 };
 
 export const autoDetailShell: GuildShellData = {
@@ -245,7 +247,7 @@ export const autoDetailIntro: GuildContentSection = {
     'Your car picks up more grime in a single week on the Beltway than most people realize. Brake dust embeds itself in the wheel wells. Road film coats the paint. Dust, crumbs, and spills build up on the seats and carpets until the interior feels grimy no matter how often you wipe things down. A basic car wash will not fix that. A full auto detail will.',
     'San Mob Detailing provides complete interior and exterior detailing for sedans, SUVs, trucks, and minivans across the DMV. We are 100% mobile, which means we bring everything to your driveway, your office lot, or wherever your vehicle sits. No drop-off required.',
   ],
-  image: { src: '/assets/ripples.png', alt: 'Preview placeholder for the owner detailing a car' },
+  image: { src: '/assets/photo-placeholder.svg', alt: 'Preview placeholder for the owner detailing a car' },
   seamless: true,
 };
 
@@ -255,7 +257,7 @@ export const autoDetailOverview: GuildContentSection = {
     'A full auto detail is a comprehensive, top-to-bottom restoration of your vehicle. It goes far beyond what a standard car wash or quick clean can do. We address every surface, both inside and outside, to remove contaminants, restore the finish, and protect the paint.',
     'Think of it as a deep reset for your car. The goal is to bring it as close to showroom condition as possible, regardless of how long it has been since the last proper cleaning. Whether your vehicle has months of buildup or just needs a thorough seasonal refresh, a full detail covers it all.',
   ],
-  image: { src: '/assets/funky-lines.png', alt: 'Preview placeholder for a full detail in progress' },
+  image: { src: '/assets/photo-placeholder.svg', alt: 'Preview placeholder for a full detail in progress' },
   reversed: true,
   action: { label: 'Get a quote', href: '#book' },
   secondaryAction: { label: 'Call (888) 900-5941', href: 'tel:+18889005941' },
@@ -267,7 +269,7 @@ export const autoDetailIncluded: GuildIncludedData = {
     {
       eyebrow: 'Wash & Protect',
       heading: 'Exterior Wash & Detail',
-      image: { src: '/assets/terrazzo-accent.png', alt: 'Preview placeholder for exterior detailing' },
+      image: { src: '/assets/photo-placeholder.svg', alt: 'Preview placeholder for exterior detailing' },
       items: [
         'Hand wash and dry using proper wash mitts and drying towels',
         'Clay bar treatment to remove embedded surface contaminants',
@@ -282,7 +284,7 @@ export const autoDetailIncluded: GuildIncludedData = {
     {
       eyebrow: 'Clean & Perfect',
       heading: 'Interior Detail & Clean',
-      image: { src: '/assets/waves-accent.png', alt: 'Preview placeholder for interior detailing' },
+      image: { src: '/assets/photo-placeholder.svg', alt: 'Preview placeholder for interior detailing' },
       items: [
         'Full vacuum of seats, carpets, floor mats, trunk, and all crevices',
         'Steam cleaning or hot water extraction on fabric surfaces',
@@ -299,7 +301,7 @@ export const autoDetailIncluded: GuildIncludedData = {
 
 export const autoDetailProcess: GuildProcessData = {
   heading: 'Our Full Auto Detailing Process',
-  image: { src: '/assets/ripples.png', alt: 'Preview placeholder for the detailing process' },
+  image: { src: '/assets/photo-placeholder.svg', alt: 'Preview placeholder for the detailing process' },
   steps: [
     { title: 'Inspection', body: 'We walk around your vehicle and assess its condition. We note any trouble spots, stains, scratches, or areas that need extra attention.' },
     { title: 'Interior First', body: 'We start inside. Remove floor mats, vacuum every surface, extract or steam clean the seats and carpets, clean and condition all hard surfaces, and detail every compartment and crevice.' },
@@ -317,7 +319,7 @@ export const autoDetailAddOns: GuildContentSection[] = [
       'Eliminates stubborn odors from smoke, pets, food, mildew, and bacteria that standard cleaning cannot reach. Our professional ozone generator works at the molecular level, neutralizing odor-causing compounds throughout your interior.',
       'The result is a genuinely clean-smelling interior, not a fragrance masking the problem underneath. Most treatments take 30 to 60 minutes and can be added to any detailing service.',
     ],
-    image: { src: '/assets/funky-lines.png', alt: 'Preview placeholder for ozone treatment' },
+    image: { src: '/assets/photo-placeholder.svg', alt: 'Preview placeholder for ozone treatment' },
   },
   {
     heading: 'Stain Removal',
@@ -326,7 +328,7 @@ export const autoDetailAddOns: GuildContentSection[] = [
       'Targeted deep extraction treatment for tough stains on seats, carpets, door panels, and upholstery that standard vacuuming and wiping cannot remove.',
       'We use professional-grade hot water extraction and stain-specific chemistry to break down and lift coffee, juice, grease, ink, and biological stains at the fiber level. Pricing is per seat so you only pay for exactly what you need.',
     ],
-    image: { src: '/assets/terrazzo-accent.png', alt: 'Preview placeholder for stain removal' },
+    image: { src: '/assets/photo-placeholder.svg', alt: 'Preview placeholder for stain removal' },
   },
   {
     heading: 'Pet Hair Removal',
@@ -335,7 +337,7 @@ export const autoDetailAddOns: GuildContentSection[] = [
       'Pet hair embeds deep into carpet fibers, seat fabric, and floor mat loops in ways that a standard vacuum simply cannot reach. We use specialized rubber extraction tools and high-powered vacuums to systematically pull embedded hair from every surface.',
       'No matter how heavy the shedding, we do not stop until the interior is completely hair-free. Included at no additional charge with every full auto detail booking.',
     ],
-    image: { src: '/assets/waves-accent.png', alt: 'Preview placeholder for pet hair removal' },
+    image: { src: '/assets/photo-placeholder.svg', alt: 'Preview placeholder for pet hair removal' },
   },
 ];
 
@@ -346,7 +348,7 @@ export const autoDetailWhy: GuildContentSection = {
     "If you plan on keeping your car for years, regular full details prevent the kind of wear that leads to expensive repairs or reupholstering. If you are looking to sell or trade in, a professional detail can add hundreds to your vehicle's perceived value.",
     'For customers who want to maintain their vehicle between full details, San Mob Detailing offers a maintenance wash program exclusively for existing customers. And for those looking for long-term paint protection after a detail, consider our ceramic coating service or a paint correction to remove any existing scratches before sealing the finish.',
   ],
-  image: { src: '/assets/ripples.png', alt: 'Preview placeholder for a finished detail' },
+  image: { src: '/assets/photo-placeholder.svg', alt: 'Preview placeholder for a finished detail' },
 };
 
 export const autoDetailFaqs: GuildFaqItem[] = [
@@ -361,7 +363,7 @@ export const autoDetailCta: GuildCtaData = {
   heading: 'Get Your Full Auto Detail Scheduled',
   body: 'Your car is overdue. You know it, and so does everyone who rides in it. San Mob Detailing comes directly to you in Alexandria, VA and across the DMV. No drop-off, no waiting, no hassle.',
   action: { label: 'Book today', href: '#' },
-  image: { src: '/assets/funky-lines.png', alt: '' },
+  image: { src: '/assets/photo-placeholder.svg', alt: '' },
 };
 
 export const faqShell: GuildShellData = {
@@ -441,7 +443,7 @@ export const faqCta: GuildCtaData = {
   heading: 'Ready to Experience Auto Care Excellence?',
   body: 'Not sure if your vehicle needs a heavy paint correction or just a standard wash? We are here to help you make the right call.',
   action: { label: 'Book today', href: '#' },
-  image: { src: '/assets/waves-accent.png', alt: '' },
+  image: { src: '/assets/photo-placeholder.svg', alt: '' },
 };
 
 export const quoteShell: GuildShellData = {
@@ -466,13 +468,13 @@ export const quoteData: GuildQuoteData = {
     { days: 'Sunday', hours: 'Appointments Only' },
   ],
   note: 'Based in Alexandria, VA — we come to you',
-  image: { src: '/assets/terrazzo-accent.png', alt: 'Preview placeholder for the mobile detailing unit' },
+  image: { src: '/assets/photo-placeholder.svg', alt: 'Preview placeholder for the mobile detailing unit' },
 };
 
 export const quoteCta: GuildCtaData = {
   heading: 'Ready to Get Your Vehicle Detailed?',
   action: { label: 'Book today', href: '#' },
-  image: { src: '/assets/ripples.png', alt: '' },
+  image: { src: '/assets/photo-placeholder.svg', alt: '' },
 };
 
 export const blogShell: GuildShellData = {
@@ -500,7 +502,7 @@ export const blogPosts: GuildBlogPost[] = [
     tags: ['RV Detailing', 'Great Falls', 'Mobile Detailing'],
     metaTitle: 'RV Detailing in Great Falls, VA | San Mob Detailing',
     metaDescription: 'RV detailing in Great Falls, VA by San Mob Detailing. Mobile exterior and interior cleaning for motorhomes and trailers. Call (888) 900-5941.',
-    heroImage: { src: '/assets/funky-lines.png', alt: 'Preview placeholder for RV detailing in Great Falls' },
+    heroImage: { src: '/assets/photo-placeholder.svg', alt: 'Preview placeholder for RV detailing in Great Falls' },
     body: [
       'Your RV spends most of its life outside. Sun, tree sap, road film, and storage dust take a toll on the exterior while every trip adds crumbs, stains, and odors inside. A seasonal deep clean keeps the rig road-ready and protects its resale value.',
       '## Why RVs Need Specialized Detailing',
@@ -516,8 +518,8 @@ export const blogPosts: GuildBlogPost[] = [
       { q: 'How is RV detailing priced?', a: 'By the foot, after an in-person inspection. The quote we give is the price you pay.' },
     ],
     images: [
-      { id: 1, type: 'hero', section: 'Hero', idea: 'RV being washed at a storage lot', alt: 'RV detailing in Great Falls, VA', prompt: '', src: '/assets/funky-lines.png' },
-      { id: 2, type: 'inline', section: 'What Our RV Detail Includes', idea: 'Detailer cleaning an RV roof', alt: 'RV roof cleaning', prompt: '', src: '/assets/ripples.png', afterHeading: 'What Our RV Detail Includes' },
+      { id: 1, type: 'hero', section: 'Hero', idea: 'RV being washed at a storage lot', alt: 'RV detailing in Great Falls, VA', prompt: '', src: '/assets/photo-placeholder.svg' },
+      { id: 2, type: 'inline', section: 'What Our RV Detail Includes', idea: 'Detailer cleaning an RV roof', alt: 'RV roof cleaning', prompt: '', src: '/assets/photo-placeholder.svg', afterHeading: 'What Our RV Detail Includes' },
     ],
   },
   {
@@ -528,10 +530,10 @@ export const blogPosts: GuildBlogPost[] = [
     category: 'Interior Detailing',
     metaTitle: 'Interior Detailing in Vienna, VA | San Mob Detailing',
     metaDescription: 'Interior detailing in Vienna, VA by San Mob Detailing. Mobile deep cleans for family cars, stains, pet hair, and odors. Call (888) 900-5941.',
-    heroImage: { src: '/assets/ripples.png', alt: 'Preview placeholder for interior detailing in Vienna' },
+    heroImage: { src: '/assets/photo-placeholder.svg', alt: 'Preview placeholder for interior detailing in Vienna' },
     body: ['Family cars work hard. Here is how a mobile interior detail resets yours.'],
     faq: [{ q: 'Is pet hair removal included?', a: 'Yes, at no extra charge.' }],
-    images: [{ id: 1, type: 'hero', section: 'Hero', idea: '', alt: '', prompt: '', src: '/assets/ripples.png' }],
+    images: [{ id: 1, type: 'hero', section: 'Hero', idea: '', alt: '', prompt: '', src: '/assets/photo-placeholder.svg' }],
   },
   {
     title: 'Paint Correction for Luxury Cars in McLean, VA: Is It Worth It?',
@@ -541,10 +543,10 @@ export const blogPosts: GuildBlogPost[] = [
     category: 'Paint Correction',
     metaTitle: 'Paint Correction in McLean, VA | San Mob Detailing',
     metaDescription: 'Paint correction in McLean, VA by San Mob Detailing. Mobile swirl and scratch removal for luxury cars. Restore your paint at home. Call (888) 900-5941.',
-    heroImage: { src: '/assets/terrazzo-accent.png', alt: 'Preview placeholder for paint correction in McLean' },
+    heroImage: { src: '/assets/photo-placeholder.svg', alt: 'Preview placeholder for paint correction in McLean' },
     body: ['Swirl marks and fine scratches dull even the best paint. Correction removes them for real.'],
     faq: [{ q: 'How long does paint correction last?', a: 'With proper washing habits, results last for years.' }],
-    images: [{ id: 1, type: 'hero', section: 'Hero', idea: '', alt: '', prompt: '', src: '/assets/terrazzo-accent.png' }],
+    images: [{ id: 1, type: 'hero', section: 'Hero', idea: '', alt: '', prompt: '', src: '/assets/photo-placeholder.svg' }],
   },
   {
     title: 'What Does a Full Auto Detail Include in Arlington, VA?',
@@ -554,9 +556,9 @@ export const blogPosts: GuildBlogPost[] = [
     category: 'Full Auto Detailing',
     metaTitle: 'Full Auto Detail in Arlington, VA | San Mob Detailing',
     metaDescription: 'What does a full auto detail include in Arlington, VA? San Mob Detailing breaks down every step, cost, and timing. Book your mobile detail today.',
-    heroImage: { src: '/assets/waves-accent.png', alt: 'Preview placeholder for a full detail in Arlington' },
+    heroImage: { src: '/assets/photo-placeholder.svg', alt: 'Preview placeholder for a full detail in Arlington' },
     body: ['Every surface, inside and out. Here is the complete breakdown of a full detail.'],
     faq: [{ q: 'How long does it take?', a: 'Two to four hours for most vehicles.' }],
-    images: [{ id: 1, type: 'hero', section: 'Hero', idea: '', alt: '', prompt: '', src: '/assets/waves-accent.png' }],
+    images: [{ id: 1, type: 'hero', section: 'Hero', idea: '', alt: '', prompt: '', src: '/assets/photo-placeholder.svg' }],
   },
 ];
