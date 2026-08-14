@@ -87,7 +87,7 @@ const active = (href: string) => activePath === href;
   .mega a { padding: .6rem .75rem; font-weight: 500; text-decoration: none; white-space: normal; }
   .mega a:hover { background: var(--dg-accent-pale); color: var(--dg-accent-dark); }
   .actions { display: flex; gap: .6rem; }
-  .actions .dg-btn { padding-inline: .8rem; font-size: .75rem; white-space: nowrap; }
+  .actions .dg-btn { justify-content: center; gap: .5rem; padding-inline: .8rem; font-size: .75rem; white-space: nowrap; }
   .menu-toggle { display: none; margin-left: auto; padding: .55rem; border: 1px solid var(--dg-ink); background: transparent; color: var(--dg-ink); line-height: 0; cursor: pointer; }
   .menu-toggle :global(svg:last-child), .menu-toggle[aria-expanded='true'] :global(svg:first-child) { display: none; }
   .menu-toggle[aria-expanded='true'] :global(svg:last-child) { display: block; }
