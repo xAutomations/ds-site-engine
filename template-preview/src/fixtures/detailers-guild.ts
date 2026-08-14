@@ -8,7 +8,10 @@ import type {
   GuildContentSection,
   GuildCtaData,
   GuildHeroData,
+  GuildOwnerCtaData,
+  GuildReviewsData,
   GuildServiceCard,
+  GuildVehicleCard,
   GuildQuoteData,
   GuildShellData,
   GuildSocialData,
@@ -473,6 +476,62 @@ export const quoteCta: GuildCtaData = {
   heading: 'Ready to Get Your Vehicle Detailed?',
   action: { label: 'Book today', href: '#' },
   image: { src: '/assets/photo-placeholder.svg', alt: '' },
+};
+
+export const bookingShell: GuildShellData = {
+  ...homeShell,
+  title: 'Book Your Detail | Detailer Guild',
+  description: 'Pick your vehicle type and book a mobile detail at a time that works for you, anywhere in the DMV.',
+  path: '/booking',
+};
+
+export const bookingHero: GuildHeroData = {
+  eyebrow: 'Booking',
+  heading: 'Book Your Detail',
+  secondaryAction: { label: 'Call (888) 900-5941', href: 'tel:+18889005941' },
+  compact: true,
+};
+
+/** Sits under the grid heading, inside the vehicle section. */
+export const bookingIntro: string[] = [
+  'Ready to get your vehicle detailed? Select your vehicle type below, pick a time that works for you, and we will handle the rest. We come to your location anywhere in the DMV.',
+];
+
+/**
+ * One scheduler per vehicle type. Hrefs are the client's live GHL booking links —
+ * external by design, which is why ServiceGrid gets `external` on this page.
+ */
+export const bookingVehicles: GuildVehicleCard[] = [
+  ['Sedan', '6a31d3b6fccf974f18067ddd'],
+  ['Small SUV', '6a31d3c2b3530cd1c695d35d'],
+  ['Large SUV', '6a31d3cdf962978c78c99a7b'],
+  ['Truck / Van', '6a31d3d26bb3cb839ead1bc5'],
+  ['Minivan', '6a31d3d8a18c57ea7cce1d01'],
+  ['Commercial Truck', '6a31d3dd1ceb216a9f9ded59'],
+  ['RV / Motorhome', '6a31d3e2b0df01916d29eeb4'],
+  ['Boat', '6a31d3e836c5944f75f640f0'],
+  ['Motorcycle', '6a31d3ee5356739082a1ea9c'],
+  ['ATV', '6a331c7cc7669635e97ca2de'],
+  ['Golf Cart', '6a331ca4230c655e46e8c1dd'],
+  ['Private Aircraft', '6a31d401bd4abc05b805eaa3'],
+].map(([label, id]) => ({
+  label,
+  href: `https://links.detailersystems.com/booking/XAIj7tJIblNDQ8k2xpAk/sc/${id}`,
+  image: { src: '/assets/photo-placeholder.svg', alt: `${label} booking preview image placeholder` },
+}));
+
+export const bookingCta: GuildOwnerCtaData = {
+  eyebrow: 'Talk To Us First',
+  heading: 'Need Help Choosing a Service?',
+  body: 'Not sure if your vehicle needs a heavy paint correction or just a standard wash? We are here to help you make the right call.',
+  image: { src: '/assets/photo-placeholder.svg', alt: 'Preview placeholder for the owner of San Mob Detailing' },
+  action: { label: 'Call (888) 900-5941', href: 'tel:+18889005941' },
+  secondaryAction: { label: 'Get a quote', href: '/get-quote' },
+};
+
+export const bookingReviews: GuildReviewsData = {
+  heading: 'What Our Customers Say',
+  intro: 'Reviews pulled straight from our Google Business Profile — every one from a real detail in the DMV.',
 };
 
 export const blogShell: GuildShellData = {

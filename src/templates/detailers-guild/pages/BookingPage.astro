@@ -1,0 +1,40 @@
+---
+/**
+ * /booking — pick a vehicle type, land on that type's scheduler.
+ *
+ * The page is a router, not a form: each card hands off to the client's external GHL
+ * calendar for that vehicle, because a boat and a golf cart are not the same
+ * appointment. Nothing is embedded here, so there is no iframe to wait on.
+ */
+import SiteLayout from '../layouts/SiteLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import ServiceGrid from '../components/ServiceGrid.astro';
+import OwnerCta from '../components/OwnerCta.astro';
+import ReviewsSection from '../components/ReviewsSection.astro';
+import type {
+  GuildHeroData,
+  GuildOwnerCtaData,
+  GuildReviewsData,
+  GuildShellData,
+  GuildVehicleCard,
+} from '../types';
+
+interface Props {
+  shell: GuildShellData;
+  hero: GuildHeroData;
+  vehiclesHeading: string;
+  /** Lead-in under the grid heading, inside the same section. */
+  vehiclesIntro?: string[];
+  vehicles: GuildVehicleCard[];
+  cta: GuildOwnerCtaData;
+  reviews?: GuildReviewsData;
+}
+const { shell, hero, vehiclesHeading, vehiclesIntro, vehicles, cta, reviews } = Astro.props;
+---
+
+<SiteLayout {...shell}>
+  <PageHero {hero} />
+  <ServiceGrid heading={vehiclesHeading} intro={vehiclesIntro} services={vehicles} external />
+  <OwnerCta content={cta} />
+  {reviews && <ReviewsSection content={reviews} />}
+</SiteLayout>

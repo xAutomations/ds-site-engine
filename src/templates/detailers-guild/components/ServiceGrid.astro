@@ -1,15 +1,26 @@
 ---
 import GuildIcon from './GuildIcon.astro';
 import type { GuildServiceCard } from '../types';
-interface Props { heading: string; services: GuildServiceCard[]; intro?: string[]; }
-const { heading, services, intro = [] } = Astro.props;
+interface Props {
+  heading: string;
+  services: GuildServiceCard[];
+  intro?: string[];
+  /**
+   * Cards point off-site (the booking page's per-vehicle GHL schedulers). Opens in a
+   * new tab so a half-finished booking does not lose the site, and carries noopener
+   * because the destination is third-party.
+   */
+  external?: boolean;
+}
+const { heading, services, intro = [], external = false } = Astro.props;
+const linkAttrs = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
 ---
 
 <section class="services dg-section dg-accent-field">
   <div class="dg-container dg-section-inner">
     <header class="head dg-reveal"><h2 class="dg-heading">{heading}</h2></header>
     {intro.length > 0 && <div class="intro dg-reveal">{intro.map((p) => <p>{p}</p>)}</div>}
-    <div class="grid dg-reveal">{services.map((service) => <a class="card" href={service.href}><img class="dg-grayscale" src={service.image.src} alt={service.image.alt} loading="lazy" /><span class="shade"></span><span class="title"><strong>{service.label}</strong><i aria-hidden="true"><GuildIcon name="diagonal" /></i></span></a>)}</div>
+    <div class="grid dg-reveal">{services.map((service) => <a class="card" href={service.href} {...linkAttrs}><img class="dg-grayscale" src={service.image.src} alt={service.image.alt} loading="lazy" /><span class="shade"></span><span class="title"><strong>{service.label}</strong><i aria-hidden="true"><GuildIcon name="diagonal" /></i></span></a>)}</div>
   </div>
 </section>
 

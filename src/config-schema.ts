@@ -112,6 +112,28 @@ export const siteConfigSchema = z.object({
     embed: z.boolean().default(false),
   }),
 
+  /**
+   * Which conversion routes this client actually publishes.
+   *
+   * Templates never hardcode a destination for their quote and booking buttons —
+   * every label/href pair is derived from here, so a site cannot end up with four
+   * spellings of the same button or a link to a page that was never built.
+   *
+   * Defaulted as a whole, so a payload written before this existed still validates.
+   */
+  routes: z
+    .object({
+      /**
+       * Whether /booking exists. Most clients publish one; those who take bookings
+       * through the quote form alone set this false and every "Book today" button
+       * resolves to /get-quote instead. This is declared rather than inferred from
+       * whether a content file happens to be on disk — a missing file is
+       * indistinguishable from an unfinished one, and the wrong guess ships a 404.
+       */
+      booking: z.boolean().default(true),
+    })
+    .default({ booking: true }),
+
   tracking: z.object({
     gtmId: z.string().regex(/^GTM-[A-Z0-9]+$/, 'gtmId must look like "GTM-XXXXXXX"'),
   }),

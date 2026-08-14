@@ -1,0 +1,38 @@
+---
+/**
+ * Google reviews, embedded from the client's Business Profile.
+ *
+ * A third-party iframe we do not control: it cannot be styled from here, and it
+ * reflows as it loads. Both are handled the way QuoteSection handles the GHL form —
+ * box it, reserve its height so nothing below it jumps, and mark the slot with a
+ * placeholder when no src is configured yet.
+ */
+import type { GuildReviewsData } from '../types';
+
+interface Props { content: GuildReviewsData; }
+const { content } = Astro.props;
+const height = content.height ?? '32rem';
+---
+
+<section class="dg-section">
+  <div class="dg-container dg-section-inner">
+    <header class="head dg-reveal">
+      <h2 class="dg-heading">{content.heading}</h2>
+      {content.intro && <p>{content.intro}</p>}
+    </header>
+    <div class="embed dg-reveal" style={`--embed-height:${height}`}>
+      {content.src
+        ? <iframe src={content.src} title="Google reviews" loading="lazy"></iframe>
+        : <div class="placeholder"><span>Google reviews embed</span></div>}
+    </div>
+  </div>
+</section>
+
+<style>
+  .head { display: grid; gap: 1rem; margin-bottom: 2.5rem; }
+  .head p { max-width: 62ch; color: var(--dg-muted); }
+  .embed { min-height: var(--embed-height); border: 1px solid var(--dg-rule); background: white; }
+  .embed iframe { display: block; width: 100%; height: 100%; min-height: var(--embed-height); border: 0; }
+  .placeholder { display: grid; min-height: var(--embed-height); place-items: center; }
+  .placeholder span { padding: .5rem 1rem; border: 1px dashed var(--dg-faint); color: var(--dg-faint); font-family: monospace; font-size: .8rem; }
+</style>

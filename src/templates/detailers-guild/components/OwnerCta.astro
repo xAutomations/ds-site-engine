@@ -1,0 +1,55 @@
+---
+/**
+ * Closing CTA built around a portrait.
+ *
+ * ConversionBanner exists for the same job, but it treats its image as scenery —
+ * full-bleed, washed with accent, cropped to a 35rem band. That is right for a
+ * vehicle and wrong for a person: the face lands wherever the crop puts it. Here the
+ * portrait is the content, so it holds a 4/5 ratio beside the copy and stays whole
+ * at every width.
+ */
+import GuildIcon from './GuildIcon.astro';
+import type { GuildOwnerCtaData } from '../types';
+
+interface Props { content: GuildOwnerCtaData; }
+const { content } = Astro.props;
+---
+
+<section class="owner dg-ink-field">
+  <div class="dg-container dg-section-inner inner">
+    <figure class="portrait dg-reveal">
+      <img class="dg-grayscale" src={content.image.src} alt={content.image.alt} loading="lazy" />
+      {content.caption && <figcaption>{content.caption}</figcaption>}
+    </figure>
+    <div class="copy dg-reveal">
+      {content.eyebrow && <div class="dg-kicker">{content.eyebrow}</div>}
+      <h2 class="dg-heading">{content.heading}</h2>
+      {content.body && <p>{content.body}</p>}
+      {content.emphasis && <strong>{content.emphasis}</strong>}
+      <div class="actions">
+        <a class="dg-btn dg-btn--primary" href={content.action.href}>{content.action.label}<GuildIcon name="arrow" size={16} /></a>
+        {content.secondaryAction && <a class="dg-btn dg-btn--light" href={content.secondaryAction.href}>{content.secondaryAction.label}</a>}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* True black rather than the --dg-ink near-black the .dg-ink-field util paints. */
+  .owner { background: #000; }
+  .inner { display: grid; grid-template-columns: 4fr 6fr; gap: clamp(2.5rem, 6vw, 4.5rem); align-items: center; }
+  .portrait { position: relative; margin: 0; border: 1px solid color-mix(in srgb, white 22%, transparent); }
+  .portrait :global(img) { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+  figcaption { padding: .85rem 1rem; border-top: 1px solid color-mix(in srgb, white 22%, transparent); color: #d7d3d3; font-size: .75rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+  .copy { display: grid; justify-items: start; gap: 1.25rem; }
+  h2 { max-width: 22ch; }
+  p { max-width: 58ch; color: #d7d3d3; }
+  strong { font-size: clamp(1.2rem, 2.4vw, 1.6rem); }
+  .actions { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: .5rem; }
+  .dg-kicker { color: #d7d3d3; }
+  @media (max-width: 56rem) {
+    .inner { grid-template-columns: 1fr; }
+    /* Copy first on a phone: the portrait is support, not the pitch. */
+    .portrait { order: 2; max-width: 22rem; }
+  }
+</style>

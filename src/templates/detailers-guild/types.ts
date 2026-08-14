@@ -138,6 +138,48 @@ export interface GuildServiceCard extends GuildNavItem {
   image: GuildImage;
 }
 
+/**
+ * A vehicle type on the booking page. Same card as a service, but `href` points at
+ * the client's external GHL scheduler rather than a page on this site — one calendar
+ * per vehicle type, because a boat and a golf cart are not the same appointment.
+ */
+export type GuildVehicleCard = GuildServiceCard;
+
+/**
+ * Closing CTA built around a portrait rather than a full-bleed background.
+ *
+ * Distinct from GuildCtaData: ConversionBanner treats its image as scenery behind
+ * the copy, which crops a person badly and loses the face at small sizes. Here the
+ * image IS the content, so it sits beside the copy at a portrait ratio and is
+ * required rather than optional.
+ */
+export interface GuildOwnerCtaData {
+  eyebrow?: string;
+  heading: string;
+  body?: string;
+  emphasis?: string;
+  image: GuildImage;
+  action: GuildLink;
+  secondaryAction?: GuildLink;
+  /** Caption under the portrait, e.g. "Sanjar — owner". */
+  caption?: string;
+}
+
+/**
+ * Google reviews pulled from the client's Business Profile.
+ *
+ * The embed is a third-party iframe we cannot style, so it is boxed and given a
+ * reserved height to keep it from shifting layout as it loads. Absent `src`, a
+ * placeholder marks the slot the way the quote form does.
+ */
+export interface GuildReviewsData {
+  heading: string;
+  intro?: string;
+  src?: string;
+  /** Reserved height for the embed. */
+  height?: string;
+}
+
 /** Mirrors the `blog` content-collection entry data produced by the blog-writer skill. */
 export interface GuildBlogPost {
   title: string;

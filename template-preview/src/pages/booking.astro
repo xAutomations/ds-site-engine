@@ -1,0 +1,21 @@
+---
+import BookingPage from '../../../src/templates/detailers-guild/pages/BookingPage.astro';
+import {
+  bookingCta,
+  bookingHero,
+  bookingIntro,
+  bookingReviews,
+  bookingShell,
+  bookingVehicles,
+} from '../fixtures/detailers-guild';
+---
+
+<BookingPage
+  shell={bookingShell}
+  hero={bookingHero}
+  vehiclesHeading="Select Your Vehicle Type"
+  vehiclesIntro={bookingIntro}
+  vehicles={bookingVehicles}
+  cta={bookingCta}
+  reviews={bookingReviews}
+/>
