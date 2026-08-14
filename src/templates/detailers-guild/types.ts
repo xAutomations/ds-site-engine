@@ -95,7 +95,6 @@ export interface GuildContentSection {
   action?: GuildLink;
   secondaryAction?: GuildLink;
   reversed?: boolean;
-  patterned?: boolean;
   /** Drops the section's bottom rule so it flows into the next section. */
   seamless?: boolean;
   stats?: Array<{ value: string; label: string }>;

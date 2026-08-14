@@ -4,7 +4,7 @@ interface Props { heading?: string; addOns: GuildContentSection[]; }
 const { heading = 'Add-On Services', addOns } = Astro.props;
 ---
 
-<section class="dg-section dg-pattern">
+<section class="dg-section dg-accent-field">
   <div class="dg-container dg-section-inner">
     <h2 class="dg-heading dg-reveal">{heading}</h2>
     <div class="grid dg-reveal">
@@ -27,7 +27,7 @@ const { heading = 'Add-On Services', addOns } = Astro.props;
   .card { display: flex; flex-direction: column; border: 1px solid var(--dg-rule); background: var(--dg-paper); }
   .card .dg-media { min-height: 0; border: 0; border-bottom: 1px solid var(--dg-rule); aspect-ratio: 16 / 10; }
   .body { display: flex; flex: 1; flex-direction: column; padding: 1.5rem; }
-  h3 { font-size: 1.3rem; }
+  h3 { color: var(--dg-ink); font-size: 1.3rem; }
   .body .dg-prose { margin-top: .9rem; font-size: .9rem; }
   @media (max-width: 60rem) { .grid { grid-template-columns: 1fr; } .card { max-width: 34rem; } }
 </style>

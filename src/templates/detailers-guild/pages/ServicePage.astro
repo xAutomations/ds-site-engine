@@ -38,8 +38,8 @@ const { shell, hero, intro, overview, included, process, addOnsHeading = 'Add-On
 
 <SiteLayout {...shell}>
   <PageHero {hero} />
-  <MediaSection content={intro} />
   <MediaSection content={overview} />
+  <MediaSection content={intro} />
   {included && <IncludedSection content={included} />}
   {process && <ProcessSteps content={process} />}
   {addOns.length > 0 && <AddOnGrid heading={addOnsHeading} {addOns} />}

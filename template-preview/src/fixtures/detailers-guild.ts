@@ -33,7 +33,7 @@ const areas = [
 ].map((label) => ({ label, href: '#areas' }));
 
 const site = {
-  accentColor: '#ec3013',
+  accentColor: '#743cbd',
   brand: {
     name: 'Detailer Guild',
     blurb: 'San Mob Detailing is a 100% mobile auto detailing service based in Alexandria, VA, serving the entire DMV region. From daily drivers to RVs, boats, and aircraft, we bring professional detailing directly to your door.',
@@ -96,7 +96,6 @@ export const homePromise: GuildContentSection = {
   ],
   image: { src: '/assets/photo-placeholder.svg', alt: 'Preview placeholder for an interior detail close-up' },
   reversed: true,
-  patterned: true,
   stats: [
     { value: '$0', label: 'Hidden fees' },
     { value: 'Included', label: 'Pet hair removal' },
@@ -158,7 +157,6 @@ export const aboutProcess: GuildContentSection = {
     'That approach applies to every vehicle we touch. Whether it is a daily driver sedan, a family SUV, a recreational vehicle, a boat sitting on a trailer, or a private aircraft, the standard is the same. Thorough work, clean results, and a customer who is satisfied when we leave.',
   ],
   image: { src: '/assets/photo-placeholder.svg', alt: 'Preview placeholder for the owner of San Mob Detailing' },
-  patterned: true,
 };
 
 export const aboutCta: GuildCtaData = {
@@ -248,7 +246,6 @@ export const autoDetailIntro: GuildContentSection = {
     'San Mob Detailing provides complete interior and exterior detailing for sedans, SUVs, trucks, and minivans across the DMV. We are 100% mobile, which means we bring everything to your driveway, your office lot, or wherever your vehicle sits. No drop-off required.',
   ],
   image: { src: '/assets/photo-placeholder.svg', alt: 'Preview placeholder for the owner detailing a car' },
-  seamless: true,
 };
 
 export const autoDetailOverview: GuildContentSection = {
@@ -259,6 +256,7 @@ export const autoDetailOverview: GuildContentSection = {
   ],
   image: { src: '/assets/photo-placeholder.svg', alt: 'Preview placeholder for a full detail in progress' },
   reversed: true,
+  seamless: true,
   action: { label: 'Get a quote', href: '#book' },
   secondaryAction: { label: 'Call (888) 900-5941', href: 'tel:+18889005941' },
 };

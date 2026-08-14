@@ -5,7 +5,7 @@ interface Props { content: GuildContentSection; }
 const { content } = Astro.props;
 ---
 
-<section class:list={['dg-section', { 'dg-pattern': content.patterned, seamless: content.seamless }]}>
+<section class:list={['dg-section', { seamless: content.seamless }]}>
   <div class:list={['dg-container', 'inner', { reversed: content.reversed, solo: !content.image }]}>
     {content.image && <figure class="dg-media dg-grayscale dg-reveal"><img src={content.image.src} alt={content.image.alt} loading="lazy" /></figure>}
     <div class="copy dg-reveal">

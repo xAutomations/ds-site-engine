@@ -9,7 +9,7 @@ const iconFor = (label: string): 'facebook' | 'instagram' | 'tiktok' | null => {
 };
 ---
 
-<section class="social dg-section dg-pattern">
+<section class="social dg-section">
   <div class="dg-container dg-section-inner">
     <div class="dg-reveal">
       <h2 class="dg-heading">{content.heading}</h2>
@@ -26,11 +26,20 @@ const iconFor = (label: string): 'facebook' | 'instagram' | 'tiktok' | null => {
 </section>
 
 <style>
-  .social { text-align: center; }
+  .social {
+    text-align: center;
+    color: white;
+    background:
+      linear-gradient(color-mix(in srgb, var(--dg-accent) 72%, transparent), color-mix(in srgb, var(--dg-accent) 72%, transparent)),
+      repeating-linear-gradient(45deg,
+      var(--dg-accent) 0, var(--dg-accent) 20px,
+      var(--dg-accent-pale) 20px, var(--dg-accent-pale) 40px);
+    background-attachment: fixed;
+  }
   .dg-section-inner { display: flex; flex-direction: column; align-items: center; gap: 1.25rem; }
-  p { margin-top: .5rem; color: var(--dg-muted); }
+  p { margin-top: .5rem; color: color-mix(in srgb, white 82%, var(--dg-accent)); }
   .links { display: flex; flex-wrap: wrap; justify-content: center; gap: .75rem; }
-  .links a { display: grid; min-width: 2.875rem; min-height: 2.875rem; place-items: center; padding: .5rem; border: 1px solid var(--dg-rule); color: var(--dg-ink); font-size: .75rem; font-weight: 800; text-decoration: none; text-transform: uppercase; transition: background .2s ease, color .2s ease, border-color .2s ease; }
-  .links a:hover { border-color: var(--dg-ink); background: var(--dg-ink); color: var(--dg-bg); }
+  .links a { display: grid; min-width: 2.875rem; min-height: 2.875rem; place-items: center; padding: .5rem; border: 1px solid color-mix(in srgb, white 40%, transparent); color: white; font-size: .75rem; font-weight: 800; text-decoration: none; text-transform: uppercase; transition: background .2s ease, color .2s ease, border-color .2s ease; }
+  .links a:hover { border-color: white; background: white; color: var(--dg-accent-dark); }
   .dg-media { width: min(55rem, 100%); margin-top: 1.25rem; aspect-ratio: 16 / 9; }
 </style>
