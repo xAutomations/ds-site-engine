@@ -8,6 +8,7 @@ import type {
   GuildContentSection,
   GuildCtaData,
   GuildHeroData,
+  GuildLegalDoc,
   GuildOwnerCtaData,
   GuildReviewsData,
   GuildServiceCard,
@@ -532,6 +533,120 @@ export const bookingCta: GuildOwnerCtaData = {
 export const bookingReviews: GuildReviewsData = {
   heading: 'What Our Customers Say',
   intro: 'Reviews pulled straight from our Google Business Profile — every one from a real detail in the DMV.',
+};
+
+export const privacyShell: GuildShellData = {
+  ...homeShell,
+  title: 'Privacy Policy | Detailer Guild',
+  description: 'How San Mob Detailing collects, uses, and protects your personal information.',
+  path: '/privacy-policy',
+};
+
+export const tosShell: GuildShellData = {
+  ...homeShell,
+  title: 'Terms of Service | Detailer Guild',
+  description: 'The terms governing use of the San Mob Detailing website and services.',
+  path: '/tos',
+};
+
+export const notFoundShell: GuildShellData = {
+  ...homeShell,
+  title: 'Page Not Found | Detailer Guild',
+  description: 'The page you were looking for does not exist.',
+  path: '/404',
+};
+
+/**
+ * Stand-in legal copy. Production resolves this from the payload or generates it
+ * from lib/legal.ts; the preview only needs enough shape to show the layout —
+ * a long section list, bullets with and without terms, and a contact block.
+ */
+export const privacyDoc: GuildLegalDoc = {
+  title: 'Privacy Policy',
+  intro: [
+    'This Privacy Policy describes how San Mob Detailing collects, uses, and protects your personal information when you use our website or services.',
+    'We will never sell your personal information to third parties.',
+  ],
+  emphasis: 'By using our Site or booking a service, you agree to this Privacy Policy.',
+  sections: [
+    {
+      heading: 'Information We Collect',
+      body: ['We may collect the following types of information:'],
+      bullets: [
+        { term: 'Contact details:', text: 'name, phone number, email address, and service address.' },
+        { term: 'Vehicle details:', text: 'make, model, and condition, so we can quote accurately.' },
+        { text: 'Usage data such as pages visited and time on site.' },
+      ],
+    },
+    {
+      heading: 'How We Use Your Information',
+      body: [
+        'We use the information we collect to schedule and deliver detailing services, to respond to quote requests, and to send service reminders where you have asked for them.',
+      ],
+    },
+    {
+      heading: 'Cookies and Tracking',
+      body: [
+        'Our website uses cookies to understand how visitors use the site so we can improve it. You can disable cookies in your browser settings at any time.',
+      ],
+    },
+    {
+      heading: 'Data Retention',
+      body: ['We retain customer records for as long as needed to provide services and meet legal obligations.'],
+      note: 'You may ask us to delete your records at any time, except where we are required to keep them for tax or legal reasons.',
+    },
+    {
+      heading: 'Your Rights',
+      body: ['You may request a copy of the information we hold about you, or ask us to delete it, at any time.'],
+    },
+  ],
+  contact: {
+    heading: 'Contact Us',
+    intro:
+      'For questions about this privacy policy, contact San Mob Detailing at info@sanmobdetailing.com or (888) 900-5941.',
+  },
+};
+
+export const tosDoc: GuildLegalDoc = {
+  ...privacyDoc,
+  title: 'Terms of Service & Booking Policy',
+  intro: [
+    'These Terms of Service ("Terms") govern your use of the San Mob Detailing website at https://sanmobdetailing.com (the "Site") and the detailing services provided by San Mob Detailing ("we," "us," or "our"). By using our Site or booking a service, you agree to these Terms.',
+  ],
+  emphasis: 'By booking a service with San Mob Detailing, you agree to the following terms and policies.',
+  sections: [
+    {
+      heading: 'Services',
+      body: [
+        'San Mob Detailing provides mobile vehicle detailing services in the DMV region. All services are subject to availability, weather conditions, and scheduling. We reserve the right to refuse or reschedule service at our discretion.',
+      ],
+    },
+    {
+      heading: 'Booking and Cancellation',
+      body: [
+        'Appointments can be booked through our website, by phone, or by email. We ask for reasonable notice for cancellations or rescheduling.',
+      ],
+      note: 'Late cancellations or no-shows may be subject to a cancellation fee. We will make reasonable efforts to communicate any schedule changes on our end in advance.',
+    },
+    {
+      heading: 'Pricing and Payment',
+      body: [
+        'Prices for services are provided as quotes based on vehicle type, size, and condition. Final pricing may be adjusted based on the actual condition of the vehicle at the time of service. Payment is due upon completion of the service.',
+      ],
+      note: 'An additional travel fee may apply for locations beyond our standard 40-mile service radius from Alexandria, VA.',
+    },
+    {
+      heading: 'Liability',
+      body: [
+        'We carry insurance for the work we perform. Pre-existing damage, wear, or defects identified during inspection are recorded before work begins.',
+      ],
+    },
+  ],
+  contact: {
+    heading: 'Contact Us',
+    intro:
+      'For questions about these terms, contact San Mob Detailing at info@sanmobdetailing.com or (888) 900-5941.',
+  },
 };
 
 export const blogShell: GuildShellData = {

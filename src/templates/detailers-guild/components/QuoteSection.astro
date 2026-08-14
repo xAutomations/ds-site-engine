@@ -1,4 +1,5 @@
 ---
+import GuildImg from './GuildImg.astro';
 import GuildIcon from './GuildIcon.astro';
 import type { GuildQuoteData, GuildSiteData } from '../types';
 
@@ -33,7 +34,7 @@ const iconFor = (label: string): 'facebook' | 'instagram' | 'tiktok' | null => {
         </div>
       </div>
       {content.note && <p class="note"><GuildIcon name="arrow" size={13} />{content.note}</p>}
-      {content.image && <figure class="dg-media dg-grayscale"><img src={content.image.src} alt={content.image.alt} loading="lazy" /></figure>}
+      {content.image && <figure class="dg-media dg-grayscale"><GuildImg src={content.image.src} alt={content.image.alt} sizes="(max-width: 56rem) 100vw, 40vw" /></figure>}
     </div>
     <div class="form dg-reveal" style={`--form-min-height:${content.formHeight ?? '52rem'}`}>
       {content.formSrc

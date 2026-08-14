@@ -1,0 +1,60 @@
+---
+/**
+ * Every image in this template goes through here.
+ *
+ * Two kinds of `src` reach a Guild component, and they need opposite handling:
+ *
+ *   ./assets/hero.jpg   A payload asset. Must be resolved and optimized by
+ *                       Img.astro — and a missing file must fail the build. Left
+ *                       raw, it renders as a URL relative to the *page*, so
+ *                       /full-auto-detailing/assets/hero.jpg — a 404 on every page
+ *                       of the site, which is exactly what this template shipped
+ *                       before this component existed.
+ *   /assets/hero.svg    Already a URL: template-preview's public/ files, and any
+ *                       absolute or external image. Passed through untouched,
+ *                       because there is no payload to resolve it against.
+ *
+ * The distinction is the leading slash (or a protocol), not a flag a caller has to
+ * remember to set.
+ */
+import Img from '../../../components/Img.astro';
+
+interface Props {
+  src: string;
+  alt: string;
+  widths?: number[];
+  sizes?: string;
+  loading?: 'eager' | 'lazy';
+  fetchpriority?: 'high' | 'low' | 'auto';
+  class?: string;
+}
+
+const {
+  src,
+  alt,
+  widths,
+  sizes,
+  loading = 'lazy',
+  fetchpriority = 'auto',
+  class: className,
+} = Astro.props;
+
+/** Anything already addressable by a browser: absolute path, protocol, or data URI. */
+const isUrl = /^(https?:)?\/\//.test(src) || src.startsWith('/') || src.startsWith('data:');
+---
+
+{
+  isUrl ? (
+    <img src={src} alt={alt} loading={loading} fetchpriority={fetchpriority} class={className} />
+  ) : (
+    <Img
+      src={src}
+      alt={alt}
+      widths={widths}
+      sizes={sizes}
+      loading={loading}
+      fetchpriority={fetchpriority}
+      class={className}
+    />
+  )
+}

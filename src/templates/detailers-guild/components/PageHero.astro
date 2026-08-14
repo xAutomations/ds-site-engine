@@ -1,14 +1,24 @@
 ---
 import GuildIcon from './GuildIcon.astro';
+import GuildImg from './GuildImg.astro';
+import { guildPosterUrl, guildVideoUrl } from '../assets';
 import type { GuildHeroData } from '../types';
 interface Props { hero: GuildHeroData; }
 const { hero } = Astro.props;
 const ticker = hero.ticker ? [...hero.ticker, ...hero.ticker] : [];
+
+/**
+ * A <video src> and a poster= are plain attributes, so they need resolved URLs
+ * rather than a component. Left as authored, "./assets/hero.webm" resolves against
+ * the page URL and the hero silently falls back to nothing.
+ */
+const videoSrc = hero.video ? guildVideoUrl(hero.video.src) : undefined;
+const posterSrc = hero.image ? await guildPosterUrl(hero.image.src) : undefined;
 ---
 
 <section class:list={['hero', { compact: hero.compact }]}>
-  {hero.video && <div class="hero-image dg-grayscale"><video src={hero.video.src} poster={hero.image?.src} autoplay muted loop playsinline></video></div>}
-  {!hero.video && hero.image && <div class="hero-image dg-grayscale"><img src={hero.image.src} alt="" loading="eager" fetchpriority="high" /></div>}
+  {videoSrc && <div class="hero-image dg-grayscale"><video src={videoSrc} poster={posterSrc} autoplay muted loop playsinline></video></div>}
+  {!videoSrc && hero.image && <div class="hero-image dg-grayscale"><GuildImg src={hero.image.src} alt="" loading="eager" fetchpriority="high" sizes="100vw" /></div>}
   <div class="wash"></div>
   <div class="dg-container hero-inner">
     <div class="dg-kicker dg-reveal">{hero.eyebrow}</div>

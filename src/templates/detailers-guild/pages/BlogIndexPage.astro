@@ -1,4 +1,5 @@
 ---
+import GuildImg from '../components/GuildImg.astro';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import GuildIcon from '../components/GuildIcon.astro';
@@ -23,7 +24,7 @@ const formatDate = (date: string) =>
         {posts.map((post) => (
           <a class="card dg-reveal" href={`/post/${post.slug}`}>
             <figure class="dg-media dg-grayscale">
-              <img src={post.heroImage.src} alt={post.heroImage.alt} loading="lazy" />
+              <GuildImg src={post.heroImage.src} alt={post.heroImage.alt} sizes="(max-width: 48rem) 100vw, 33vw" />
             </figure>
             <div class="body">
               <div class="meta"><time datetime={post.date}>{formatDate(post.date)}</time><span class="category">{post.category}</span></div>

@@ -1,4 +1,5 @@
 ---
+import GuildImg from './GuildImg.astro';
 import GuildIcon from './GuildIcon.astro';
 import type { GuildImage, GuildNavItem } from '../types';
 interface Props { heading?: string; intro?: string; map?: GuildImage; areas: GuildNavItem[]; }
@@ -10,7 +11,7 @@ const { heading = 'Areas We Serve', intro, map, areas } = Astro.props;
     <div class="lead dg-reveal">
       <h2 class="dg-heading">{heading}</h2>
       {intro && <p class="dg-prose">{intro}</p>}
-      {map && <figure class="dg-media dg-grayscale"><img src={map.src} alt={map.alt} loading="lazy" /></figure>}
+      {map && <figure class="dg-media dg-grayscale"><GuildImg src={map.src} alt={map.alt} sizes="(max-width: 48rem) 100vw, 50vw" /></figure>}
     </div>
     <div class="areas dg-rule-list dg-reveal">
       {areas.map((area) => <a href={area.href}>{area.label}<GuildIcon name="arrow" size={16} /></a>)}

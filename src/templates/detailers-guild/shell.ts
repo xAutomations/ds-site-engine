@@ -13,7 +13,7 @@
  * derived value is computed once here and handed to SiteLayout as data.
  */
 import { getCollection } from 'astro:content';
-import { areaLabel } from '../../lib/content';
+import { areaLabel, assertUniqueSlugs } from '../../lib/content';
 import { siteConfig } from '../../lib/site-config';
 import { ogImageUrl } from '../../lib/assets';
 import {
@@ -27,7 +27,15 @@ import {
   webPageJsonLd,
   webSiteJsonLd,
 } from '../../lib/seo';
+import { assertGuildAccent, resolveGuildAccent } from './theme';
 import type { GuildNavItem, GuildServiceCard, GuildShellData, GuildSiteData } from './types';
+
+/**
+ * Checked once at module load rather than per page: the accent is one config value,
+ * and a failure should stop the build immediately rather than on whichever page
+ * happens to render first.
+ */
+assertGuildAccent(siteConfig.theme.accentColor);
 
 /**
  * The Guild collections, ordered the way the nav and grids render them.
@@ -35,14 +43,29 @@ import type { GuildNavItem, GuildServiceCard, GuildShellData, GuildSiteData } fr
  * These are this template's own collections (content.config.ts keeps one schema per
  * collection so both templates keep exact types), so no casting is needed anywhere.
  */
+async function guildCollections() {
+  const [services, areas] = await Promise.all([
+    getCollection('guildServices'),
+    getCollection('guildAreas'),
+  ]);
+  /**
+   * Services and areas both render at /{slug}, so a shared slug means one silently
+   * overwrites the other. Checked on every read, exactly as the aviation accessors
+   * do it — an earlier version of these helpers skipped the guard, which would have
+   * shipped a missing page as a passing build.
+   */
+  assertUniqueSlugs(services, areas);
+  return { services, areas };
+}
+
 export async function guildServiceEntries() {
-  const entries = await getCollection('guildServices');
-  return entries.sort((a, b) => a.data.order - b.data.order);
+  const { services } = await guildCollections();
+  return services.sort((a, b) => a.data.order - b.data.order);
 }
 
 export async function guildAreaEntries() {
-  const entries = await getCollection('guildAreas');
-  return entries.sort((a, b) => a.data.order - b.data.order);
+  const { areas } = await guildCollections();
+  return areas.sort((a, b) => a.data.order - b.data.order);
 }
 
 /**
@@ -68,8 +91,12 @@ export function guildSite(): GuildSiteData {
     ['YouTube', socials.youtube],
   ].flatMap(([label, href]) => (href ? [{ label: label as string, href }] : []));
 
+  const accent = resolveGuildAccent(theme.accentColor);
+
   return {
-    accentColor: theme.accentColor,
+    accentColor: accent.accent,
+    onAccent: accent.onAccent,
+    accentDark: accent.accentDark,
     brand: { name: brand.name, blurb: brand.blurb },
     contact: {
       phone: contact.phone,

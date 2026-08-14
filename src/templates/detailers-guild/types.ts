@@ -23,6 +23,13 @@ export interface GuildNavItem extends GuildLink {
 
 export interface GuildSiteData {
   accentColor: string;
+  /**
+   * Label colour on an accent fill, and accent-as-text on paper. Both derived from
+   * accentColor for WCAG AA (see theme.ts) rather than assumed to be white and a
+   * fixed dark mix. Optional so template-preview can supply an accent alone.
+   */
+  onAccent?: string;
+  accentDark?: string;
   brand: {
     name: string;
     blurb: string;
@@ -233,6 +240,28 @@ export interface GuildQuoteData {
   formSrc?: string;
   /** Minimum height reserved for the embedded form. */
   formHeight?: string;
+}
+
+/**
+ * A resolved legal document, ready to render.
+ *
+ * The route decides where the text came from — the payload's own
+ * content/legal/*.md, or the shared boilerplate generated from config by
+ * lib/legal.ts — so the component never has to know or care.
+ */
+export interface GuildLegalDoc {
+  title: string;
+  intro: string[];
+  /** Accent line closing the intro, e.g. "By booking, you agree to these terms." */
+  emphasis?: string;
+  sections: Array<{
+    heading: string;
+    body?: string[];
+    bullets?: Array<{ term?: string; text: string }>;
+    /** Pulled out of the body into a tinted callout — fees, limits, deadlines. */
+    note?: string;
+  }>;
+  contact: { heading: string; intro: string };
 }
 
 export interface GuildCtaData {

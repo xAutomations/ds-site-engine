@@ -1,0 +1,134 @@
+---
+/**
+ * /privacy-policy and /tos.
+ *
+ * Centred masthead, then one column of numbered sections separated by rules. The
+ * number is a badge rather than part of the heading text, so a clause can be cited
+ * by number without a screen reader announcing "one dot" before every heading.
+ *
+ * Props-pure like every other Guild page: the route resolves the document (payload
+ * override or generated boilerplate) and hands it over finished.
+ */
+import SiteLayout from '../layouts/SiteLayout.astro';
+import OwnerCta from '../components/OwnerCta.astro';
+import type { GuildLegalDoc, GuildOwnerCtaData, GuildShellData } from '../types';
+
+interface Props {
+  shell: GuildShellData;
+  doc: GuildLegalDoc;
+  /** Closing conversion band. Optional — see the route for where it comes from. */
+  cta?: GuildOwnerCtaData;
+}
+const { shell, doc, cta } = Astro.props;
+const { contact } = shell.site;
+---
+
+<SiteLayout {...shell}>
+  <section class="dg-section">
+    <div class="dg-container dg-section-inner">
+      <article class="doc">
+        <header class="dg-reveal">
+          <h1 class="dg-display">{doc.title}</h1>
+        </header>
+
+        <div class="intro dg-reveal">
+          {doc.intro.map((paragraph) => <p>{paragraph}</p>)}
+          {doc.emphasis && <p class="emphasis">{doc.emphasis}</p>}
+        </div>
+
+        {doc.sections.map((section, index) => (
+          <section class="dg-reveal">
+            <h2>
+              <span class="num" aria-hidden="true">{index + 1}</span>
+              {section.heading}
+            </h2>
+            {section.body?.map((paragraph) => <p>{paragraph}</p>)}
+            {section.bullets && section.bullets.length > 0 && (
+              <ul>
+                {section.bullets.map((bullet) => (
+                  <li>{bullet.term && <strong>{bullet.term}</strong>}{bullet.text}</li>
+                ))}
+              </ul>
+            )}
+            {section.note && <p class="note">{section.note}</p>}
+          </section>
+        ))}
+
+        <section class="dg-reveal">
+          <h2>
+            <span class="num" aria-hidden="true">{doc.sections.length + 1}</span>
+            {doc.contact.heading}
+          </h2>
+          <p>{doc.contact.intro}</p>
+          <ul class="nap">
+            <li><a href={`tel:${contact.phone}`}>{contact.phoneDisplay}</a></li>
+            <li><a href={`mailto:${contact.email}`}>{contact.email}</a></li>
+            <li>{contact.address}</li>
+          </ul>
+        </section>
+      </article>
+    </div>
+  </section>
+
+  {cta && <OwnerCta content={cta} />}
+</SiteLayout>
+
+<style>
+  /*
+   * One column, centred, sized so the measure is comfortable without a second cap.
+   * Paragraphs deliberately carry no max-width of their own: capping them inside a
+   * wider column left the text hugging the left edge while the rules and headings
+   * ran full width, which reads as broken centring rather than as a measure.
+   */
+  .doc { width: min(100%, 54rem); margin-inline: auto; }
+  header { text-align: center; }
+  h1 { max-width: 18ch; margin-inline: auto; text-transform: uppercase; }
+  .intro { padding: 2.5rem 0 2.25rem; }
+  .intro p { margin-bottom: 1rem; }
+  .emphasis { margin-top: 1.25rem; color: var(--dg-accent-dark); font-weight: 800; }
+
+  /* One rule between sections, none above the first — the intro already sits on one. */
+  .doc > section { padding: 2.5rem 0; border-top: 1px solid var(--dg-rule); }
+
+  h2 {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    font-size: clamp(1rem, 1.6vw, 1.15rem);
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+  /* Notched square, echoing the accent blocks used across the template. */
+  .num {
+    display: grid;
+    width: 2.1rem;
+    height: 2.1rem;
+    flex: none;
+    place-items: center;
+    background: var(--dg-accent);
+    clip-path: polygon(0 0, 100% 0, 100% 72%, 72% 100%, 0 100%);
+    color: var(--dg-on-accent);
+    font-size: .8rem;
+  }
+
+  p { margin-bottom: 1rem; }
+  ul { margin: 0 0 1rem; padding-left: 1.1rem; }
+  li { margin-bottom: .5rem; }
+  li strong { margin-right: .35rem; }
+
+  /* Callout for the clause someone will argue about later: fees, limits, deadlines. */
+  .note {
+    margin-top: 1.5rem;
+    padding: 1.1rem 1.4rem;
+    border-left: 3px solid var(--dg-accent);
+    background: var(--dg-accent-pale);
+    color: var(--dg-ink);
+    font-weight: 700;
+  }
+
+  .nap { padding-left: 0; list-style: none; }
+  .nap a { color: var(--dg-ink); font-weight: 800; text-decoration: none; }
+  .nap a:hover { color: var(--dg-accent-dark); }
+</style>

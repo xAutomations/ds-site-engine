@@ -3,6 +3,7 @@
  * read through here so ordering is defined once.
  */
 import { getCollection, getEntry } from 'astro:content';
+import { siteConfig } from './site-config';
 
 /**
  * Static routes that must never be shadowed by a payload slug. Both `services` and
@@ -28,7 +29,7 @@ const RESERVED_SLUGS = new Set([
  * a service slug impossible by construction — and also made non-city service areas
  * impossible. Now that slugs are free-form, the collision has to be checked outright.
  */
-function assertUniqueSlugs(
+export function assertUniqueSlugs(
   services: Array<{ data: { slug: string } }>,
   areas: Array<{ data: { slug: string } }>,
 ): void {
@@ -62,6 +63,55 @@ function assertUniqueSlugs(
       `Slug collisions in the payload — every page renders at /{slug}, so these overwrite each other:\n${problems.join('\n')}`,
     );
   }
+}
+
+/**
+ * The active template's pages, normalised to the fields every template shares.
+ *
+ * Template-agnostic endpoints (llms.txt, and anything else in src/pages) need to know
+ * what exists at /{slug} without caring which contract produced it. Returning a flat
+ * shape rather than the entries themselves keeps the two schemas from leaking out as
+ * a union that nothing downstream can narrow.
+ */
+export async function getPageIndex(): Promise<{
+  services: Array<{ name: string; slug: string; summary: string }>;
+  areas: Array<{ name: string; slug: string; state?: string; summary: string }>;
+}> {
+  if (siteConfig.template === 'detailers-guild') {
+    const [services, areas] = await Promise.all([
+      getCollection('guildServices'),
+      getCollection('guildAreas'),
+    ]);
+    assertUniqueSlugs(services, areas);
+    return {
+      services: services
+        .sort((a, b) => a.data.order - b.data.order)
+        .map(({ data }) => ({ name: data.name, slug: data.slug, summary: data.metaDescription })),
+      areas: areas
+        .sort((a, b) => a.data.order - b.data.order)
+        .map(({ data }) => ({
+          name: data.name,
+          slug: data.slug,
+          state: data.state,
+          summary: data.metaDescription,
+        })),
+    };
+  }
+
+  const [services, areas] = await Promise.all([getServices(), getAreas()]);
+  return {
+    services: services.map(({ data }) => ({
+      name: data.name,
+      slug: data.slug,
+      summary: data.metaDescription,
+    })),
+    areas: areas.map(({ data }) => ({
+      name: data.name,
+      slug: data.slug,
+      state: data.state,
+      summary: data.metaDescription,
+    })),
+  };
 }
 
 export async function getServices() {

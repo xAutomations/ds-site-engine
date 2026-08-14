@@ -56,16 +56,14 @@ const ROUTES: Record<Template, TemplateRoute[]> = {
     { pattern: '/[service]', entrypoint: '[service].astro' },
     { pattern: '/[area]', entrypoint: '[area].astro' },
   ],
-  /**
-   * Legal (/privacy-policy, /tos) and /404 are absent until this template has page
-   * components for them — an entry here without a route file fails the build, which
-   * is the right failure but not a useful one yet.
-   */
   'detailers-guild': [
     { pattern: '/', entrypoint: 'index.astro' },
     { pattern: '/about', entrypoint: 'about.astro' },
     { pattern: '/faqs', entrypoint: 'faqs.astro' },
     { pattern: '/get-quote', entrypoint: 'get-quote.astro' },
+    { pattern: '/privacy-policy', entrypoint: 'privacy-policy.astro' },
+    { pattern: '/tos', entrypoint: 'tos.astro' },
+    { pattern: '/404', entrypoint: '404.astro' },
     { pattern: '/booking', entrypoint: 'booking.astro', requires: 'booking' },
     { pattern: '/blog', entrypoint: 'blog/index.astro' },
     { pattern: '/post/[slug]', entrypoint: 'post/[slug].astro' },

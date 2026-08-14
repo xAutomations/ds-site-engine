@@ -1,4 +1,5 @@
 ---
+import GuildImg from './GuildImg.astro';
 import GuildIcon from './GuildIcon.astro';
 import type { GuildContentSection } from '../types';
 interface Props { content: GuildContentSection; }
@@ -7,7 +8,7 @@ const { content } = Astro.props;
 
 <section class:list={['dg-section', { seamless: content.seamless }]}>
   <div class:list={['dg-container', 'inner', { reversed: content.reversed, solo: !content.image }]}>
-    {content.image && <figure class="dg-media dg-grayscale dg-reveal"><img src={content.image.src} alt={content.image.alt} loading="lazy" /></figure>}
+    {content.image && <figure class="dg-media dg-grayscale dg-reveal"><GuildImg src={content.image.src} alt={content.image.alt} sizes="(max-width: 48rem) 100vw, 50vw" /></figure>}
     <div class="copy dg-reveal">
       {content.eyebrow && <div class="dg-kicker">{content.eyebrow}</div>}
       {content.heading && <h2 class:list={['dg-heading', { large: content.large, small: content.small }]}>{content.heading}</h2>}

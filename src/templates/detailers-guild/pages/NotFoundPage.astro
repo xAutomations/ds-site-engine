@@ -1,0 +1,56 @@
+---
+/**
+ * /404.
+ *
+ * Every link out of here is one the site definitely has: home, the services the
+ * client actually published, and the phone. A 404 that offers a menu of guesses is
+ * worse than one that offers the two things a lost customer wants — the thing they
+ * were looking for, or a person.
+ */
+import SiteLayout from '../layouts/SiteLayout.astro';
+import GuildIcon from '../components/GuildIcon.astro';
+import type { GuildLink, GuildShellData } from '../types';
+
+interface Props {
+  shell: GuildShellData;
+  heading: string;
+  body: string;
+  primaryAction: GuildLink;
+}
+const { shell, heading, body, primaryAction } = Astro.props;
+const { contact } = shell.site;
+---
+
+<SiteLayout {...shell}>
+  <section class="notfound dg-ink-field">
+    <div class="dg-container dg-section-inner inner">
+      <div class="dg-kicker">Error 404</div>
+      <h1 class="dg-display">{heading}</h1>
+      <p>{body}</p>
+      <div class="actions">
+        <a class="dg-btn dg-btn--primary" href={primaryAction.href}>{primaryAction.label}<GuildIcon name="arrow" size={16} /></a>
+        <a class="dg-btn dg-btn--light" href={`tel:${contact.phone}`}>Call {contact.phoneDisplay}</a>
+      </div>
+
+      {shell.services.length > 0 && (
+        <nav class="links" aria-label="Services">
+          <strong>Or jump to a service</strong>
+          <div>{shell.services.map((service) => <a href={service.href}>{service.label}</a>)}</div>
+        </nav>
+      )}
+    </div>
+  </section>
+</SiteLayout>
+
+<style>
+  .inner { display: flex; min-height: 60vh; flex-direction: column; align-items: center; justify-content: center; gap: 1.25rem; text-align: center; }
+  h1 { max-width: 16ch; }
+  p { max-width: 52ch; color: #d7d3d3; }
+  .dg-kicker { color: #d7d3d3; }
+  .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: .75rem; margin-top: .5rem; }
+  .links { margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid color-mix(in srgb, white 22%, transparent); }
+  .links strong { display: block; margin-bottom: 1rem; font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; }
+  .links div { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem 1.25rem; }
+  .links a { color: #d7d3d3; font-size: .9rem; font-weight: 700; text-decoration: none; }
+  .links a:hover { color: white; }
+</style>

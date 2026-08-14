@@ -1,0 +1,27 @@
+---
+/** /tos */
+import { getEntry } from 'astro:content';
+import LegalPage from '../pages/LegalPage.astro';
+import { guildPageTitle, guildShell } from '../shell';
+import { ownerCtaFrom } from '../compose';
+import { legalMetaDescription, resolveLegalDoc } from './_legal';
+
+const doc = await resolveLegalDoc('tos');
+const authored = await getEntry('legal', 'tos');
+
+/**
+ * The closing CTA is the booking page's owner band, reused rather than authored
+ * again: it is the same portrait and the same offer to talk it through, and a second
+ * copy in a second file is a second thing to keep in sync. A client with no booking
+ * page simply gets no CTA here.
+ */
+const booking = await getEntry('guildBooking', 'booking');
+
+const shell = await guildShell({
+  title: guildPageTitle(doc.title),
+  description: authored?.data.metaDescription ?? legalMetaDescription('tos'),
+  path: '/tos',
+});
+---
+
+<LegalPage {shell} {doc} cta={booking && ownerCtaFrom(booking.data.cta)} />

@@ -1,0 +1,11 @@
+---
+import NotFoundPage from '../../../src/templates/detailers-guild/pages/NotFoundPage.astro';
+import { notFoundShell } from '../fixtures/detailers-guild';
+---
+
+<NotFoundPage
+  shell={notFoundShell}
+  heading="We Could Not Find That Page"
+  body="The link may be out of date, or the page may have moved. Everything we offer is one tap away below."
+  primaryAction={{ label: 'Get a quote', href: '/get-quote' }}
+/>

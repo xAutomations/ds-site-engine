@@ -1,4 +1,5 @@
 ---
+import GuildImg from './GuildImg.astro';
 import GuildIcon from './GuildIcon.astro';
 import type { GuildSocialData } from '../types';
 interface Props { content: GuildSocialData; }
@@ -21,7 +22,7 @@ const iconFor = (label: string): 'facebook' | 'instagram' | 'tiktok' | null => {
         return <a href={link.href} aria-label={link.label} rel="noreferrer" target="_blank">{icon ? <GuildIcon name={icon} size={18} /> : link.label}</a>;
       })}
     </div>
-    {content.image && <figure class="dg-media dg-grayscale dg-reveal"><img src={content.image.src} alt={content.image.alt} loading="lazy" /></figure>}
+    {content.image && <figure class="dg-media dg-grayscale dg-reveal"><GuildImg src={content.image.src} alt={content.image.alt} sizes="(max-width: 48rem) 100vw, 50vw" /></figure>}
   </div>
 </section>
 

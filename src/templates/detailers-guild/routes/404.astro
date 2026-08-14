@@ -1,0 +1,20 @@
+---
+/** /404 — noindex, since a soft 404 in the index is worse than none. */
+import NotFoundPage from '../pages/NotFoundPage.astro';
+import { guildPageTitle, guildShell } from '../shell';
+import { quoteAction } from '../routes';
+
+const shell = await guildShell({
+  title: guildPageTitle('Page Not Found'),
+  description: 'The page you were looking for does not exist.',
+  path: '/404',
+  noindex: true,
+});
+---
+
+<NotFoundPage
+  {shell}
+  heading="We Could Not Find That Page"
+  body="The link may be out of date, or the page may have moved. Everything we offer is one tap away below."
+  primaryAction={quoteAction()}
+/>

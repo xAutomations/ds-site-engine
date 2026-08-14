@@ -1,4 +1,5 @@
 ---
+import GuildImg from './GuildImg.astro';
 import GuildIcon from './GuildIcon.astro';
 import type { GuildIncludedData } from '../types';
 interface Props { content: GuildIncludedData; }
@@ -10,7 +11,7 @@ const { content } = Astro.props;
     <h2 class="dg-heading dg-reveal">{content.heading}</h2>
     {content.panels.map((panel, index) => (
       <div class:list={['panel', 'dg-reveal', { reversed: index % 2 === 1 }]}>
-        {panel.image && <figure class="dg-media dg-grayscale"><img src={panel.image.src} alt={panel.image.alt} loading="lazy" /></figure>}
+        {panel.image && <figure class="dg-media dg-grayscale"><GuildImg src={panel.image.src} alt={panel.image.alt} sizes="(max-width: 48rem) 100vw, 50vw" /></figure>}
         <div>
           {panel.eyebrow && <div class="dg-kicker">{panel.eyebrow}</div>}
           <h3 class="dg-subheading">{panel.heading}</h3>

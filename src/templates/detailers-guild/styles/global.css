@@ -12,7 +12,13 @@
   --dg-paper: #f8f4f4;
   --dg-ink: #201e1d;
   --dg-accent: var(--dg-client-accent, #ec3013);
-  --dg-accent-dark: color-mix(in srgb, var(--dg-accent) 76%, black);
+  /*
+   * Both derived per client by theme.ts so the accent clears AA on this template's
+   * surfaces. The fallbacks are what template-preview uses, where there is no config
+   * to derive from.
+   */
+  --dg-on-accent: var(--dg-client-on-accent, white);
+  --dg-accent-dark: var(--dg-client-accent-dark, color-mix(in srgb, var(--dg-accent) 76%, black));
   --dg-accent-pale: color-mix(in srgb, var(--dg-accent) 18%, white);
   --dg-rule: color-mix(in srgb, var(--dg-ink) 40%, transparent);
   --dg-muted: #605d5d;
@@ -48,7 +54,7 @@ h1, h2, h3, h4 { font-weight: 800; line-height: 1.04; letter-spacing: -0.025em; 
 .dg-prose > * + * { margin-top: 0.9rem; }
 .dg-btn { display: inline-flex; min-height: 3.375rem; align-items: center; justify-content: space-between; gap: 1rem; padding: 0.9rem 1.6rem; border: 1px solid var(--dg-rule); background: transparent; color: var(--dg-ink); font-weight: 800; line-height: 1; letter-spacing: 0.04em; text-decoration: none; text-transform: uppercase; transition: background .2s ease, color .2s ease, border-color .2s ease; }
 .dg-btn:hover { border-color: var(--dg-ink); background: var(--dg-ink); color: var(--dg-bg); }
-.dg-btn--primary { border-color: var(--dg-accent); background: var(--dg-accent); color: white; }
+.dg-btn--primary { border-color: var(--dg-accent); background: var(--dg-accent); color: var(--dg-on-accent); }
 .dg-btn--primary:hover { border-color: var(--dg-accent-dark); background: var(--dg-accent-dark); }
 .dg-btn--light { border-color: color-mix(in srgb, white 35%, transparent); color: white; }
 .dg-btn--light:hover { border-color: white; background: white; color: var(--dg-ink); }
@@ -58,7 +64,7 @@ h1, h2, h3, h4 { font-weight: 800; line-height: 1.04; letter-spacing: -0.025em; 
 .dg-media img { height: 100%; object-fit: cover; }
 .dg-rule-list { border-top: 2px solid var(--dg-rule); }
 .dg-rule-list > * { border-bottom: 1px solid var(--dg-rule); }
-.dg-accent-field { background: var(--dg-accent); color: white; }
+.dg-accent-field { background: var(--dg-accent); color: var(--dg-on-accent); }
 .dg-ink-field { background: var(--dg-ink); color: white; }
 .dg-reveal { opacity: 0; transform: translateY(0.875rem); transition: opacity .5s ease, transform .5s ease; }
 .dg-reveal.is-visible { opacity: 1; transform: none; }

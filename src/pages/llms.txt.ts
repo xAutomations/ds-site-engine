@@ -10,12 +10,12 @@
  */
 import type { APIRoute } from 'astro';
 import { siteConfig } from '../lib/site-config';
-import { getServices, getAreas, areaLabel } from '../lib/content';
+import { getPageIndex, areaLabel } from '../lib/content';
 import { canonical } from '../lib/seo';
 
 export const GET: APIRoute = async () => {
   const { brand, contact, serviceArea, seo, site } = siteConfig;
-  const [services, areas] = await Promise.all([getServices(), getAreas()]);
+  const { services, areas } = await getPageIndex();
 
   const link = (name: string, path: string, note?: string) =>
     `- [${name}](${canonical(siteConfig, path)})${note ? `: ${note}` : ''}`;
@@ -29,11 +29,11 @@ export const GET: APIRoute = async () => {
     '',
     '## Services',
     '',
-    ...services.map((s) => link(s.data.name, `/${s.data.slug}`, s.data.metaDescription)),
+    ...services.map((s) => link(s.name, `/${s.slug}`, s.summary)),
     '',
     '## Coverage Areas',
     '',
-    ...areas.map((a) => link(areaLabel(a.data), `/${a.data.slug}`, a.data.metaDescription)),
+    ...areas.map((a) => link(areaLabel(a), `/${a.slug}`, a.summary)),
     '',
     '## Company',
     '',

@@ -1,4 +1,5 @@
 ---
+import GuildImg from './GuildImg.astro';
 import type { GuildContentSection } from '../types';
 interface Props { heading?: string; addOns: GuildContentSection[]; }
 const { heading = 'Add-On Services', addOns } = Astro.props;
@@ -10,7 +11,7 @@ const { heading = 'Add-On Services', addOns } = Astro.props;
     <div class="grid dg-reveal">
       {addOns.map((addOn) => (
         <article class="card">
-          {addOn.image && <figure class="dg-media dg-grayscale"><img src={addOn.image.src} alt={addOn.image.alt} loading="lazy" /></figure>}
+          {addOn.image && <figure class="dg-media dg-grayscale"><GuildImg src={addOn.image.src} alt={addOn.image.alt} sizes="(max-width: 48rem) 100vw, 33vw" /></figure>}
           <div class="body">
             <h3>{addOn.heading}</h3>
             <div class="dg-prose">{addOn.body.map((paragraph) => <p>{paragraph}</p>)}</div>

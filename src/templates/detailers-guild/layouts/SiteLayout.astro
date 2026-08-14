@@ -24,7 +24,16 @@ const {
 ---
 
 <!doctype html>
-<html lang="en" style={`--dg-client-accent:${site.accentColor}`}>
+<html
+  lang="en"
+  style={[
+    `--dg-client-accent:${site.accentColor}`,
+    site.onAccent && `--dg-client-on-accent:${site.onAccent}`,
+    site.accentDark && `--dg-client-accent-dark:${site.accentDark}`,
+  ]
+    .filter(Boolean)
+    .join(';')}
+>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />

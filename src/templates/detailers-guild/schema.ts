@@ -56,6 +56,20 @@ const image = z.object({
   alt: prose,
 });
 
+/**
+ * An image the page treats as decoration rather than content.
+ *
+ * ConversionBanner renders its background with a hardcoded `alt=""` — correct, since
+ * the copy sits on top of it and a screen reader announcing "detailer washing a car"
+ * mid-heading is noise. Requiring alt text for a slot that discards it just invites
+ * writers to produce text nobody will ever read, so `alt` is optional here and
+ * defaults to empty.
+ */
+const decorativeImage = z.object({
+  src: z.string().min(1),
+  alt: z.string().default(''),
+});
+
 /** URL safety only — this says nothing about what the page *is*. */
 const slug = z.string().regex(/^[a-z0-9]+(-[a-z0-9]+)*$/, 'slug must be lowercase, hyphen-separated');
 
@@ -114,7 +128,8 @@ const cta = z.object({
   body: prose.optional(),
   /** Single emphasised line under the body, e.g. "If your vehicle needs attention, do not wait!" */
   emphasis: prose.optional(),
-  image: image.optional(),
+  /** Background scenery behind the copy — decorative, so no alt text is required. */
+  image: decorativeImage.optional(),
 });
 
 /** Follow-us band. The links themselves come from config's socials. */
