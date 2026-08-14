@@ -3,7 +3,7 @@ import {
   paragraphs,
   proseBlocks,
   areaLabel,
-} from '../src/lib/content';
+} from '../src/lib/prose';
 
 describe('paragraphs', () => {
   it('splits on blank lines and trims', () => {
