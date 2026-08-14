@@ -33,7 +33,7 @@ const areas = [
 ].map((label) => ({ label, href: '#areas' }));
 
 const site = {
-  accentColor: '#743cbd',
+  accentColor: '#0f766e',
   brand: {
     name: 'Detailer Guild',
     blurb: 'San Mob Detailing is a 100% mobile auto detailing service based in Alexandria, VA, serving the entire DMV region. From daily drivers to RVs, boats, and aircraft, we bring professional detailing directly to your door.',
