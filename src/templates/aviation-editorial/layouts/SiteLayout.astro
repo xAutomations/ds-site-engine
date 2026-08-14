@@ -29,7 +29,16 @@ const faviconHref = brand.faviconPath ? await imageUrl(brand.faviconPath, 48, 'p
 const graphs = [
   webSiteJsonLd(siteConfig),
   webPageJsonLd(siteConfig, { title, description, path }),
-  localBusinessJsonLd(siteConfig, areas.map((area) => ({ name: area.data.name, state: area.data.state })), logoUrl),
+  localBusinessJsonLd(
+    siteConfig,
+    areas.map((area) => ({ name: area.data.name, state: area.data.state })),
+    logoUrl,
+    services.map((service) => ({
+      name: service.data.name,
+      slug: service.data.slug,
+      description: service.data.shortDescription,
+    })),
+  ),
   ...jsonLd,
 ];
 const hasTracking = !tracking.gtmId.includes('PLACEHOLDER');

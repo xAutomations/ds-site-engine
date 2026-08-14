@@ -2,7 +2,7 @@
 /** /{area} — one page per areas-collection entry. */
 import type { InferGetStaticPropsType } from 'astro';
 import LocationPage from '../pages/LocationPage.astro';
-import { guildAreaEntries, guildLocalTitle, guildServiceCards, guildShell } from '../shell';
+import { guildAreaEntries, guildAreaJsonLd, guildLocalTitle, guildServiceCards, guildShell } from '../shell';
 import { ctaFrom, heroFrom, sectionFrom, socialFrom } from '../compose';
 import { siteConfig } from '../../../lib/site-config';
 
@@ -24,6 +24,7 @@ const shell = await guildShell({
   description: data.metaDescription,
   path: `/${data.slug}`,
   ogImage: data.hero.image?.src,
+  jsonLd: guildAreaJsonLd({ name: data.name, slug: data.slug }),
 });
 ---
 

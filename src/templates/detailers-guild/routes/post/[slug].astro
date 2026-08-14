@@ -5,7 +5,7 @@
  */
 import type { InferGetStaticPropsType } from 'astro';
 import BlogPostPage from '../../pages/BlogPostPage.astro';
-import { guildBlogEntries, guildShell } from '../../shell';
+import { guildBlogEntries, guildBlogPostJsonLd, guildShell } from '../../shell';
 
 export const getStaticPaths = async () => {
   const posts = await guildBlogEntries();
@@ -26,6 +26,7 @@ const shell = await guildShell({
   ogType: 'article',
   ogImage: post.heroImage.src,
   faqs: post.faq,
+  jsonLd: await guildBlogPostJsonLd(post),
 });
 ---
 

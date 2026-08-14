@@ -15,8 +15,10 @@
 import { getCollection } from 'astro:content';
 import { areaLabel, assertUniqueSlugs } from '../../lib/content';
 import { siteConfig } from '../../lib/site-config';
-import { ogImageUrl } from '../../lib/assets';
+import { imageUrl, ogImageUrl } from '../../lib/assets';
 import {
+  areaBreadcrumbJsonLd,
+  blogPostingJsonLd,
   buildHomeTitle,
   buildTitle,
   canonical,
@@ -187,15 +189,27 @@ export async function guildShell(options: GuildShellOptions): Promise<GuildShell
     name: data.name,
     state: data.state,
   }));
+  /** The business node's makesOffer — every service, with its page URL. */
+  const serviceFacts = (await guildServiceEntries()).map(({ data }) => ({
+    name: data.name,
+    slug: data.slug,
+    description: data.shortDescription,
+  }));
 
   const og = await ogImageUrl(
     options.ogImage ?? siteConfig.defaults.heroVideo.poster.src,
     siteConfig.site.url,
   );
+  // PNG rather than WebP: the logo carries transparency, and this URL is consumed
+  // by crawlers rather than browsers — the same reasoning as the aviation layout.
+  const logoUrl = new URL(
+    await imageUrl(siteConfig.brand.logoPath, 512, 'png'),
+    siteConfig.site.url,
+  ).href;
 
   const jsonLd = [
     webSiteJsonLd(siteConfig),
-    localBusinessJsonLd(siteConfig, areaFacts),
+    localBusinessJsonLd(siteConfig, areaFacts, logoUrl, serviceFacts),
     webPageJsonLd(siteConfig, { title, description, path }),
     ...(faqs?.length ? [faqPageJsonLd(faqs)] : []),
     ...(options.jsonLd ?? []),
@@ -259,5 +273,39 @@ export async function guildServiceJsonLd(service: {
   return [
     serviceJsonLd(siteConfig, service, areaFacts),
     serviceBreadcrumbJsonLd(siteConfig, service),
+  ];
+}
+
+/** Area-page breadcrumb — the service pages' sibling, same Home-anchored shape. */
+export function guildAreaJsonLd(area: { name: string; slug: string }): Array<Record<string, unknown>> {
+  return [areaBreadcrumbJsonLd(siteConfig, area)];
+}
+
+/**
+ * Blog-post graph nodes: the BlogPosting entity the page's og:type=article implies.
+ * The hero image resolves through the same built-URL path as og:image — the raw
+ * `./assets/…` path would 404 (see lib/assets.ts).
+ */
+export async function guildBlogPostJsonLd(post: {
+  title: string;
+  slug: string;
+  metaDescription: string;
+  date: string;
+  author: string;
+  heroImage: { src: string };
+}): Promise<Array<Record<string, unknown>>> {
+  const hero = await ogImageUrl(post.heroImage.src, siteConfig.site.url);
+  return [
+    blogPostingJsonLd(
+      siteConfig,
+      {
+        title: post.title,
+        slug: post.slug,
+        description: post.metaDescription,
+        date: post.date,
+        author: post.author,
+      },
+      hero.url,
+    ),
   ];
 }

@@ -128,6 +128,55 @@ export function serviceBreadcrumbJsonLd(
   };
 }
 
+/**
+ * Home → Service Areas → {Area}. Same shape as the service breadcrumb, and for the
+ * same reason: there is no /areas index page, so the middle crumb points at home,
+ * and the last crumb carries no `item` (schema.org defines it as the current page).
+ */
+export function areaBreadcrumbJsonLd(
+  config: SiteConfig,
+  area: { name: string; slug: string },
+): Record<string, unknown> {
+  const url = canonical(config, `/${area.slug}`);
+  return {
+    '@type': 'BreadcrumbList',
+    '@id': `${url}#breadcrumb`,
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${config.site.url}/` },
+      { '@type': 'ListItem', position: 2, name: 'Service Areas', item: `${config.site.url}/` },
+      { '@type': 'ListItem', position: 3, name: area.name },
+    ],
+  };
+}
+
+/**
+ * Blog posts: the Article entity the page's `og:type=article` implies. Everything
+ * comes from the post frontmatter; `imageUrl` is the built absolute hero URL,
+ * resolved by the caller for the same reason as localBusinessJsonLd's logoUrl.
+ * `publisher` references the LocalBusiness node — a LocalBusiness is an
+ * Organization, so the @id link satisfies Article's publisher expectation without
+ * restating the business record.
+ */
+export function blogPostingJsonLd(
+  config: SiteConfig,
+  post: { title: string; slug: string; description: string; date: string; author: string },
+  imageUrl?: string,
+): Record<string, unknown> {
+  const url = canonical(config, `/post/${post.slug}`);
+  return {
+    '@type': 'BlogPosting',
+    '@id': `${url}#article`,
+    headline: post.title,
+    description: post.description,
+    url,
+    mainEntityOfPage: { '@id': `${url}#webpage` },
+    datePublished: post.date,
+    author: { '@type': 'Person', name: post.author },
+    publisher: { '@id': `${config.site.url}/#business` },
+    ...(imageUrl ? { image: imageUrl } : {}),
+  };
+}
+
 // City only where the area actually is one. An airport or a region served is a
 // Place; typing it as a City is a schema.org lie that rich-results testing flags.
 function areaServedNodes(areas: Array<{ name: string; state?: string }>) {
@@ -140,11 +189,17 @@ function areaServedNodes(areas: Array<{ name: string; state?: string }>) {
 /**
  * LocalBusiness from the footer NAP (spec §10). Emitted on every page.
  * `areaServed` is fed from the areas collection so adding a city updates the schema.
+ *
+ * `services` feeds `makesOffer`: the business node names every service it sells,
+ * with the page URL, so the home page — where no Service node exists — still
+ * connects the business to its catalogue. Fed from the services collection, so a
+ * new service page joins the offer list automatically.
  */
 export function localBusinessJsonLd(
   config: SiteConfig,
   areas: Array<{ name: string; state?: string }>,
   logoUrl?: string,
+  services?: Array<{ name: string; slug: string; description?: string }>,
 ): Record<string, unknown> {
   const { brand, contact, serviceArea, hours, socials, seo } = config;
   const sameAs = Object.values(socials).filter((u): u is string => Boolean(u));
@@ -180,6 +235,20 @@ export function localBusinessJsonLd(
       geoRadius: serviceArea.radiusMiles * 1609, // miles → metres
     },
     knowsAbout: seo.category,
+    ...(seo.priceRange ? { priceRange: seo.priceRange } : {}),
+    ...(services?.length
+      ? {
+          makesOffer: services.map((s) => ({
+            '@type': 'Offer',
+            itemOffered: {
+              '@type': 'Service',
+              name: s.name,
+              url: canonical(config, `/${s.slug}`),
+              ...(s.description ? { description: s.description } : {}),
+            },
+          })),
+        }
+      : {}),
     ...(hours?.length
       ? {
           openingHoursSpecification: hours.map((h) => ({

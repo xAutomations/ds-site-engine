@@ -8,9 +8,12 @@ import {
   webPageJsonLd,
   serviceJsonLd,
   serviceBreadcrumbJsonLd,
+  areaBreadcrumbJsonLd,
+  blogPostingJsonLd,
   localBusinessJsonLd,
   faqPageJsonLd,
 } from '../src/lib/seo';
+import type { SiteConfig } from '../src/config-schema';
 import { testConfig } from './fixtures/site-config';
 
 describe('title and H1 formulas', () => {
@@ -87,6 +90,71 @@ describe('JSON-LD graph nodes', () => {
     const node = serviceBreadcrumbJsonLd(testConfig, { name: 'S', slug: 's' });
     const crumbs = node.itemListElement as Array<Record<string, unknown>>;
     expect(crumbs[1].item).toBe('https://acme.example/');
+  });
+
+  it('emits priceRange only when config supplies one', () => {
+    expect(localBusinessJsonLd(testConfig, [])).not.toHaveProperty('priceRange');
+
+    const priced = {
+      ...testConfig,
+      seo: { ...testConfig.seo, priceRange: '$$' },
+    } as SiteConfig;
+    expect(localBusinessJsonLd(priced, []).priceRange).toBe('$$');
+  });
+
+  it('makesOffer names every service with its canonical page URL', () => {
+    const business = localBusinessJsonLd(testConfig, [], undefined, [
+      { name: 'Ceramic Coating', slug: 'ceramic-coating', description: 'Long-term protection.' },
+      { name: 'Interior Detail', slug: 'interior-detail' },
+    ]);
+    expect(business.makesOffer).toEqual([
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Ceramic Coating',
+          url: 'https://acme.example/ceramic-coating/',
+          description: 'Long-term protection.',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Interior Detail',
+          url: 'https://acme.example/interior-detail/',
+        },
+      },
+    ]);
+    // No services given → no empty makesOffer array.
+    expect(localBusinessJsonLd(testConfig, [])).not.toHaveProperty('makesOffer');
+  });
+
+  it('area breadcrumb mirrors the service one: home-anchored, last crumb without item', () => {
+    const node = areaBreadcrumbJsonLd(testConfig, { name: 'Ashburn', slug: 'ashburn-va' });
+    const crumbs = node.itemListElement as Array<Record<string, unknown>>;
+    expect(crumbs).toHaveLength(3);
+    expect(crumbs[1]).toMatchObject({ name: 'Service Areas', item: 'https://acme.example/' });
+    expect(crumbs[2]).toEqual({ '@type': 'ListItem', position: 3, name: 'Ashburn' });
+  });
+
+  it('BlogPosting ties into the graph: webpage by @id, publisher at the business node', () => {
+    const node = blogPostingJsonLd(
+      testConfig,
+      { title: 'Wax vs Ceramic', slug: 'wax-vs-ceramic', description: 'D', date: '2026-08-01', author: 'Jo Doe' },
+      'https://acme.example/_astro/hero.abc123.jpeg',
+    );
+    expect(node.url).toBe('https://acme.example/post/wax-vs-ceramic/');
+    expect(node.mainEntityOfPage).toEqual({ '@id': 'https://acme.example/post/wax-vs-ceramic/#webpage' });
+    expect(node.publisher).toEqual({ '@id': 'https://acme.example/#business' });
+    expect(node.author).toEqual({ '@type': 'Person', name: 'Jo Doe' });
+    expect(node.image).toBe('https://acme.example/_astro/hero.abc123.jpeg');
+    // Image is optional — a post whose hero cannot resolve still gets its Article node.
+    expect(
+      blogPostingJsonLd(testConfig, {
+        title: 'T', slug: 's', description: 'D', date: '2026-08-01', author: 'A',
+      }),
+    ).not.toHaveProperty('image');
   });
 
   it('FAQPage maps every pair', () => {

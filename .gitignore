@@ -6,6 +6,9 @@ dist/
 .env
 .env.production
 .import/
+# Raw onboarding exports carry client PII (name, phone, address); they are source
+# material for intake.json, not repo artifacts.
+/clients/*/Fillout *.csv
 template-preview/.astro/
 template-preview/dist/
 template-preview/node_modules/

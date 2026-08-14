@@ -63,6 +63,14 @@ export const intakeSchema = z.object({
     /** The {region} token, e.g. "the Northeast". */
     region: z.string().min(1),
     /**
+     * schema.org price positioning ("$$" standard, "$$$" premium/luxury). Optional
+     * and never rendered as copy — it only feeds the LocalBusiness JSON-LD.
+     */
+    priceRange: z
+      .string()
+      .regex(/^\${1,4}$/, 'must be 1–4 dollar signs, e.g. "$$"')
+      .nullish(),
+    /**
      * Closing sentence in the footer contact column. Optional — the engine renders
      * the bare "Serving {city}, {ST}..." line when absent. Must not assert anything
      * untrue of this client (the old hardcoded one claimed every business was mobile).

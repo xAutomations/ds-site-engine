@@ -153,6 +153,16 @@ export const siteConfigSchema = z.object({
     category: z.string().min(1),
     /** e.g. "Northern Virginia" — the {region} token. */
     region: z.string().min(1),
+    /**
+     * schema.org price positioning for the LocalBusiness node: "$$" standard,
+     * "$$$" premium/luxury. Optional — omitted, the JSON-LD simply carries no
+     * priceRange rather than a guessed one. Never rendered as visible copy; the
+     * no-prices-on-pages rule is about dollar amounts, not this signal.
+     */
+    priceRange: z
+      .string()
+      .regex(/^\${1,4}$/, 'priceRange must be 1–4 dollar signs, e.g. "$$"')
+      .optional(),
   }),
 
   legal: z.object({

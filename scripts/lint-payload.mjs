@@ -71,6 +71,7 @@ const DRIFT_MAP = [
   ['business.websiteUrl', 'site.url'],
   ['business.category', 'seo.category'],
   ['business.region', 'seo.region'],
+  ['business.priceRange', 'seo.priceRange'],
   ['contact.phone', 'contact.phone'],
   ['contact.phoneDisplay', 'contact.phoneDisplay'],
   ['contact.email', 'contact.email'],
