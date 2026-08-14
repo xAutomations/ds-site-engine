@@ -1,0 +1,33 @@
+---
+/**
+ * /post/{slug} — ogType is 'article' here rather than 'website', and the post's own
+ * FAQs feed an FAQPage node the same way a service page's do.
+ */
+import type { InferGetStaticPropsType } from 'astro';
+import BlogPostPage from '../../pages/BlogPostPage.astro';
+import { getBlogPosts } from '../../../../lib/content';
+import { guildShell } from '../../shell';
+
+export const getStaticPaths = async () => {
+  const posts = await getBlogPosts();
+  return posts.map((entry) => ({
+    params: { slug: entry.data.slug },
+    props: { entry },
+  }));
+};
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+const { entry } = Astro.props as Props;
+const post = entry.data;
+
+const shell = await guildShell({
+  title: post.metaTitle,
+  description: post.metaDescription,
+  path: `/post/${post.slug}`,
+  ogType: 'article',
+  ogImage: post.heroImage.src,
+  faqs: post.faq,
+});
+---
+
+<BlogPostPage {shell} {post} />

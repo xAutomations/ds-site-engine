@@ -46,7 +46,16 @@ export interface GuildShellData {
   title: string;
   description: string;
   path: string;
+  /**
+   * Self-referencing canonical, already absolute and trailing-slashed. Derived by
+   * the route (lib/seo canonical()), never authored — and passed in rather than
+   * computed here so template-preview can render without a client payload.
+   */
+  canonical?: string;
+  /** Absolute, built URL for OG/Twitter cards. */
   ogImage?: string;
+  ogImageWidth?: number;
+  ogImageHeight?: number;
   ogType?: 'website' | 'article';
   noindex?: boolean;
   jsonLd?: Array<Record<string, unknown>>;

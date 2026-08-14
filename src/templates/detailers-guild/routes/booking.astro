@@ -1,0 +1,31 @@
+---
+/**
+ * /booking — injected only when siteConfig.routes.booking is true, so this file
+ * never renders for a client who takes bookings through the quote form alone.
+ */
+import { getEntry } from 'astro:content';
+import BookingPage from '../pages/BookingPage.astro';
+import { guildPageTitle, guildShell } from '../shell';
+import { heroFrom, ownerCtaFrom } from '../compose';
+
+const entry = await getEntry('guildBooking', 'booking');
+if (!entry) throw new Error('Missing client/content/booking.md (routes.booking is enabled)');
+const data = entry.data;
+
+const shell = await guildShell({
+  title: data.title ?? guildPageTitle('Book Your Detail'),
+  description: data.metaDescription,
+  path: '/booking',
+  ogImage: data.cta.image.src,
+});
+---
+
+<BookingPage
+  {shell}
+  hero={heroFrom(data.hero)}
+  vehiclesHeading={data.vehiclesHeading}
+  vehiclesIntro={data.vehiclesIntro}
+  vehicles={data.vehicles}
+  cta={ownerCtaFrom(data.cta)}
+  reviews={data.reviews}
+/>

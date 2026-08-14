@@ -1,0 +1,9 @@
+---
+import { getQuoteReceived } from '../../../lib/content';
+import AviationEditorialQuoteReceived from '../pages/QuoteReceivedPage.astro';
+
+const entry = await getQuoteReceived();
+
+---
+
+<AviationEditorialQuoteReceived {entry} />

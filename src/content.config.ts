@@ -16,6 +16,53 @@ import {
   aviationHomeSchema,
   aviationQuoteReceivedSchema,
 } from './templates/aviation-editorial/schema';
+import {
+  guildAboutSchema,
+  guildAreaSchema,
+  guildBlogIndexSchema,
+  guildBookingSchema,
+  guildFaqsSchema,
+  guildHomeSchema,
+  guildQuoteSchema,
+  guildServiceSchema,
+} from './templates/detailers-guild/schema';
+import { siteConfig } from './lib/site-config';
+
+/**
+ * Each template owns its content shape (see each template's schema.ts). A collection's
+ * schema is therefore chosen by the active template rather than being a union that
+ * every template has to satisfy — a payload is only ever validated against the one
+ * contract it was written for.
+ *
+ * This is the single file where both templates are named together, and deliberately
+ * so: it is a map from template to schema set, not logic.
+ */
+const isGuild = siteConfig.template === 'detailers-guild';
+
+/**
+ * Collections come in per-template pairs, and the inactive template's loader is
+ * pointed at a pattern that matches nothing.
+ *
+ * The obvious alternative — one collection whose `schema` is chosen by a ternary —
+ * was tried and reverted: a runtime-selected schema makes `entry.data` a union of
+ * both templates' shapes, and nothing can narrow it, because the discriminant is a
+ * config value rather than anything in the data. That cost every page in both
+ * templates its field-level type checking (131 errors under `astro check`).
+ *
+ * Keeping the collections separate means each one has exactly one schema, so both
+ * templates keep exact types, and only the active template's files are ever
+ * validated — a Guild payload is never checked against the aviation contract.
+ */
+/**
+ * An inactive collection loads nothing at all, rather than globbing a pattern that
+ * matches nothing: the glob loader warns once per empty pattern, and warnings that
+ * mean "working as intended" teach everyone to ignore warnings.
+ */
+const empty = async () => [];
+const aviationLoader = (base: string, pattern: string) =>
+  isGuild ? empty : glob({ base, pattern });
+const guildLoader = (base: string, pattern: string) =>
+  isGuild ? glob({ base, pattern }) : empty;
 
 const BASE = './client/content';
 
@@ -97,9 +144,7 @@ const beforeAfter = z
   })
   .optional();
 
-const services = defineCollection({
-  loader: glob({ base: `${BASE}/services`, pattern: '**/*.md' }),
-  schema: z.object({
+const aviationServiceSchema = z.object({
     name: prose,
     /** Must match the filename and the live URL: /{slug} */
     slug,
@@ -181,12 +226,19 @@ const services = defineCollection({
 
     /** Service-specific closing call-to-action headline. */
     ctaHeadline: prose,
-  }),
 });
 
-const areas = defineCollection({
-  loader: glob({ base: `${BASE}/areas`, pattern: '**/*.md' }),
-  schema: z.object({
+const services = defineCollection({
+  loader: aviationLoader(`${BASE}/services`, '**/*.md'),
+  schema: aviationServiceSchema,
+});
+
+const guildServices = defineCollection({
+  loader: guildLoader(`${BASE}/services`, '**/*.md'),
+  schema: guildServiceSchema,
+});
+
+const aviationAreaSchema = z.object({
     /** Display name. A city ("Ashburn"), but equally an airport or a region. */
     name: prose,
     slug,
@@ -237,27 +289,71 @@ const areas = defineCollection({
     ctaHeadline: prose,
     /** Structured operational data for aviation-editorial airport pages. */
     airport: aviationAirportSchema.optional(),
-  }),
+});
+
+const areas = defineCollection({
+  loader: aviationLoader(`${BASE}/areas`, '**/*.md'),
+  schema: aviationAreaSchema,
+});
+
+const guildAreas = defineCollection({
+  loader: guildLoader(`${BASE}/areas`, '**/*.md'),
+  schema: guildAreaSchema,
 });
 
 const home = defineCollection({
-  loader: glob({ base: BASE, pattern: 'home.md' }),
+  loader: aviationLoader(BASE, 'home.md'),
   schema: aviationHomeSchema,
 });
 
+const guildHome = defineCollection({
+  loader: guildLoader(BASE, 'home.md'),
+  schema: guildHomeSchema,
+});
+
 const about = defineCollection({
-  loader: glob({ base: BASE, pattern: 'about.md' }),
+  loader: aviationLoader(BASE, 'about.md'),
   schema: aviationAboutSchema,
 });
 
+const guildAbout = defineCollection({
+  loader: guildLoader(BASE, 'about.md'),
+  schema: guildAboutSchema,
+});
+
 const faqs = defineCollection({
-  loader: glob({ base: BASE, pattern: 'faqs.md' }),
+  loader: aviationLoader(BASE, 'faqs.md'),
   schema: aviationFaqSchema,
+});
+
+const guildFaqs = defineCollection({
+  loader: guildLoader(BASE, 'faqs.md'),
+  schema: guildFaqsSchema,
+});
+
+/**
+ * /booking — detailers-guild only, and only when the client publishes one
+ * (siteConfig.routes.booking). Aviation payloads carry no booking.md, so the
+ * collection is simply empty there.
+ */
+const guildBooking = defineCollection({
+  loader: guildLoader(BASE, 'booking.md'),
+  schema: guildBookingSchema,
+});
+
+/**
+ * /blog index copy — detailers-guild only, and optional: without blog.md the route
+ * falls back to a plain masthead rather than failing, since the post list is what
+ * the page is for.
+ */
+const guildBlogIndex = defineCollection({
+  loader: guildLoader(BASE, 'blog.md'),
+  schema: guildBlogIndexSchema,
 });
 
 /** /get-quote copy. The active template owns the form integration and composition. */
 const getQuote = defineCollection({
-  loader: glob({ base: BASE, pattern: 'get-quote.md' }),
+  loader: aviationLoader(BASE, 'get-quote.md'),
   schema: z.object({
     metaDescription,
     title: prose,
@@ -269,6 +365,11 @@ const getQuote = defineCollection({
     panelHeading: prose,
     ctaHeadline: prose,
   }),
+});
+
+const guildGetQuote = defineCollection({
+  loader: guildLoader(BASE, 'get-quote.md'),
+  schema: guildQuoteSchema,
 });
 
 /** /quote-received copy — the form's post-submit confirmation page. */
@@ -344,6 +445,7 @@ const blog = defineCollection({
 });
 
 export const collections = {
+  // aviation-editorial
   services,
   areas,
   home,
@@ -351,6 +453,16 @@ export const collections = {
   faqs,
   getQuote,
   quoteReceived,
+  // detailers-guild
+  guildServices,
+  guildAreas,
+  guildHome,
+  guildAbout,
+  guildFaqs,
+  guildGetQuote,
+  guildBooking,
+  guildBlogIndex,
+  // shared — same shape for both templates
   legal,
   blog,
 };

@@ -1,0 +1,25 @@
+---
+/** /blog — the post list comes from the collection; the payload authors only copy. */
+import { getEntry } from 'astro:content';
+import BlogIndexPage from '../../pages/BlogIndexPage.astro';
+import { getBlogPosts } from '../../../../lib/content';
+import { guildPageTitle, guildShell } from '../../shell';
+import { heroFrom } from '../../compose';
+
+const entry = await getEntry('guildBlogIndex', 'blog');
+const data = entry?.data;
+const posts = (await getBlogPosts()).map((entry) => entry.data);
+
+const shell = await guildShell({
+  title: data?.title ?? guildPageTitle('Blog'),
+  description: data?.metaDescription ?? 'Detailing insights, tips, and service guides.',
+  path: '/blog',
+});
+
+/** Falls back to a plain masthead when the payload carries no blog.md. */
+const hero = heroFrom(
+  data?.hero ?? { eyebrow: 'The Blog', heading: 'Latest From The Shop' },
+);
+---
+
+<BlogIndexPage {shell} {hero} {posts} />

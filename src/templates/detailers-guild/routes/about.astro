@@ -1,0 +1,28 @@
+---
+/** /about */
+import { getEntry } from 'astro:content';
+import AboutPage from '../pages/AboutPage.astro';
+import { brandName, guildPageTitle, guildServiceCards, guildShell } from '../shell';
+import { ctaFrom, heroFrom, sectionFrom } from '../compose';
+
+const entry = await getEntry('guildAbout', 'about');
+if (!entry) throw new Error('Missing client/content/about.md');
+const data = entry.data;
+
+const shell = await guildShell({
+  title: data.title ?? guildPageTitle(`About ${brandName}`),
+  description: data.metaDescription,
+  path: '/about',
+  ogImage: data.hero.image?.src,
+});
+---
+
+<AboutPage
+  {shell}
+  hero={heroFrom(data.hero)}
+  story={sectionFrom(data.story)}
+  process={sectionFrom(data.process, { reversed: true })}
+  services={await guildServiceCards()}
+  servicesIntro={data.servicesIntro}
+  cta={ctaFrom(data.cta)}
+/>

@@ -1,0 +1,40 @@
+---
+/** /{area} — one page per areas-collection entry. */
+import type { InferGetStaticPropsType } from 'astro';
+import LocationPage from '../pages/LocationPage.astro';
+import { guildAreaEntries, guildLocalTitle, guildServiceCards, guildShell } from '../shell';
+import { ctaFrom, heroFrom, sectionFrom, socialFrom } from '../compose';
+import { siteConfig } from '../../../lib/site-config';
+
+export const getStaticPaths = async () => {
+  const areas = await guildAreaEntries();
+  return areas.map((entry) => ({
+    params: { area: entry.data.slug },
+    props: { entry },
+  }));
+};
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+const { entry } = Astro.props as Props;
+const data = entry.data;
+
+const shell = await guildShell({
+  title:
+    data.title ?? guildLocalTitle(siteConfig.seo.category, data.name, data.state),
+  description: data.metaDescription,
+  path: `/${data.slug}`,
+  ogImage: data.hero.image?.src,
+});
+---
+
+<LocationPage
+  {shell}
+  hero={heroFrom(data.hero)}
+  intro={sectionFrom(data.intro, { lead: true, seamless: true })}
+  why={sectionFrom(data.why)}
+  services={await guildServiceCards()}
+  neighborhoods={sectionFrom(data.neighborhoods, { small: true })}
+  social={socialFrom(data.social, shell.site.socials)}
+  guarantee={sectionFrom(data.guarantee, { large: true })}
+  cta={ctaFrom(data.cta, { small: true })}
+/>

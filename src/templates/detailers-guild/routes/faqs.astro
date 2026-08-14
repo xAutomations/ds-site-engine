@@ -1,0 +1,32 @@
+---
+/**
+ * /faqs — every authored question also feeds an FAQPage node, so the answers are
+ * eligible for rich results rather than only being readable on the page.
+ */
+import { getEntry } from 'astro:content';
+import FaqPage from '../pages/FaqPage.astro';
+import { guildPageTitle, guildShell } from '../shell';
+import { ctaFrom, heroFrom, sectionFrom } from '../compose';
+
+const entry = await getEntry('guildFaqs', 'faqs');
+if (!entry) throw new Error('Missing client/content/faqs.md');
+const data = entry.data;
+
+const shell = await guildShell({
+  title: data.title ?? guildPageTitle('Frequently Asked Questions'),
+  description: data.metaDescription,
+  path: '/faqs',
+  faqs: data.groups.flatMap((group) =>
+    group.items.map((item) => ({ q: item.question, a: item.answer })),
+  ),
+});
+---
+
+<FaqPage
+  {shell}
+  hero={heroFrom(data.hero)}
+  intro={data.intro && sectionFrom(data.intro, { lead: true, seamless: true })}
+  groups={data.groups}
+  outro={data.outro && sectionFrom(data.outro, { small: true })}
+  cta={ctaFrom(data.cta)}
+/>

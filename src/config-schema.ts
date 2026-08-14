@@ -11,7 +11,7 @@ import { z } from 'astro/zod';
 export const PRESETS = ['stealth', 'fresh', 'chrome', 'bold', 'noir'] as const;
 export type Preset = (typeof PRESETS)[number];
 
-export const TEMPLATES = ['aviation-editorial'] as const;
+export const TEMPLATES = ['aviation-editorial', 'detailers-guild'] as const;
 export type Template = (typeof TEMPLATES)[number];
 
 const hexColor = z

@@ -1,0 +1,30 @@
+---
+/** / — home. Title targets the region, not the base city (see lib/seo.ts). */
+import { getEntry } from 'astro:content';
+import HomePage from '../pages/HomePage.astro';
+import { guildHomeTitle, guildServiceCards, guildShell } from '../shell';
+import { ctaFrom, heroFrom, sectionFrom, socialFrom } from '../compose';
+
+const entry = await getEntry('guildHome', 'home');
+if (!entry) throw new Error('Missing client/content/home.md');
+const data = entry.data;
+
+const shell = await guildShell({
+  title: data.title ?? guildHomeTitle(),
+  description: data.metaDescription,
+  path: '/',
+  ogImage: data.hero.image?.src,
+});
+---
+
+<HomePage
+  {shell}
+  hero={heroFrom(data.hero, { compact: false })}
+  introduction={sectionFrom(data.introduction)}
+  promise={sectionFrom(data.promise, { reversed: true })}
+  services={await guildServiceCards()}
+  about={sectionFrom(data.about)}
+  social={socialFrom(data.social, shell.site.socials)}
+  areaSection={data.areaSection}
+  cta={ctaFrom(data.cta)}
+/>

@@ -1,8 +1,7 @@
 ---
 import type { InferGetStaticPropsType } from 'astro';
-import { getServices } from '../lib/content';
-import { siteConfig } from '../lib/site-config';
-import AviationEditorialService from '../templates/aviation-editorial/pages/ServicePage.astro';
+import { getServices } from '../../../lib/content';
+import AviationEditorialService from '../pages/ServicePage.astro';
 
 // Deliberately unannotated: adding `: GetStaticPaths` widens the return type and
 // collapses InferGetStaticPropsType to `never`.
@@ -18,9 +17,6 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
 const { entry } = Astro.props as Props;
 
-if (siteConfig.template !== 'aviation-editorial') {
-  throw new Error(`No service page registered for template "${siteConfig.template}".`);
-}
 ---
 
 <AviationEditorialService {entry} />

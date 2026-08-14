@@ -1,0 +1,60 @@
+---
+/**
+ * /{service} — one page per services-collection entry.
+ *
+ * Carries Service + BreadcrumbList nodes alongside the site-level graph, plus an
+ * FAQPage node built from the service's own questions.
+ */
+import type { InferGetStaticPropsType } from 'astro';
+import ServicePage from '../pages/ServicePage.astro';
+import {
+  basePlace,
+  guildLocalTitle,
+  guildServiceEntries,
+  guildServiceJsonLd,
+  guildShell,
+} from '../shell';
+import { alternate, ctaFrom, heroFrom, sectionFrom, socialFrom } from '../compose';
+
+// Deliberately unannotated: adding `: GetStaticPaths` widens the return type and
+// collapses InferGetStaticPropsType to `never`.
+export const getStaticPaths = async () => {
+  const services = await guildServiceEntries();
+  return services.map((entry) => ({
+    params: { service: entry.data.slug },
+    props: { entry },
+  }));
+};
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+const { entry } = Astro.props as Props;
+const data = entry.data;
+
+const shell = await guildShell({
+  title: data.title ?? guildLocalTitle(data.name, basePlace.city, basePlace.state),
+  description: data.metaDescription,
+  path: `/${data.slug}`,
+  ogImage: data.hero.image?.src ?? data.cardImage.src,
+  faqs: data.faqs.map((item) => ({ q: item.question, a: item.answer })),
+  jsonLd: await guildServiceJsonLd({
+    name: data.name,
+    description: data.shortDescription,
+    slug: data.slug,
+  }),
+});
+---
+
+<ServicePage
+  {shell}
+  hero={heroFrom(data.hero)}
+  intro={sectionFrom(data.intro, { lead: true })}
+  overview={sectionFrom(data.overview, { reversed: true, seamless: true })}
+  included={data.included}
+  process={data.process}
+  addOnsHeading={data.addOnsHeading}
+  addOns={alternate(data.addOns, () => ({ small: true }))}
+  why={sectionFrom(data.why)}
+  social={socialFrom(data.social, shell.site.socials)}
+  faqs={data.faqs}
+  cta={ctaFrom(data.cta)}
+/>

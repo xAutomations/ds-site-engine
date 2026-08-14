@@ -1,0 +1,33 @@
+---
+/**
+ * /get-quote — the contact page. Hours, phone, email, and socials come from config
+ * via the shell; the payload authors only the copy around them.
+ */
+import { getEntry } from 'astro:content';
+import QuotePage from '../pages/QuotePage.astro';
+import { guildPageTitle, guildShell } from '../shell';
+import { ctaFrom, heroFrom } from '../compose';
+import { siteConfig } from '../../../lib/site-config';
+
+const entry = await getEntry('guildGetQuote', 'get-quote');
+if (!entry) throw new Error('Missing client/content/get-quote.md');
+const data = entry.data;
+
+const shell = await guildShell({
+  title: data.title ?? guildPageTitle('Get a Quote'),
+  description: data.metaDescription,
+  path: '/get-quote',
+  ogImage: data.quote.image?.src,
+});
+
+/**
+ * The form is embedded only where the client opted in (ghl.embed) — an unstyleable
+ * iframe earns its place only on the page that IS the form.
+ */
+const quote = {
+  ...data.quote,
+  formSrc: siteConfig.ghl.embed ? siteConfig.ghl.quoteUrl : undefined,
+};
+---
+
+<QuotePage {shell} hero={heroFrom(data.hero)} {quote} cta={ctaFrom(data.cta ?? { heading: siteConfig.defaults.ctaHeadline })} />

@@ -1,0 +1,28 @@
+---
+import type { InferGetStaticPropsType } from 'astro';
+import { getAreas } from '../../../lib/content';
+import AviationEditorialAirport from '../pages/AirportPage.astro';
+
+export const getStaticPaths = async () => {
+  const areas = await getAreas();
+  return areas.map((entry) => ({
+    params: { area: entry.data.slug },
+    props: { entry },
+  }));
+};
+
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+const { entry } = Astro.props as Props;
+
+/**
+ * This template renders every area as an airport page, so the structured `airport`
+ * block is required rather than optional here. (The template check that used to
+ * share this condition is gone: these routes only exist when aviation-editorial is
+ * the active template.)
+ */
+if (!entry.data.airport) {
+  throw new Error(`Area "${entry.data.slug}" has no airport data, which aviation-editorial requires.`);
+}
+---
+
+<AviationEditorialAirport {entry} />

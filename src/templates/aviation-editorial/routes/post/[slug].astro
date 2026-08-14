@@ -1,8 +1,7 @@
 ---
 import type { InferGetStaticPropsType } from 'astro';
-import { getBlogPosts } from '../../lib/content';
-import { siteConfig } from '../../lib/site-config';
-import AviationEditorialBlogPost from '../../templates/aviation-editorial/pages/BlogPost.astro';
+import { getBlogPosts } from '../../../../lib/content';
+import AviationEditorialBlogPost from '../../pages/BlogPost.astro';
 
 export const getStaticPaths = async () => {
   const posts = await getBlogPosts();
@@ -16,9 +15,6 @@ type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
 const { entry } = Astro.props as Props;
 
-if (siteConfig.template !== 'aviation-editorial') {
-  throw new Error(`No blog post page registered for template "${siteConfig.template}".`);
-}
 ---
 
 <AviationEditorialBlogPost {entry} />
