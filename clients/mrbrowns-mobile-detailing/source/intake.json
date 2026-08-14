@@ -1,0 +1,164 @@
+{
+  "slug": "mrbrowns-mobile-detailing",
+
+  "business": {
+    "name": "Mr. Brown's Mobile Detailing",
+    "legalName": null,
+    "owner": "Derrick Brown",
+    "tagline": "Mobile detailing that comes to your driveway.",
+    "blurb": "Mr. Brown's Mobile Detailing is an owner-operated mobile detailing service based in Independence, VA. Derrick Brown brings full detailing to your home or work across the Twin Counties, from cars and trucks to RVs and boats.",
+    "websiteUrl": "https://mrbrownsmobiledetailing.com",
+    "category": "Mobile Auto Detailing",
+    "region": "Southwest Virginia",
+    "priceRange": "$$",
+    "footerNote": "Owner-operated and fully mobile. Derrick brings everything to your driveway."
+  },
+
+  "contact": {
+    "phone": "+12766203494",
+    "phoneDisplay": "(276) 620-3494",
+    "email": "brownfitzgerald21@gmail.com",
+    "address": {
+      "street": "490 Pine Mountain Road",
+      "city": "Independence",
+      "state": "VA",
+      "zip": "24348"
+    }
+  },
+
+  "serviceArea": {
+    "baseCity": "Independence",
+    "baseState": "VA",
+    "radiusMiles": 45,
+    "label": "the Twin Counties of Southwest Virginia and Mt. Airy, NC"
+  },
+
+  "hours": [{ "days": "Monday to Sunday", "hours": "9am to 6pm" }],
+
+  "socials": {
+    "facebook": null,
+    "instagram": null,
+    "tiktok": null,
+    "youtube": null,
+    "reviewUrl": null
+  },
+
+  "ghl": {
+    "quoteUrl": null,
+    "embed": false
+  },
+
+  "tracking": {
+    "gtmId": null
+  },
+
+  "theme": {
+    "accentColor": "#2f6fb4"
+  },
+
+  "legal": {
+    "effectiveDate": "August 2026",
+    "source": "template",
+    "governingState": null
+  },
+
+  "pages": {
+    "services": [
+      {
+        "name": "Full Auto Detailing",
+        "slug": "full-auto-detailing",
+        "order": 1,
+        "shortDescription": "Complete interior and exterior detailing for cars, trucks, SUVs, and minivans.",
+        "kind": "service"
+      },
+      {
+        "name": "Ceramic Coating",
+        "slug": "ceramic-coating",
+        "order": 2,
+        "shortDescription": "Long-term paint protection with a gloss that outlasts any wax.",
+        "kind": "service"
+      },
+      {
+        "name": "RV Detailing",
+        "slug": "rv-detailing",
+        "order": 3,
+        "shortDescription": "Full-size cleaning and care for motorhomes and campers, done where they sit.",
+        "kind": "service"
+      },
+      {
+        "name": "Boat Detailing",
+        "slug": "boat-detailing",
+        "order": 4,
+        "shortDescription": "Hull-to-helm cleaning and protection for boats and personal watercraft.",
+        "kind": "service"
+      }
+    ],
+    "areas": [
+      {
+        "name": "Independence",
+        "slug": "independence-va",
+        "order": 1,
+        "state": "VA",
+        "isHeadquarters": true
+      },
+      {
+        "name": "Wytheville",
+        "slug": "wytheville-va",
+        "order": 2,
+        "state": "VA",
+        "isHeadquarters": false
+      },
+      {
+        "name": "Galax",
+        "slug": "galax-va",
+        "order": 3,
+        "state": "VA",
+        "isHeadquarters": false
+      },
+      {
+        "name": "Hillsville",
+        "slug": "hillsville-va",
+        "order": 4,
+        "state": "VA",
+        "isHeadquarters": false
+      },
+      {
+        "name": "Mt. Airy",
+        "slug": "mt-airy-nc",
+        "order": 5,
+        "state": "NC",
+        "isHeadquarters": false
+      }
+    ]
+  },
+
+  "assets": {
+    "logo": null,
+    "heroVideo": null,
+    "socialImage": null,
+    "introImage": null,
+    "beforeAfter": []
+  },
+
+  "tokens": {},
+  "redirects": [],
+
+  "source": {
+    "type": "manual",
+    "path": "source"
+  },
+
+  "notes": [
+    "Domain: the onboarding form says 'mrbownsmobiledetailing.com', which drops the r in Browns. Purchase is still pending, so intake records the correct spelling (mrbrownsmobiledetailing.com). Verify the purchase uses this exact spelling before launch.",
+    "Phone: a dedicated business number was bought and is in identity verification. The site carries Derrick's (276) 620-3494 until it clears; update intake and config together when it does.",
+    "Not insured or bonded (form). Site copy must not claim insurance.",
+    "Business is not registered as an entity; no legal name exists.",
+    "Logo: client wants a Memoji-style logo designed. Brand colors blue and silver on a dark theme.",
+    "No usable photography: the form's logo, work-photo, and headshot uploads are one identical screenshot. All imagery comes from generation; placeholders until then.",
+    "Google Business Profile claimed, verification pending. Facebook page pending; no other socials.",
+    "routes.booking is false until GHL service calendars exist. Every booking button resolves to /get-quote.",
+    "Travel fee applies beyond the 45-mile radius (amount internal, per no-prices rule).",
+    "Form answers 'None' to the water/electricity question; ambiguous whether he needs hookups or brings his own. Do not claim self-contained until confirmed with Derrick.",
+    "Internal pricing reference from the form: exterior-only and full-detail package tiers by vehicle size; ceramic, RV, and boat quoted by size. Add-ons: pet hair, headlight restoration, undercarriage. Never rendered on pages."
+  ]
+}

@@ -1,0 +1,149 @@
+{
+  "_readme": "Prompt manifest for scripts/generate-images.mjs. Run: pnpm run images mrbrowns-mobile-detailing. Entries whose `out` file already exists are skipped. `usedBy` documents the repoint step; content currently references placeholder .jpg files and is repointed to these outputs after generation succeeds. NOT in this manifest: the logo (client wants a designed Memoji-style mark, handled manually) and the hero video (real or generated footage, separate step).",
+  "style": "STYLE: Photorealistic editorial photograph, 3:2 landscape, cool color grade with deep blue and silver tones and dark shadows, natural overcast Appalachian daylight, documentary rather than glossy advertising. Rural southwest Virginia setting: gravel driveways, farmland edges, wooded Blue Ridge foothills. No readable text, no logos, no license plates, no visible faces.",
+  "defaults": {
+    "provider": "kie",
+    "model": {
+      "kie": "gpt-image-2-text-to-image",
+      "openai": "gpt-image-2"
+    },
+    "aspectRatio": "3:2",
+    "resolution": "2K",
+    "quality": "high",
+    "resizeWidth": 1200
+  },
+  "images": [
+    {
+      "id": "hero-poster",
+      "out": "hero-poster.webp",
+      "alt": "A freshly detailed vehicle in a driveway, by Mr. Brown's Mobile Detailing in Independence, VA",
+      "usedBy": [
+        "site.config.ts -> defaults.heroVideo.poster (currently ./assets/hero-poster.jpg)",
+        "content/home.md -> hero.image",
+        "every cta.image slot (decorative)"
+      ],
+      "resizeWidth": 1600,
+      "prompt": "A dark blue pickup truck parked on a neat gravel driveway in front of a modest white farmhouse in the Blue Ridge foothills, freshly washed and glossy with water beads on the hood, late golden-hour light raking across the paint, wooded hills soft in the background. Shot from a low three-quarter front angle."
+    },
+    {
+      "id": "intro",
+      "out": "intro.webp",
+      "alt": "A detailer working on a car in a customer's driveway in rural Virginia",
+      "usedBy": [
+        "content/home.md -> introduction.image, promise.image, about.image",
+        "content/about.md -> hero.image, story.image",
+        "generic section slots across services and areas (currently ./assets/intro.jpg)"
+      ],
+      "prompt": "A man in a plain dark work shirt seen from behind at three-quarter angle, hand-polishing the rear quarter panel of a silver SUV in a residential gravel driveway, microfiber towel in hand, detailing supplies in an open caddy at his feet, rural Virginia farmland and a wooden fence blurred in the background. His face is turned away and not visible."
+    },
+    {
+      "id": "social",
+      "out": "social.webp",
+      "alt": "Mr. Brown's Mobile Detailing, mobile auto detailing in Independence, VA",
+      "usedBy": [
+        "site.config.ts -> defaults.socialImage (currently ./assets/social.jpg)"
+      ],
+      "resizeWidth": 1200,
+      "prompt": "A gleaming freshly detailed dark sedan parked on a country road pull-off overlooking rolling Blue Ridge mountain ridges at dusk, deep blue sky, silver reflections along the body line. Wide 1200x630-friendly landscape composition with clear space on the left third."
+    },
+    {
+      "id": "work-interior",
+      "out": "work-interior.webp",
+      "alt": "Deep cleaning a vehicle interior, Mr. Brown's Mobile Detailing",
+      "usedBy": [
+        "rotation shot for why/guarantee section slots across services and areas (repoint from ./assets/intro.jpg)"
+      ],
+      "prompt": "Close view through an open rear door of a detailer's gloved hands working a fabric cleaning brush over a truck's rear bench seat, extraction machine hose curling across the door sill, dark interior lit by soft daylight from the open doors. No face visible."
+    },
+    {
+      "id": "work-exterior",
+      "out": "work-exterior.webp",
+      "alt": "Hand washing a vehicle exterior, Mr. Brown's Mobile Detailing",
+      "usedBy": [
+        "rotation shot for why/guarantee section slots across services and areas (repoint from ./assets/intro.jpg)"
+      ],
+      "prompt": "Thick white foam sliding down the side of a dark blue SUV mid-wash in a gravel driveway, a wash mitt pressed against the front fender, low afternoon sun backlighting the suds, wooded Appalachian hillside out of focus behind."
+    },
+    {
+      "id": "service-full-auto-detailing",
+      "out": "service-full-auto-detailing.webp",
+      "alt": "Full auto detailing by Mr. Brown's Mobile Detailing in Independence, VA",
+      "usedBy": [
+        "content/services/full-auto-detailing.md -> cardImage, hero image (currently ./assets/service-full-auto-detailing.jpg)"
+      ],
+      "prompt": "An open car door revealing a spotless vacuumed interior with clean black carpets and wiped leather seats, a detailer's vacuum hose and brush resting beside the sill, suburban-rural driveway setting with soft daylight."
+    },
+    {
+      "id": "service-ceramic-coating",
+      "out": "service-ceramic-coating.webp",
+      "alt": "Ceramic coating application by Mr. Brown's Mobile Detailing in Independence, VA",
+      "usedBy": [
+        "content/services/ceramic-coating.md -> cardImage, hero image (currently ./assets/service-ceramic-coating.jpg)"
+      ],
+      "prompt": "Close-up macro of a gloved hand applying ceramic coating to a deep blue car hood with a small square applicator pad, wet-glass gloss and mirror reflections on the cured half of the panel, dark moody background with silver highlights."
+    },
+    {
+      "id": "service-rv-detailing",
+      "out": "service-rv-detailing.webp",
+      "alt": "RV detailing by Mr. Brown's Mobile Detailing in Independence, VA",
+      "usedBy": [
+        "content/services/rv-detailing.md -> cardImage, hero image (currently ./assets/service-rv-detailing.jpg)"
+      ],
+      "prompt": "A white Class C motorhome parked beside a farmhouse being washed, soap suds sliding down its tall sidewall, extension brush leaning against a bucket, green pasture and wooded hills behind, overcast soft light."
+    },
+    {
+      "id": "service-boat-detailing",
+      "out": "service-boat-detailing.webp",
+      "alt": "Boat detailing by Mr. Brown's Mobile Detailing in Independence, VA",
+      "usedBy": [
+        "content/services/boat-detailing.md -> cardImage, hero image (currently ./assets/service-boat-detailing.jpg)"
+      ],
+      "prompt": "A bowrider boat on its trailer in a gravel yard, hull half-cleaned showing a sharp contrast between polished glossy gelcoat and a dull water-stained section, cleaning supplies on a step stool alongside, Appalachian ridge line in the distance."
+    },
+    {
+      "id": "area-independence-va",
+      "out": "area-independence-va.webp",
+      "alt": "Mobile detailing at a home outside Independence, VA",
+      "usedBy": [
+        "content/areas/independence-va.md -> intro.image (repoint from ./assets/intro.jpg)"
+      ],
+      "prompt": "A clean pickup truck parked on a long gravel farm driveway leading to a white farmhouse with a wraparound porch, split-rail fence and green pasture on both sides, high Blue Ridge ridgeline behind, clear morning light. Classic rural Grayson County Virginia scene."
+    },
+    {
+      "id": "area-wytheville-va",
+      "out": "area-wytheville-va.webp",
+      "alt": "Mobile detailing at a home in Wytheville, VA",
+      "usedBy": [
+        "content/areas/wytheville-va.md -> intro.image (repoint from ./assets/intro.jpg)"
+      ],
+      "prompt": "A freshly detailed silver sedan in the paved driveway of a tidy brick ranch house in a small-town neighborhood, mature maple trees along the street, a hint of a highway overpass far in the background haze, bright midday light."
+    },
+    {
+      "id": "area-galax-va",
+      "out": "area-galax-va.webp",
+      "alt": "Mobile detailing at a home in Galax, VA",
+      "usedBy": [
+        "content/areas/galax-va.md -> intro.image (repoint from ./assets/intro.jpg)"
+      ],
+      "prompt": "A gleaming dark SUV parked in front of a small-town craftsman house with a covered porch, bicycles leaning by the steps, tree-lined street sloping toward low mountains, warm late-afternoon light."
+    },
+    {
+      "id": "area-hillsville-va",
+      "out": "area-hillsville-va.webp",
+      "alt": "Mobile detailing at a farm near Hillsville, VA",
+      "usedBy": [
+        "content/areas/hillsville-va.md -> intro.image (repoint from ./assets/intro.jpg)"
+      ],
+      "prompt": "A clean work truck parked beside a red barn on a hilltop farm, morning fog lying in the valley below and rolling Blue Ridge ridges fading into the mist, dew on the grass, soft diffused light. Carroll County Virginia mountain farm scene."
+    },
+    {
+      "id": "area-mt-airy-nc",
+      "out": "area-mt-airy-nc.webp",
+      "alt": "Mobile detailing at a home in Mt. Airy, NC",
+      "usedBy": [
+        "content/areas/mt-airy-nc.md -> intro.image (repoint from ./assets/intro.jpg)"
+      ],
+      "prompt": "A polished classic-style sedan parked on the driveway of a neat mid-century brick home with white trim, small-town street with granite curbing and dogwood trees, gentle piedmont hills in the distance, nostalgic golden-hour light."
+    }
+  ]
+}
