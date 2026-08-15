@@ -20,7 +20,7 @@ const active = (href: string) => activePath === href;
 </div>
 <header class="header" data-header>
   <div class="header-inner dg-container">
-    <a class="brand" href="/" aria-label={`${brand.name} home`}><i aria-hidden="true"></i><span>{brand.name}</span></a>
+    <a class="brand" href="/" aria-label={`${brand.name} home`}>{brand.logo ? <img src={brand.logo} alt="" /> : <><i aria-hidden="true"></i><span>{brand.name}</span></>}</a>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="guild-nav" aria-label="Menu" data-menu-toggle><GuildIcon name="menu" size={20} /><GuildIcon name="close" size={20} /></button>
     <nav id="guild-nav" class="nav" aria-label="Main navigation" data-menu>
       <a class:list={{ active: active('/') }} href="/">Home</a>
@@ -76,6 +76,13 @@ const active = (href: string) => activePath === href;
   .brand { display: flex; align-items: center; gap: .75rem; color: var(--dg-ink); font-size: clamp(1.15rem, 2vw, 1.6rem); font-weight: 800; line-height: 1; text-decoration: none; text-transform: uppercase; }
   .brand i { width: 2rem; height: 2rem; flex: none; background: var(--dg-accent); transition: width .25s ease, height .25s ease; }
   .is-compact .brand i { width: 1.4rem; height: 1.4rem; }
+  /**
+   * max-height rather than height: the logo takes its full 7rem wherever there is
+   * room, and scales down proportionally when max-width bites on a narrow viewport,
+   * instead of letterboxing inside a fixed-height box.
+   */
+  .brand img { display: block; width: auto; height: auto; max-height: 7rem; max-width: 100%; transition: max-height .25s ease; }
+  .is-compact .brand img { max-height: 3rem; }
   .nav { display: flex; align-items: center; gap: 1.45rem; margin-left: auto; font-size: .875rem; font-weight: 700; white-space: nowrap; }
   .nav > a, summary { padding-block: .8rem; text-decoration: none; cursor: pointer; list-style: none; }
   .nav > a:hover, .nav > a.active, summary:hover { color: var(--dg-accent-dark); }
@@ -96,6 +103,12 @@ const active = (href: string) => activePath === href;
     .nav { gap: 1rem; }
   }
   @media (max-width: 56rem) {
+    /**
+     * The mobile nav panel is positioned from a fixed header offset below, so the
+     * logo is capped near the header's own height here — at 7rem the header would
+     * grow past that offset and open its dropdown underneath itself.
+     */
+    .brand img, .is-compact .brand img { max-height: 3.4rem; }
     .topbar > div:first-child { display: none; }
     .topbar { justify-content: flex-end; }
     .menu-toggle { display: block; }

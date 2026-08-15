@@ -14,7 +14,7 @@ const iconFor = (label: string): 'facebook' | 'instagram' | 'tiktok' | null => {
 <footer class="footer">
   <div class="dg-container footer-main">
     <div class="brand-col">
-      <div class="mark"><i></i><strong>{brand.name}</strong></div>
+      <div class="mark">{brand.footerLogo ? <img src={brand.footerLogo} alt={brand.name} /> : <><i></i><strong>{brand.name}</strong></>}</div>
       <p>{brand.blurb}</p>
     </div>
     <div>
@@ -50,6 +50,7 @@ const iconFor = (label: string): 'facebook' | 'instagram' | 'tiktok' | null => {
   .footer-main { display: grid; grid-template-columns: 3.5fr 2.5fr 3fr 3fr; gap: clamp(2rem, 4vw, 3.25rem); padding-block: 4rem 3.5rem; border-bottom: 1px solid var(--dg-rule); }
   .mark { display: flex; align-items: center; gap: .65rem; margin-bottom: 1.15rem; font-size: 1.125rem; font-weight: 800; text-transform: uppercase; }
   .mark i { width: 1.25rem; height: 1.25rem; background: var(--dg-accent); }
+  .mark img { display: block; width: auto; height: auto; max-height: 10rem; max-width: 100%; }
   .brand-col p { max-width: 34rem; color: var(--dg-muted); }
   h2 { display: inline-block; margin-bottom: 1.1rem; padding-bottom: .35rem; border-bottom: 2px solid var(--dg-ink); font-size: 1.15rem; letter-spacing: .05em; text-transform: uppercase; }
   h2:not(:first-child) { margin-top: 1.75rem; }

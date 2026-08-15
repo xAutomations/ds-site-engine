@@ -38,7 +38,17 @@ export const siteConfigSchema = z.object({
     tagline: z.string().min(1),
     /** Longer footer blurb (spec §04, brand column). */
     blurb: z.string().min(1),
+    /** Header logo, also the LocalBusiness JSON-LD image. Convention: ./assets/logo.png */
     logoPath: z.string().min(1),
+    /**
+     * Footer logo variant, for the different treatment a footer's paper surface
+     * often needs.
+     *
+     * Rarely needed: omitted, the template already picks up
+     * assets/logo-footer.{webp,jpg,png} by convention, and falls back to logoPath
+     * when there is none. Set this only to point at a filename off that convention.
+     */
+    footerLogoPath: z.string().min(1).optional(),
     /** Custom favicon path. Omitted generates one from the accent colour. */
     faviconPath: z.string().min(1).optional(),
     /**

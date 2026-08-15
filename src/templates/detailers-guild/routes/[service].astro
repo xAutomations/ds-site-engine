@@ -48,12 +48,12 @@ const shell = await guildShell({
   {shell}
   hero={heroFrom(data.hero)}
   intro={sectionFrom(data.intro, { lead: true })}
-  overview={sectionFrom(data.overview, { reversed: true, seamless: true, actions: true })}
+  overview={sectionFrom(data.overview, { reversed: true, seamless: true, actions: 'pair' })}
   included={data.included && includedFrom(data.included)}
   process={data.process}
   addOnsHeading={data.addOnsHeading}
   addOns={alternate(data.addOns, () => ({ small: true }))}
-  why={sectionFrom(data.why, { actions: true })}
+  why={sectionFrom(data.why, { actions: 'pair' })}
   social={socialFrom(data.social, shell.site.socials)}
   faqs={data.faqs}
   cta={ctaFrom(data.cta)}

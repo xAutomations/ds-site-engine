@@ -61,7 +61,10 @@ const {
     <meta name="twitter:description" content={description} />
     {ogImage && <meta name="twitter:image" content={ogImage} />}
     {jsonLd.length > 0 && <script is:inline type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', '@graph': jsonLd })} />}
-    {site.favicon && <link rel="icon" href={site.favicon} />}
+    {/* Always linked: the engine generates /favicon.svg from the accent, so a client
+        without their own mark still gets one rather than no icon at all. */}
+    <link rel="icon" href={site.favicon ?? '/favicon.svg'} type={site.favicon ? 'image/png' : 'image/svg+xml'} />
+    {site.appleTouchIcon && <link rel="apple-touch-icon" href={site.appleTouchIcon} />}
     <link rel="preload" as="font" type="font/woff2" href="/fonts/archivo-latin.woff2" crossorigin />
   </head>
   <body>

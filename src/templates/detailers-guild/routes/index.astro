@@ -20,10 +20,10 @@ const shell = await guildShell({
 <HomePage
   {shell}
   hero={heroFrom(data.hero, { compact: false })}
-  introduction={sectionFrom(data.introduction, { actions: true })}
+  introduction={sectionFrom(data.introduction, { actions: 'book' })}
   promise={sectionFrom(data.promise, { reversed: true })}
   services={await guildServiceCards()}
-  about={sectionFrom(data.about)}
+  about={sectionFrom(data.about, { actions: 'quote' })}
   social={socialFrom(data.social, shell.site.socials)}
   areaSection={data.areaSection}
   cta={ctaFrom(data.cta)}

@@ -53,7 +53,10 @@ function svg(width, height, label, sub) {
 }
 
 const IMAGES = [
-  { file: 'logo.jpg', w: 600, h: 200, label: 'PLACEHOLDER', sub: 'logo' },
+  // PNG for both logos — real logos arrive with transparency, and the header and
+  // footer load these paths directly (brand.logoPath / brand.footerLogoPath).
+  { file: 'logo.png', w: 600, h: 200, label: 'PLACEHOLDER', sub: 'header logo' },
+  { file: 'logo-footer.png', w: 600, h: 200, label: 'PLACEHOLDER', sub: 'footer logo' },
   { file: 'hero-poster.jpg', w: 1600, h: 900, label: 'PLACEHOLDER', sub: 'hero poster' },
   { file: 'social.jpg', w: 1200, h: 630, label: 'PLACEHOLDER', sub: 'social share image' },
   { file: 'intro.jpg', w: 1200, h: 900, label: 'PLACEHOLDER', sub: 'home intro photo' },
@@ -79,9 +82,8 @@ async function main() {
 
   for (const img of [...IMAGES, ...(await serviceImages())]) {
     const out = path.join(DIR, img.file);
-    await sharp(svg(img.w, img.h, img.label, img.sub))
-      .jpeg({ quality: 82 })
-      .toFile(out);
+    const pipeline = sharp(svg(img.w, img.h, img.label, img.sub));
+    await (img.file.endsWith('.png') ? pipeline.png() : pipeline.jpeg({ quality: 82 })).toFile(out);
     console.log(`  ▸ ${out}`);
   }
 

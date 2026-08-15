@@ -21,7 +21,8 @@ export const siteConfig = {
       'Smoke Detailing is a fully mobile detailing operation built to exercise the Detailers Guild template. Every word of this payload is invented test copy.',
     footerNote:
       'Serving the test region with pride, our mobile team comes to you for convenience and quality.',
-    logoPath: './assets/logo.jpg',
+    logoPath: './assets/logo.png',
+    footerLogoPath: './assets/logo-footer.png',
   },
 
   contact: {

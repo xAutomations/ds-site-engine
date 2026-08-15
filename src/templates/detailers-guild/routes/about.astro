@@ -20,7 +20,7 @@ const shell = await guildShell({
 <AboutPage
   {shell}
   hero={heroFrom(data.hero)}
-  story={sectionFrom(data.story)}
+  story={sectionFrom(data.story, { actions: 'book' })}
   process={sectionFrom(data.process, { reversed: true })}
   services={await guildServiceCards()}
   servicesIntro={data.servicesIntro}

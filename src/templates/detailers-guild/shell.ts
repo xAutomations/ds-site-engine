@@ -15,7 +15,7 @@
 import { getCollection } from 'astro:content';
 import { areaLabel, assertUniqueSlugs } from '../../lib/content';
 import { siteConfig } from '../../lib/site-config';
-import { imageUrl, ogImageUrl } from '../../lib/assets';
+import { imageUrl, ogImageUrl, optionalImageUrl } from '../../lib/assets';
 import {
   areaBreadcrumbJsonLd,
   blogPostingJsonLd,
@@ -38,6 +38,18 @@ import type { GuildNavItem, GuildServiceCard, GuildShellData, GuildSiteData } fr
  * happens to render first.
  */
 assertGuildAccent(siteConfig.theme.accentColor, siteConfig.theme.mode);
+
+/**
+ * Where the footer logo is looked for when config does not name one. The extension
+ * is a hint — resolveAssetKey picks whichever of webp/jpg/png the payload shipped.
+ */
+const FOOTER_LOGO_CONVENTION = './assets/logo-footer.png';
+
+/**
+ * Where a client's own favicon is looked for when config does not name one. Same
+ * rule as the footer logo: the extension is a hint, so assets/favicon.webp works.
+ */
+const FAVICON_CONVENTION = './assets/favicon.png';
 
 /**
  * The Guild collections, ordered the way the nav and grids render them.
@@ -83,9 +95,41 @@ export async function guildAreaEntries() {
  * string where config stores structured parts, and an ordered social list where
  * config stores an object. Doing it here means no component ever formats a NAP.
  */
-export function guildSite(): GuildSiteData {
+export async function guildSite(): Promise<GuildSiteData> {
   const { brand, contact, serviceArea, hours, socials, theme } = siteConfig;
   const { street, city, state, zip } = contact.address;
+
+  // PNG because client logos carry transparency; 480px covers the header at 2x.
+  const logo = await imageUrl(brand.logoPath, 480, 'png');
+  /**
+   * The footer variant is found by convention rather than declared: dropping
+   * assets/logo-footer.{webp,jpg,png} into a payload is enough to use it, and a
+   * client without one falls back to the header logo. An explicit footerLogoPath
+   * still wins and still fails the build when it points at nothing — a path that
+   * was typed out is a claim, and a broken claim should not fall back silently.
+   */
+  const footerLogo = brand.footerLogoPath
+    ? await imageUrl(brand.footerLogoPath, 480, 'png')
+    : ((await optionalImageUrl(FOOTER_LOGO_CONVENTION, 480, 'png')) ?? logo);
+
+  /**
+   * The client's own mark, found by convention or named in config. Re-encoded to
+   * PNG whatever the source format — WebP favicons are not universally honoured,
+   * and a favicon is one asset not worth debugging per browser.
+   *
+   * Undefined where the client has no mark; the layout then links the accent-derived
+   * /favicon.svg the engine generates. Note this must be a *built* URL: the raw
+   * payload path resolves against the current page, which 404s on every page but
+   * the home page.
+   */
+  const faviconSource = brand.faviconPath ?? FAVICON_CONVENTION;
+  const favicon = brand.faviconPath
+    ? await imageUrl(brand.faviconPath, 48, 'png')
+    : await optionalImageUrl(FAVICON_CONVENTION, 48, 'png');
+  /** iOS home-screen icon. Only meaningful where the client supplied a real mark. */
+  const appleTouchIcon = favicon
+    ? await optionalImageUrl(faviconSource, 180, 'png')
+    : undefined;
 
   /**
    * Ordered, not Object.entries: the object's key order is whatever the payload
@@ -107,7 +151,7 @@ export function guildSite(): GuildSiteData {
     accentDark: accent.accentDark,
     accentOnLight: accent.accentOnLight,
     mode: theme.mode,
-    brand: { name: brand.name, blurb: brand.blurb },
+    brand: { name: brand.name, blurb: brand.blurb, logo, footerLogo },
     contact: {
       phone: contact.phone,
       phoneDisplay: contact.phoneDisplay,
@@ -123,7 +167,8 @@ export function guildSite(): GuildSiteData {
     locationBlurb: brand.footerNote,
     hours,
     socials: socialLinks,
-    favicon: brand.faviconPath,
+    favicon,
+    appleTouchIcon,
   };
 }
 
@@ -218,7 +263,7 @@ export async function guildShell(options: GuildShellOptions): Promise<GuildShell
   ];
 
   return {
-    site: guildSite(),
+    site: await guildSite(),
     title,
     description,
     path,

@@ -8,6 +8,7 @@
  * broken <img> (core principle 3).
  */
 import { Image } from 'astro:assets';
+import { resolveAssetKey } from '../lib/assets';
 
 interface Props {
   src: string;
@@ -36,9 +37,12 @@ const assets = import.meta.glob<{ default: ImageMetadata }>(
   { eager: true },
 );
 
-/** "./assets/hero.jpg" and "assets/hero.jpg" both resolve. */
-const key = `../../client/${src.replace(/^\.\//, '')}`;
-const entry = assets[key];
+/**
+ * "./assets/hero.jpg" and "assets/hero.jpg" both resolve, and so does hero.webp
+ * when that is the format the client actually supplied — see resolveAssetKey.
+ */
+const key = resolveAssetKey(src, assets);
+const entry = key ? assets[key] : undefined;
 
 if (!entry) {
   const available = Object.keys(assets)

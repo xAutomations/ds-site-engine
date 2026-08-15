@@ -45,6 +45,10 @@ export interface GuildSiteData {
   brand: {
     name: string;
     blurb: string;
+    /** Built URL of the header logo. Optional only for template-preview, which falls back to the accent mark. */
+    logo?: string;
+    /** Built URL of the footer logo variant; the shell falls back to the header logo. */
+    footerLogo?: string;
   };
   contact: {
     phone: string;
@@ -57,7 +61,13 @@ export interface GuildSiteData {
   locationBlurb?: string;
   hours?: Array<{ days: string; hours: string }>;
   socials: GuildLink[];
+  /**
+   * Built URL of the client's own favicon, already re-encoded to PNG. Undefined
+   * where they have none — the layout falls back to the generated /favicon.svg.
+   */
   favicon?: string;
+  /** Built URL of the 180px iOS home-screen icon, from the same source as favicon. */
+  appleTouchIcon?: string;
 }
 
 export interface GuildShellData {

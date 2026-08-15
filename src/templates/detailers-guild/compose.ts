@@ -59,22 +59,41 @@ export interface SectionFlags {
   small?: boolean;
   lead?: boolean;
   /**
-   * Renders the quote/call button pair under the copy. A slot decision like the
-   * rest: the stakes sections ("Why X Matters", "Why Mobile Detailing in {Area}")
-   * end on a conversion beat, and the actions are derived here so a writer can
-   * never author a button (the same rule as heroes and closing bands).
+   * The conversion beat a slot closes on. A slot decision like the rest — the
+   * actions are derived here so a writer can never author a button (the same rule
+   * as heroes and closing bands). The proven payload uses all three shapes:
+   *
+   *   - 'book'  — single "Book today", under the opening pitch (home introduction,
+   *     about story): the reader just met the offer, so ask for the commitment.
+   *   - 'quote' — single "Get a quote", under the who-we-are block (home about):
+   *     softer ask for a reader still comparing.
+   *   - 'pair'  — quote + call, the hero pair repeated where a stakes section
+   *     ("Why X Matters", "Why Mobile Detailing in {Area}") ends on a hard beat.
    */
-  actions?: boolean;
+  actions?: 'book' | 'quote' | 'pair';
 }
 
 type AuthoredSection = Omit<GuildContentSection, keyof SectionFlags | 'action' | 'secondaryAction'>;
+
+function sectionActions(actions: SectionFlags['actions']) {
+  switch (actions) {
+    case 'book':
+      return { action: bookingAction(routeOptions) };
+    case 'quote':
+      return { action: quoteAction() };
+    case 'pair':
+      return { action: quoteAction(), secondaryAction: callAction(siteConfig.contact) };
+    default:
+      return {};
+  }
+}
 
 export function sectionFrom(section: AuthoredSection, flags: SectionFlags = {}): GuildContentSection {
   const { actions, ...layout } = flags;
   return {
     ...section,
     ...layout,
-    ...(actions ? { action: quoteAction(), secondaryAction: callAction(siteConfig.contact) } : {}),
+    ...sectionActions(actions),
   };
 }
 
