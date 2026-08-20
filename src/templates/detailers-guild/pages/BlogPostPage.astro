@@ -1,5 +1,6 @@
 ---
 import GuildImg from '../components/GuildImg.astro';
+import { displayDate, isoDate } from '../../../lib/dates';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import GuildIcon from '../components/GuildIcon.astro';
 import FaqSection from '../components/FaqSection.astro';
@@ -58,7 +59,7 @@ const faqItems = post.faq.map((item) => ({ question: item.q, answer: plainText(i
   <article class="post">
     <header class="head dg-container">
       <div class="meta dg-reveal">
-        <time datetime={post.date}>{new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+        <time datetime={isoDate(post.date)}>{displayDate(post.date)}</time>
         <span aria-hidden="true">■</span>
         <span>{readTime} min read</span>
         <span class="category">{post.category}</span>

@@ -1,6 +1,7 @@
 ---
 import Img from '../../../components/Img.astro';
 import { getBlogPosts } from '../../../lib/content';
+import { displayDate, isoDate } from '../../../lib/dates';
 import { siteConfig } from '../../../lib/site-config';
 import SiteLayout from '../layouts/SiteLayout.astro';
 
@@ -27,7 +28,7 @@ const { brand } = siteConfig;
             <Img src={post.data.heroImage.src} alt={post.data.heroImage.alt} widths={[600]} sizes="600px" />
           </div>
           <div class="card-body">
-            <time datetime={post.data.date}>{new Date(post.data.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</time>
+            <time datetime={isoDate(post.data.date)}>{displayDate(post.data.date)}</time>
             <h2>{post.data.title}</h2>
             <p>{post.data.metaDescription}</p>
             <span class="card-category">{post.data.category}</span>

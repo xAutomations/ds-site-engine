@@ -1,5 +1,6 @@
 ---
 import GuildImg from '../components/GuildImg.astro';
+import { displayDate, isoDate } from '../../../lib/dates';
 import SiteLayout from '../layouts/SiteLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import GuildIcon from '../components/GuildIcon.astro';
@@ -12,7 +13,7 @@ interface Props {
 }
 const { shell, hero, posts } = Astro.props;
 const formatDate = (date: string) =>
-  new Date(date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  displayDate(date);
 ---
 
 <SiteLayout {...shell}>
@@ -27,7 +28,7 @@ const formatDate = (date: string) =>
               <GuildImg src={post.heroImage.src} alt={post.heroImage.alt} sizes="(max-width: 48rem) 100vw, 33vw" />
             </figure>
             <div class="body">
-              <div class="meta"><time datetime={post.date}>{formatDate(post.date)}</time><span class="category">{post.category}</span></div>
+              <div class="meta"><time datetime={isoDate(post.date)}>{formatDate(post.date)}</time><span class="category">{post.category}</span></div>
               <h2>{post.title}</h2>
               <p>{post.metaDescription}</p>
               <span class="more">Read more<GuildIcon name="arrow" size={13} /></span>

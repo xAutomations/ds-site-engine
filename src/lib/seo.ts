@@ -2,6 +2,7 @@
  * The SEO formulas from spec §10, in one place. Recipes never build these strings
  * themselves — if a page needs a title, it comes from here.
  */
+import { isoDate } from './dates';
 import type { SiteConfig } from '../config-schema';
 
 /**
@@ -196,21 +197,6 @@ export function blogPostingJsonLd(
     publisher: { '@id': `${config.site.url}/#business` },
     ...(imageUrl ? { image: imageUrl } : {}),
   };
-}
-
-/**
- * schema.org dates must be ISO 8601, but the blog `date` field is `z.coerce.string()`
- * (schema.ts) — a bare YAML date arrives as a Date and coerces to its toString form
- * ("Sat Aug 01 2026 05:00:00 GMT+0500"), which validators reject. Already-ISO strings
- * pass through untouched; anything else is reformatted from its UTC components, since
- * YAML parses a bare date as UTC midnight and reading it back in local time can land
- * on the previous day.
- */
-function isoDate(value: string): string {
-  if (/^\d{4}-\d{2}-\d{2}/.test(value)) return value;
-  const parsed = new Date(value);
-  if (Number.isNaN(parsed.getTime())) return value;
-  return parsed.toISOString().slice(0, 10);
 }
 
 // City only where the area actually is one. An airport or a region served is a
