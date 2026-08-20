@@ -1,7 +1,8 @@
 ---
 import type { CollectionEntry } from 'astro:content';
 import Img from '../../../components/Img.astro';
-import { faqPageJsonLd } from '../../../lib/seo';
+import { ogImageUrl } from '../../../lib/assets';
+import { blogPostBreadcrumbJsonLd, blogPostingJsonLd, faqPageJsonLd } from '../../../lib/seo';
 import { siteConfig } from '../../../lib/site-config';
 import SiteLayout from '../layouts/SiteLayout.astro';
 
@@ -53,6 +54,25 @@ const wordCount = [post.title, ...post.body, ...post.faq.flatMap((item) => [item
   .trim()
   .split(/\s+/).length;
 const readTime = Math.max(1, Math.ceil(wordCount / 200));
+
+// The hero resolves through the same built-URL path as og:image — the raw
+// `./assets/…` frontmatter path would 404 (see lib/assets.ts).
+const heroForSchema = await ogImageUrl(post.heroImage.src, siteConfig.site.url);
+const postGraph = [
+  blogPostingJsonLd(
+    siteConfig,
+    {
+      title: post.title,
+      slug: post.slug,
+      description: post.metaDescription,
+      date: post.date,
+      author: post.author,
+    },
+    heroForSchema.url,
+  ),
+  blogPostBreadcrumbJsonLd(siteConfig, { title: post.title, slug: post.slug }),
+  faqPageJsonLd(schemaFaq),
+];
 ---
 
 <SiteLayout
@@ -61,7 +81,7 @@ const readTime = Math.max(1, Math.ceil(wordCount / 200));
   path={`/post/${post.slug}`}
   ogImage={post.heroImage.src}
   ogType="article"
-  jsonLd={[faqPageJsonLd(schemaFaq)]}
+  jsonLd={postGraph}
 >
   <article class="blog-post">
     <header class="post-header">

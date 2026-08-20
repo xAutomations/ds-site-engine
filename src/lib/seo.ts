@@ -150,6 +150,27 @@ export function areaBreadcrumbJsonLd(
 }
 
 /**
+ * Home → Blog → {post}. Unlike the service and area breadcrumbs, the middle crumb
+ * points at a page that actually exists (/blog is a real index), so the trail is
+ * literal rather than home-anchored. Last crumb carries no `item`, same rule.
+ */
+export function blogPostBreadcrumbJsonLd(
+  config: SiteConfig,
+  post: { title: string; slug: string },
+): Record<string, unknown> {
+  const url = canonical(config, `/post/${post.slug}`);
+  return {
+    '@type': 'BreadcrumbList',
+    '@id': `${url}#breadcrumb`,
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: `${config.site.url}/` },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: `${config.site.url}/blog` },
+      { '@type': 'ListItem', position: 3, name: post.title },
+    ],
+  };
+}
+
+/**
  * Blog posts: the Article entity the page's `og:type=article` implies. Everything
  * comes from the post frontmatter; `imageUrl` is the built absolute hero URL,
  * resolved by the caller for the same reason as localBusinessJsonLd's logoUrl.
@@ -170,11 +191,26 @@ export function blogPostingJsonLd(
     description: post.description,
     url,
     mainEntityOfPage: { '@id': `${url}#webpage` },
-    datePublished: post.date,
+    datePublished: isoDate(post.date),
     author: { '@type': 'Person', name: post.author },
     publisher: { '@id': `${config.site.url}/#business` },
     ...(imageUrl ? { image: imageUrl } : {}),
   };
+}
+
+/**
+ * schema.org dates must be ISO 8601, but the blog `date` field is `z.coerce.string()`
+ * (schema.ts) — a bare YAML date arrives as a Date and coerces to its toString form
+ * ("Sat Aug 01 2026 05:00:00 GMT+0500"), which validators reject. Already-ISO strings
+ * pass through untouched; anything else is reformatted from its UTC components, since
+ * YAML parses a bare date as UTC midnight and reading it back in local time can land
+ * on the previous day.
+ */
+function isoDate(value: string): string {
+  if (/^\d{4}-\d{2}-\d{2}/.test(value)) return value;
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) return value;
+  return parsed.toISOString().slice(0, 10);
 }
 
 // City only where the area actually is one. An airport or a region served is a

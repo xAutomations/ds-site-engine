@@ -18,6 +18,7 @@ import { siteConfig } from '../../lib/site-config';
 import { imageUrl, ogImageUrl, optionalImageUrl } from '../../lib/assets';
 import {
   areaBreadcrumbJsonLd,
+  blogPostBreadcrumbJsonLd,
   blogPostingJsonLd,
   buildHomeTitle,
   buildTitle,
@@ -329,7 +330,8 @@ export function guildAreaJsonLd(area: { name: string; slug: string }): Array<Rec
 }
 
 /**
- * Blog-post graph nodes: the BlogPosting entity the page's og:type=article implies.
+ * Blog-post graph nodes: the BlogPosting entity the page's og:type=article implies,
+ * plus the Home → Blog → {post} trail its service and area siblings already carry.
  * The hero image resolves through the same built-URL path as og:image — the raw
  * `./assets/…` path would 404 (see lib/assets.ts).
  */
@@ -354,5 +356,6 @@ export async function guildBlogPostJsonLd(post: {
       },
       hero.url,
     ),
+    blogPostBreadcrumbJsonLd(siteConfig, { title: post.title, slug: post.slug }),
   ];
 }
