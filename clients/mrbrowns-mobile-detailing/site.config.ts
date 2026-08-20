@@ -65,6 +65,11 @@ export const siteConfig = {
   },
 
   theme: {
+    /**
+     * A dark-mode-safe rendering of the brand navy (#154481), which is itself
+     * 2.18:1 against this palette's black page — below the 3:1 the template asserts,
+     * so its fills sank into the background. This clears at 4.05:1.
+     */
     accentColor: '#2f6fb4',
     // "Blue & Silver with dark theme background" — the dark surface palette honors it.
     mode: 'dark' as const,

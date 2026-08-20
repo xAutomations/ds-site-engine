@@ -83,7 +83,12 @@ h1, h2, h3, h4 { font-weight: 800; line-height: 1.04; letter-spacing: -0.025em; 
 .dg-btn--primary { border-color: var(--dg-accent); background: var(--dg-accent); color: var(--dg-on-accent); }
 .dg-btn--primary:hover { border-color: var(--dg-accent-dark); background: var(--dg-accent-dark); }
 .dg-btn--light { border-color: color-mix(in srgb, white 35%, transparent); color: white; }
-.dg-btn--light:hover { border-color: white; background: white; color: var(--dg-ink); }
+/*
+ * --dg-field, not --dg-ink: this button sits on the dark bands and inverts to a
+ * white fill on hover, so its label has to be dark in BOTH modes. Ink flips light
+ * in dark mode, which made the hover state white-on-white and the label vanish.
+ */
+.dg-btn--light:hover { border-color: white; background: white; color: var(--dg-field); }
 .dg-arrow { width: 1rem; height: 1rem; flex: none; }
 .dg-grayscale { filter: grayscale(1) contrast(1.08); }
 .dg-media { position: relative; min-height: 16rem; overflow: hidden; border: 1px solid var(--dg-rule); background: var(--dg-surface); }
