@@ -1,17 +1,15 @@
 /**
  * PAYLOAD — JetSpa (aircraft detailing, KTEB / KMMU / KABE / KHPN).
  *
- * ⚠️  THIS CONFIG CONTAINS PLACEHOLDERS. IT MUST NOT SHIP.
+ * No placeholders remain: the last one (tracking.gtmId) was supplied 2026-08-20 and
+ * this payload builds under DS_STRICT=1, which is what the release pipeline uses.
  *
- * Facts that have not been supplied yet are filled with values containing the string
- * "PLACEHOLDER", by decision, so the site can be built and reviewed before onboarding
- * is complete. They are deliberately not plausible: a made-up street address that
- * looks real survives review and reaches production, while "PLACEHOLDER" in the footer
- * cannot. src/lib/site-config.ts warns on every build that they are still here, and
- * DS_STRICT=1 turns that warning into a build failure — set it in any deploy pipeline.
- *
- * The honest record of what is missing is clients/jetspa/source/intake.json, where
- * those fields are null. Fill intake first, then mirror the value here.
+ * The convention, should a future fact go missing again: fill it with a value
+ * containing the string "PLACEHOLDER" rather than something plausible — a made-up
+ * street address survives review and reaches production, "PLACEHOLDER" in the footer
+ * cannot. src/lib/site-config.ts lists them on every build and DS_STRICT=1 turns that
+ * into a build failure. clients/jetspa/source/intake.json stays the honest record of
+ * what was actually supplied; fill intake first, then mirror the value here.
  *
  * Payloads import nothing; validation happens at the engine boundary in
  * src/lib/site-config.ts.
@@ -70,9 +68,11 @@ export const siteConfig = {
   },
 
   tracking: {
-    // TODO(fact-needed): no GTM container yet. This ID matches nothing, so the
-    // container script 404s harmlessly — but nothing is being measured either.
-    gtmId: 'GTM-PLACEHOLDER',
+    // Supplied by the client 2026-08-20. Search Console is verified by DNS TXT in
+    // Cloudflare, not through this container: GSC reads Google's own index rather
+    // than a tag, and DNS verification covers every subdomain and survives a
+    // container swap.
+    gtmId: 'GTM-NLQ3BKZ4',
   },
 
   theme: {

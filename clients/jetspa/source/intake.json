@@ -42,7 +42,7 @@
     "embed": true
   },
   "tracking": {
-    "gtmId": null
+    "gtmId": "GTM-NLQ3BKZ4"
   },
   "theme": {
     "preset": "noir",
@@ -201,7 +201,7 @@
     "8 service pages carry a [BEFORE/AFTER IMAGE SECTION] placeholder in the export; assets.beforeAfter is empty until real photography exists. Generated aircraft imagery is a poor fit for this audience — wrong airframes and garbled registrations are obvious to owners and flight departments.",
     "Trust signals repeated site-wide and treated as facts: ADA (Aircraft Detailing Association) certification, OEM-approved chemistry, $200K general liability + $1.5M hangar liability insurance, badge access at all four airports. Verify each before publishing; none is verifiable from the export.",
     "Morristown's ICAO is KMMU (the onboarding call said 'MMA', which is wrong).",
-    "PLACEHOLDERS ARE IN USE, by decision: site.config.ts carries stand-in values for the facts still null here, so the site can be built and reviewed before onboarding completes. This file stays the honest record — a field that is null here has not been supplied, whatever site.config.ts says. Every placeholder contains the string 'PLACEHOLDER', is listed on every build by src/lib/site-config.ts, and fails the build under DS_STRICT=1. Assets are no longer stand-ins: logo, hero video, poster and every page image now come from the client's own site (see the asset note above). What remains placeholder is text and URLs, not imagery.",
+    "NO PLACEHOLDERS REMAIN as of 2026-08-20: tracking.gtmId was the last one and is now supplied, so this payload builds under DS_STRICT=1, which is what the release pipeline uses. This file stays the honest record — a field that is null here has not been supplied, whatever site.config.ts says. The fields still null are optional or derived, not missing facts: service shortDescriptions are written by us, airport `state` is deliberately absent (an airport is a Place, not a City, and typing it as one is a schema.org lie), and the unused socials have no accounts behind them. Should a fact go missing in future, the convention holds: fill it with a value containing the string 'PLACEHOLDER', which src/lib/site-config.ts lists on every build and DS_STRICT=1 turns into a build failure. Assets are the client's own — logo, hero video, poster and every page image (see the asset note above).",
     "Instagram is the only social account; Facebook, TikTok, YouTube and the Google review link are deliberately skipped. The authored FAQ and quote surfaces must remain Instagram-only.",
     "hours is [] by decision (2026-08-13): the business publishes no opening hours — AOG dispatch is 24/7 and everything else is quote-first. The site and its LocalBusiness JSON-LD carry no hours.",
     "ghl.quoteUrl is false by decision (2026-08-13): there is no external GHL quote page. The quote form is embedded directly on /get-quote (embed: true).",
